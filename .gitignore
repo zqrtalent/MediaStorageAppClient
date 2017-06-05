@@ -1,0 +1,9 @@
+*.DS_Store
+*.pdb
+*.app
+*.aps
+*.ncb
+*.clw
+*.obj
+*.db
+bin/*
