@@ -454,6 +454,12 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = Q32RM795VQ;
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					__IPHONE_OS__,
+					__APPLE__,
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

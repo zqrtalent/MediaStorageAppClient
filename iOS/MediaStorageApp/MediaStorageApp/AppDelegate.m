@@ -7,8 +7,15 @@
 //
 
 #import "AppDelegate.h"
+#include "MediaStorageRuntimeInfo.h"
+#import "MediaPlayerControlCenter.h"
+#import "RemoteCommandsProtocol.h"
 
-@interface AppDelegate ()
+@interface AppDelegate()<PlayerDelegate, RemoteCommandsProtocol>
+
+@property (nonatomic, strong) MediaPlayerControlCenter* mpControlCenter;
+@property (nonatomic, assign) unsigned int currentPlayTimeSec;
+@property (nonatomic, assign) float currentPlayTimeSecFloat;
 
 @end
 
@@ -17,6 +24,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.mpControlCenter = [[MediaPlayerControlCenter alloc] init];
+    self.currentPlayTimeSec = 0;
+    self.currentPlayTimeSecFloat = 0.0f;
+    
     return YES;
 }
 
@@ -45,6 +56,12 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    // Cleanup runtime info object.
+    [[MediaStorageRuntimeInfo sharedInstance] cleanUp];
+    // Destroy media player control center object.
+    [self.mpControlCenter cleanUp];
+    
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
 }
@@ -93,6 +110,119 @@
         NSLog(@"Unresolved error %@, %@", error, error.userInfo);
         abort();
     }
+}
+
+#pragma mark - PlayerDelegate methods
+
+-(void)onPlayStarted:(BOOL)resumed{
+    void (^playStartedBlock)();
+    playStartedBlock = ^{
+        if(!resumed){ // Start play
+            [self.mpControlCenter setActiveRemoteCommands:YES];
+            self.mpControlCenter.remoteCommandsDelegate = self;
+            
+            MediaInfo* playingMedia = [MediaStorageRuntimeInfo sharedInstance].NowPlaying;
+            // Initialize now playing info.
+            [self.mpControlCenter setNowPlayingTitle:playingMedia.songName];
+            [self.mpControlCenter setNowPlayingArtistName:playingMedia.artist];
+            [self.mpControlCenter setNowPlayingAlbumName:playingMedia.album];
+            [self.mpControlCenter setNowPlayingDuration:(double)playingMedia.DurationInSec];
+            [self.mpControlCenter setNowPlayingPlaybackProgress:(double)playingMedia.CurrentPositionInSec];
+            [self.mpControlCenter setNowPlayingElapsedPlaybackTime:(double)playingMedia.CurrentPositionInSec];
+            [self.mpControlCenter setNowPlayingState:YES];
+            [self.mpControlCenter setActiveNowPlayingInfo:YES];
+        }
+        else{
+            [self.mpControlCenter setNowPlayingState:YES];
+        }
+    };
+    
+    if([NSThread isMainThread])
+        playStartedBlock();
+    else
+        dispatch_async(dispatch_get_main_queue(), playStartedBlock);
+}
+
+-(void)onPlayEnded{
+    void (^playEndedBlock)();
+    playEndedBlock = ^{
+        [self.mpControlCenter setActiveNowPlayingInfo:NO];
+    };
+    
+    if([NSThread isMainThread])
+        playEndedBlock();
+    else
+        dispatch_async(dispatch_get_main_queue(), playEndedBlock);
+}
+
+-(void)onPaused{
+    void (^playPausedBlock)();
+    playPausedBlock = ^{
+        [self.mpControlCenter setNowPlayingState:NO];
+    };
+    
+    if([NSThread isMainThread])
+        playPausedBlock();
+    else
+        dispatch_async(dispatch_get_main_queue(), playPausedBlock);
+}
+
+-(void)onBufferingStarted{
+    //    dispatch_async(dispatch_get_main_queue(), ^(){
+    //        NSLog(@"onBufferingStarted");
+    //        [[NowPlayInfo sharedInstance].miniPlayerView onBufferingStarted];
+    //    });
+}
+
+-(void)onBufferingEnded{
+    //    dispatch_async(dispatch_get_main_queue(), ^(){
+    //        NSLog(@"onBufferingEnded");
+    //        [[NowPlayInfo sharedInstance].miniPlayerView onBufferingEnded];
+    //    });
+}
+
+-(void)onPlayTimeUpdate:(unsigned int)msec{
+    self.currentPlayTimeSecFloat = (msec/1000.0);
+    int currentTimeSec = (int)self.currentPlayTimeSecFloat;
+    if(currentTimeSec != self.currentPlayTimeSec){ //  Dont update time change less than second.
+        self.currentPlayTimeSec = currentTimeSec;
+        
+        // Update now playing info.
+        if(self.mpControlCenter){
+            void (^playTimeUpdatelock)();
+            playTimeUpdatelock = ^{
+                //[self.mpControlCenter setNowPlayingPlaybackProgress:(double)currentTimeSec];
+                [self.mpControlCenter setNowPlayingElapsedPlaybackTime:(double)currentTimeSec];
+                [self.mpControlCenter updateNowPlayingInfo];
+            };
+            
+            if([NSThread isMainThread])
+                playTimeUpdatelock();
+            else
+                dispatch_async(dispatch_get_main_queue(), playTimeUpdatelock);
+        }
+    }
+}
+
+#pragma mark - RemoteCommandsProtocol methods.
+-(MPRemoteCommandHandlerStatus)onPlayCommand{
+    return MPRemoteCommandHandlerStatusSuccess;
+}
+
+-(MPRemoteCommandHandlerStatus)onPauseCommand{
+    return MPRemoteCommandHandlerStatusSuccess;
+}
+
+-(MPRemoteCommandHandlerStatus)onTogglePlayPauseCommand{
+    return MPRemoteCommandHandlerStatusSuccess;
+}
+
+-(MPRemoteCommandHandlerStatus)onNextTrackCommand{
+    return MPRemoteCommandHandlerStatusSuccess;
+}
+
+-(MPRemoteCommandHandlerStatus)onPrevTrackCommand{
+    return MPRemoteCommandHandlerStatusSuccess;
 }
 
 @end

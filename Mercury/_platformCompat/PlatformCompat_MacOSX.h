@@ -175,12 +175,12 @@ typedef struct tagBITMAP {
 
 
 // Rect
-typedef tagRECT		RECTDef;
+typedef struct tagRECT		RECTDef;
 #define LPRECTDef RECTDef*
 #define LPCRECTDef const RECTDef*
 
 // Point
-typedef tagPOINT	POINTDef;
+typedef struct tagPOINT	POINTDef;
 #define LPPOINTDef POINTDef*
 #define LPCPOINTDef const POINTDef*
 
@@ -190,7 +190,7 @@ typedef struct tagPOINTF{
 } 	POINTF;
 
 // Size
-typedef tagSIZE		SIZEDef;
+typedef struct tagSIZE		SIZEDef;
 #define LPSIZEDef	SIZEDef*
 #define LPCSIZEDef const SIZEDef*
 

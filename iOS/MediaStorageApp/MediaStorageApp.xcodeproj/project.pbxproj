@@ -7,6 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA011D741EFF23EA004D7BDA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA011D731EFF23EA004D7BDA /* MediaPlayer.framework */; };
+		BA011D781EFF2445004D7BDA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA011D771EFF2445004D7BDA /* AVFoundation.framework */; };
+		BA34D6B11F0598880041EA39 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34D6B01F0598880041EA39 /* CoreGraphics.framework */; };
+		BA34D6B51F0598980041EA39 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34D6B41F0598980041EA39 /* AudioToolbox.framework */; };
+		BA34D6B71F0598A70041EA39 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34D6B61F0598A70041EA39 /* UIKit.framework */; };
+		BA34D6B91F0598AF0041EA39 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34D6B81F0598AF0041EA39 /* CoreFoundation.framework */; };
+		BA34D6C61F05A8D40041EA39 /* MediaFileStream.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6BF1F05A8D40041EA39 /* MediaFileStream.m */; };
+		BA34D6C71F05A8D40041EA39 /* MediaStreamDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6C11F05A8D40041EA39 /* MediaStreamDownloader.m */; };
+		BA34D6C81F05A8D40041EA39 /* MediaURLStream.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6C51F05A8D40041EA39 /* MediaURLStream.m */; };
+		BA34D6CC1F05A8E80041EA39 /* Mp3Decoder.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6CB1F05A8E80041EA39 /* Mp3Decoder.m */; };
+		BA34D6D11F05A91E0041EA39 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6CF1F05A91E0041EA39 /* Player.m */; };
+		BA34D6D51F05A94F0041EA39 /* MediaStreamingService.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6D41F05A94F0041EA39 /* MediaStreamingService.m */; };
+		BA34D6E91F05A96F0041EA39 /* MediaLibraryInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6D71F05A96F0041EA39 /* MediaLibraryInfo.cpp */; };
+		BA34D6EA1F05A96F0041EA39 /* MediaPacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6D91F05A96F0041EA39 /* MediaPacket.cpp */; };
+		BA34D6EB1F05A96F0041EA39 /* MediaPackets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6DB1F05A96F0041EA39 /* MediaPackets.cpp */; };
+		BA34D6EC1F05A96F0041EA39 /* MLAlbum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6DD1F05A96F0041EA39 /* MLAlbum.cpp */; };
+		BA34D6ED1F05A96F0041EA39 /* MLArtist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6DF1F05A96F0041EA39 /* MLArtist.cpp */; };
+		BA34D6EE1F05A96F0041EA39 /* MLPlaylist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6E11F05A96F0041EA39 /* MLPlaylist.cpp */; };
+		BA34D6EF1F05A96F0041EA39 /* MLPlaylistSong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6E31F05A96F0041EA39 /* MLPlaylistSong.cpp */; };
+		BA34D6F01F05A96F0041EA39 /* MLSong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6E51F05A96F0041EA39 /* MLSong.cpp */; };
+		BA34D6F11F05A96F0041EA39 /* SessionInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6E71F05A96F0041EA39 /* SessionInfo.cpp */; };
+		BA34D6F91F05AE340041EA39 /* AlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6F41F05AE340041EA39 /* AlbumsViewController.m */; };
+		BA34D6FA1F05AE340041EA39 /* NowPlayingController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6F61F05AE340041EA39 /* NowPlayingController.m */; };
+		BA34D6FB1F05AE340041EA39 /* SongsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6F81F05AE340041EA39 /* SongsTableViewController.m */; };
+		BA83ED951EF5C9C1000E5DDA /* CustomPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA83ED941EF5C9C1000E5DDA /* CustomPresentationController.m */; };
 		BA87FBD71EE7327300F56A7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA87FBD61EE7327300F56A7A /* main.m */; };
 		BA87FBDA1EE7327300F56A7A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA87FBD91EE7327300F56A7A /* AppDelegate.m */; };
 		BA87FBDD1EE7327300F56A7A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA87FBDC1EE7327300F56A7A /* ViewController.m */; };
@@ -16,7 +41,19 @@
 		BA87FBE81EE7327300F56A7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA87FBE61EE7327300F56A7A /* LaunchScreen.storyboard */; };
 		BA87FBF31EE7327300F56A7A /* MediaStorageAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA87FBF21EE7327300F56A7A /* MediaStorageAppTests.m */; };
 		BA87FC0D1EE7385300F56A7A /* liblame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA87FC061EE7383A00F56A7A /* liblame.a */; };
-		BA87FC0E1EE7385800F56A7A /* libMercury.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA87FC0C1EE7384600F56A7A /* libMercury.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		BAB320401F12385800F3C1BC /* ArtistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB3203F1F12385800F3C1BC /* ArtistsViewController.m */; };
+		BAB320451F123FB400F3C1BC /* MediaStorageRuntimeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB320441F123FB400F3C1BC /* MediaStorageRuntimeInfo.m */; };
+		BAB320481F12407100F3C1BC /* PlayerQueueManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB320471F12407100F3C1BC /* PlayerQueueManager.m */; };
+		BAB3204B1F12413F00F3C1BC /* MediaInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB3204A1F12413F00F3C1BC /* MediaInfo.m */; };
+		BAB3204D1F12430800F3C1BC /* Artists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB3204C1F12430800F3C1BC /* Artists.storyboard */; };
+		BAB3204F1F12433200F3C1BC /* Albums.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB3204E1F12433200F3C1BC /* Albums.storyboard */; };
+		BAB320511F12435400F3C1BC /* NowPlaying.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB320501F12435400F3C1BC /* NowPlaying.storyboard */; };
+		BAB320531F12437300F3C1BC /* Songs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB320521F12437300F3C1BC /* Songs.storyboard */; };
+		BAB320571F1245A200F3C1BC /* MediaPlayerControlCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB320551F1245A200F3C1BC /* MediaPlayerControlCenter.m */; };
+		BAB3205A1F1247D000F3C1BC /* MediaStreamingSessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB320591F1247D000F3C1BC /* MediaStreamingSessionInfo.m */; };
+		BAB320631F126C5B00F3C1BC /* libMercury.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA87FC0C1EE7384600F56A7A /* libMercury.a */; };
+		BAB320651F12708C00F3C1BC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAB320641F12708C00F3C1BC /* CoreData.framework */; };
+		BAB320681F1270DC00F3C1BC /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB320671F1270DC00F3C1BC /* MainTabBarController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +81,53 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA011D731EFF23EA004D7BDA /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		BA011D771EFF2445004D7BDA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		BA34D6B01F0598880041EA39 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BA34D6B41F0598980041EA39 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		BA34D6B61F0598A70041EA39 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		BA34D6B81F0598AF0041EA39 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		BA34D6BE1F05A8D40041EA39 /* MediaFileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaFileStream.h; path = MediaStream/MediaFileStream.h; sourceTree = "<group>"; };
+		BA34D6BF1F05A8D40041EA39 /* MediaFileStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaFileStream.m; path = MediaStream/MediaFileStream.m; sourceTree = "<group>"; };
+		BA34D6C01F05A8D40041EA39 /* MediaStreamDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStreamDownloader.h; path = MediaStream/MediaStreamDownloader.h; sourceTree = "<group>"; };
+		BA34D6C11F05A8D40041EA39 /* MediaStreamDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaStreamDownloader.m; path = MediaStream/MediaStreamDownloader.m; sourceTree = "<group>"; };
+		BA34D6C21F05A8D40041EA39 /* MediaStreamProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStreamProtocol.h; path = MediaStream/MediaStreamProtocol.h; sourceTree = "<group>"; };
+		BA34D6C31F05A8D40041EA39 /* MediaStreamReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStreamReaderProtocol.h; path = MediaStream/MediaStreamReaderProtocol.h; sourceTree = "<group>"; };
+		BA34D6C41F05A8D40041EA39 /* MediaURLStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaURLStream.h; path = MediaStream/MediaURLStream.h; sourceTree = "<group>"; };
+		BA34D6C51F05A8D40041EA39 /* MediaURLStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaURLStream.m; path = MediaStream/MediaURLStream.m; sourceTree = "<group>"; };
+		BA34D6CA1F05A8E80041EA39 /* Mp3Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mp3Decoder.h; path = MediaStream/Decoder/Mp3Decoder.h; sourceTree = "<group>"; };
+		BA34D6CB1F05A8E80041EA39 /* Mp3Decoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mp3Decoder.m; path = MediaStream/Decoder/Mp3Decoder.m; sourceTree = "<group>"; };
+		BA34D6CE1F05A91E0041EA39 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Player/Player.h; sourceTree = "<group>"; };
+		BA34D6CF1F05A91E0041EA39 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = Player/Player.m; sourceTree = "<group>"; };
+		BA34D6D01F05A91E0041EA39 /* PlayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerDelegate.h; path = Player/PlayerDelegate.h; sourceTree = "<group>"; };
+		BA34D6D31F05A94F0041EA39 /* MediaStreamingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStreamingService.h; path = MediaStorageWebApi/MediaStreamingService.h; sourceTree = "<group>"; };
+		BA34D6D41F05A94F0041EA39 /* MediaStreamingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaStreamingService.m; path = MediaStorageWebApi/MediaStreamingService.m; sourceTree = "<group>"; };
+		BA34D6D71F05A96F0041EA39 /* MediaLibraryInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MediaLibraryInfo.cpp; path = MediaStorageWebApi/DataContracts/MediaLibraryInfo.cpp; sourceTree = "<group>"; };
+		BA34D6D81F05A96F0041EA39 /* MediaLibraryInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaLibraryInfo.h; path = MediaStorageWebApi/DataContracts/MediaLibraryInfo.h; sourceTree = "<group>"; };
+		BA34D6D91F05A96F0041EA39 /* MediaPacket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MediaPacket.cpp; path = MediaStorageWebApi/DataContracts/MediaPacket.cpp; sourceTree = "<group>"; };
+		BA34D6DA1F05A96F0041EA39 /* MediaPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaPacket.h; path = MediaStorageWebApi/DataContracts/MediaPacket.h; sourceTree = "<group>"; };
+		BA34D6DB1F05A96F0041EA39 /* MediaPackets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MediaPackets.cpp; path = MediaStorageWebApi/DataContracts/MediaPackets.cpp; sourceTree = "<group>"; };
+		BA34D6DC1F05A96F0041EA39 /* MediaPackets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaPackets.h; path = MediaStorageWebApi/DataContracts/MediaPackets.h; sourceTree = "<group>"; };
+		BA34D6DD1F05A96F0041EA39 /* MLAlbum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLAlbum.cpp; path = MediaStorageWebApi/DataContracts/MLAlbum.cpp; sourceTree = "<group>"; };
+		BA34D6DE1F05A96F0041EA39 /* MLAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLAlbum.h; path = MediaStorageWebApi/DataContracts/MLAlbum.h; sourceTree = "<group>"; };
+		BA34D6DF1F05A96F0041EA39 /* MLArtist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLArtist.cpp; path = MediaStorageWebApi/DataContracts/MLArtist.cpp; sourceTree = "<group>"; };
+		BA34D6E01F05A96F0041EA39 /* MLArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLArtist.h; path = MediaStorageWebApi/DataContracts/MLArtist.h; sourceTree = "<group>"; };
+		BA34D6E11F05A96F0041EA39 /* MLPlaylist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLPlaylist.cpp; path = MediaStorageWebApi/DataContracts/MLPlaylist.cpp; sourceTree = "<group>"; };
+		BA34D6E21F05A96F0041EA39 /* MLPlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLPlaylist.h; path = MediaStorageWebApi/DataContracts/MLPlaylist.h; sourceTree = "<group>"; };
+		BA34D6E31F05A96F0041EA39 /* MLPlaylistSong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLPlaylistSong.cpp; path = MediaStorageWebApi/DataContracts/MLPlaylistSong.cpp; sourceTree = "<group>"; };
+		BA34D6E41F05A96F0041EA39 /* MLPlaylistSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLPlaylistSong.h; path = MediaStorageWebApi/DataContracts/MLPlaylistSong.h; sourceTree = "<group>"; };
+		BA34D6E51F05A96F0041EA39 /* MLSong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLSong.cpp; path = MediaStorageWebApi/DataContracts/MLSong.cpp; sourceTree = "<group>"; };
+		BA34D6E61F05A96F0041EA39 /* MLSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLSong.h; path = MediaStorageWebApi/DataContracts/MLSong.h; sourceTree = "<group>"; };
+		BA34D6E71F05A96F0041EA39 /* SessionInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SessionInfo.cpp; path = MediaStorageWebApi/DataContracts/SessionInfo.cpp; sourceTree = "<group>"; };
+		BA34D6E81F05A96F0041EA39 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionInfo.h; path = MediaStorageWebApi/DataContracts/SessionInfo.h; sourceTree = "<group>"; };
+		BA34D6F31F05AE340041EA39 /* AlbumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumsViewController.h; path = ViewControllers/AlbumsViewController.h; sourceTree = "<group>"; };
+		BA34D6F41F05AE340041EA39 /* AlbumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumsViewController.m; path = ViewControllers/AlbumsViewController.m; sourceTree = "<group>"; };
+		BA34D6F51F05AE340041EA39 /* NowPlayingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NowPlayingController.h; path = ViewControllers/NowPlayingController.h; sourceTree = "<group>"; };
+		BA34D6F61F05AE340041EA39 /* NowPlayingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NowPlayingController.m; path = ViewControllers/NowPlayingController.m; sourceTree = "<group>"; };
+		BA34D6F71F05AE340041EA39 /* SongsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SongsTableViewController.h; path = ViewControllers/SongsTableViewController.h; sourceTree = "<group>"; };
+		BA34D6F81F05AE340041EA39 /* SongsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SongsTableViewController.m; path = ViewControllers/SongsTableViewController.m; sourceTree = "<group>"; };
+		BA83ED931EF5C9C1000E5DDA /* CustomPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPresentationController.h; sourceTree = "<group>"; };
+		BA83ED941EF5C9C1000E5DDA /* CustomPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPresentationController.m; sourceTree = "<group>"; };
 		BA87FBD21EE7327300F56A7A /* MediaStorageApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaStorageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA87FBD61EE7327300F56A7A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BA87FBD81EE7327300F56A7A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -60,6 +144,26 @@
 		BA87FBF41EE7327300F56A7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA87FC011EE7383A00F56A7A /* lame.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lame.xcodeproj; path = ../../lame/lame.xcodeproj; sourceTree = "<group>"; };
 		BA87FC071EE7384600F56A7A /* Mercury.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Mercury.xcodeproj; path = ../../Mercury/Mercury.xcodeproj; sourceTree = "<group>"; };
+		BAB3203E1F12385800F3C1BC /* ArtistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArtistsViewController.h; path = ViewControllers/ArtistsViewController.h; sourceTree = "<group>"; };
+		BAB3203F1F12385800F3C1BC /* ArtistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArtistsViewController.m; path = ViewControllers/ArtistsViewController.m; sourceTree = "<group>"; };
+		BAB320431F123FB400F3C1BC /* MediaStorageRuntimeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStorageRuntimeInfo.h; sourceTree = "<group>"; };
+		BAB320441F123FB400F3C1BC /* MediaStorageRuntimeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStorageRuntimeInfo.m; sourceTree = "<group>"; };
+		BAB320461F12407100F3C1BC /* PlayerQueueManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerQueueManager.h; sourceTree = "<group>"; };
+		BAB320471F12407100F3C1BC /* PlayerQueueManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerQueueManager.m; sourceTree = "<group>"; };
+		BAB320491F12413F00F3C1BC /* MediaInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaInfo.h; path = MediaStream/MediaInfo.h; sourceTree = "<group>"; };
+		BAB3204A1F12413F00F3C1BC /* MediaInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaInfo.m; path = MediaStream/MediaInfo.m; sourceTree = "<group>"; };
+		BAB3204C1F12430800F3C1BC /* Artists.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Artists.storyboard; path = ViewControllers/Artists.storyboard; sourceTree = "<group>"; };
+		BAB3204E1F12433200F3C1BC /* Albums.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Albums.storyboard; path = ViewControllers/Albums.storyboard; sourceTree = "<group>"; };
+		BAB320501F12435400F3C1BC /* NowPlaying.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = NowPlaying.storyboard; path = ViewControllers/NowPlaying.storyboard; sourceTree = "<group>"; };
+		BAB320521F12437300F3C1BC /* Songs.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Songs.storyboard; path = ViewControllers/Songs.storyboard; sourceTree = "<group>"; };
+		BAB320541F1245A200F3C1BC /* MediaPlayerControlCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlayerControlCenter.h; sourceTree = "<group>"; };
+		BAB320551F1245A200F3C1BC /* MediaPlayerControlCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPlayerControlCenter.m; sourceTree = "<group>"; };
+		BAB320561F1245A200F3C1BC /* RemoteCommandsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteCommandsProtocol.h; sourceTree = "<group>"; };
+		BAB320581F1247D000F3C1BC /* MediaStreamingSessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamingSessionInfo.h; sourceTree = "<group>"; };
+		BAB320591F1247D000F3C1BC /* MediaStreamingSessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamingSessionInfo.m; sourceTree = "<group>"; };
+		BAB320641F12708C00F3C1BC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		BAB320661F1270DC00F3C1BC /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
+		BAB320671F1270DC00F3C1BC /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,8 +171,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA87FC0E1EE7385800F56A7A /* libMercury.a in Frameworks */,
+				BAB320651F12708C00F3C1BC /* CoreData.framework in Frameworks */,
+				BA34D6B91F0598AF0041EA39 /* CoreFoundation.framework in Frameworks */,
+				BA34D6B71F0598A70041EA39 /* UIKit.framework in Frameworks */,
+				BAB320631F126C5B00F3C1BC /* libMercury.a in Frameworks */,
 				BA87FC0D1EE7385300F56A7A /* liblame.a in Frameworks */,
+				BA34D6B51F0598980041EA39 /* AudioToolbox.framework in Frameworks */,
+				BA34D6B11F0598880041EA39 /* CoreGraphics.framework in Frameworks */,
+				BA011D781EFF2445004D7BDA /* AVFoundation.framework in Frameworks */,
+				BA011D741EFF23EA004D7BDA /* MediaPlayer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +193,120 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA011D721EFF23EA004D7BDA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BAB320641F12708C00F3C1BC /* CoreData.framework */,
+				BA34D6B81F0598AF0041EA39 /* CoreFoundation.framework */,
+				BA34D6B61F0598A70041EA39 /* UIKit.framework */,
+				BA34D6B41F0598980041EA39 /* AudioToolbox.framework */,
+				BA34D6B01F0598880041EA39 /* CoreGraphics.framework */,
+				BA011D771EFF2445004D7BDA /* AVFoundation.framework */,
+				BA011D731EFF23EA004D7BDA /* MediaPlayer.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA34D6BD1F05A8BC0041EA39 /* MediaStream */ = {
+			isa = PBXGroup;
+			children = (
+				BA34D6C91F05A8D90041EA39 /* Decoder */,
+				BAB320491F12413F00F3C1BC /* MediaInfo.h */,
+				BAB3204A1F12413F00F3C1BC /* MediaInfo.m */,
+				BA34D6BE1F05A8D40041EA39 /* MediaFileStream.h */,
+				BA34D6BF1F05A8D40041EA39 /* MediaFileStream.m */,
+				BA34D6C01F05A8D40041EA39 /* MediaStreamDownloader.h */,
+				BA34D6C11F05A8D40041EA39 /* MediaStreamDownloader.m */,
+				BA34D6C21F05A8D40041EA39 /* MediaStreamProtocol.h */,
+				BA34D6C31F05A8D40041EA39 /* MediaStreamReaderProtocol.h */,
+				BA34D6C41F05A8D40041EA39 /* MediaURLStream.h */,
+				BA34D6C51F05A8D40041EA39 /* MediaURLStream.m */,
+			);
+			name = MediaStream;
+			sourceTree = "<group>";
+		};
+		BA34D6C91F05A8D90041EA39 /* Decoder */ = {
+			isa = PBXGroup;
+			children = (
+				BA34D6CA1F05A8E80041EA39 /* Mp3Decoder.h */,
+				BA34D6CB1F05A8E80041EA39 /* Mp3Decoder.m */,
+			);
+			name = Decoder;
+			sourceTree = "<group>";
+		};
+		BA34D6CD1F05A9120041EA39 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				BA34D6CE1F05A91E0041EA39 /* Player.h */,
+				BA34D6CF1F05A91E0041EA39 /* Player.m */,
+				BA34D6D01F05A91E0041EA39 /* PlayerDelegate.h */,
+			);
+			name = Player;
+			sourceTree = "<group>";
+		};
+		BA34D6D21F05A9360041EA39 /* MediaStorageWebApi */ = {
+			isa = PBXGroup;
+			children = (
+				BA34D6D61F05A9520041EA39 /* DataContracts */,
+				BA34D6D31F05A94F0041EA39 /* MediaStreamingService.h */,
+				BA34D6D41F05A94F0041EA39 /* MediaStreamingService.m */,
+			);
+			name = MediaStorageWebApi;
+			sourceTree = "<group>";
+		};
+		BA34D6D61F05A9520041EA39 /* DataContracts */ = {
+			isa = PBXGroup;
+			children = (
+				BA34D6D71F05A96F0041EA39 /* MediaLibraryInfo.cpp */,
+				BA34D6D81F05A96F0041EA39 /* MediaLibraryInfo.h */,
+				BA34D6D91F05A96F0041EA39 /* MediaPacket.cpp */,
+				BA34D6DA1F05A96F0041EA39 /* MediaPacket.h */,
+				BA34D6DB1F05A96F0041EA39 /* MediaPackets.cpp */,
+				BA34D6DC1F05A96F0041EA39 /* MediaPackets.h */,
+				BA34D6DD1F05A96F0041EA39 /* MLAlbum.cpp */,
+				BA34D6DE1F05A96F0041EA39 /* MLAlbum.h */,
+				BA34D6DF1F05A96F0041EA39 /* MLArtist.cpp */,
+				BA34D6E01F05A96F0041EA39 /* MLArtist.h */,
+				BA34D6E11F05A96F0041EA39 /* MLPlaylist.cpp */,
+				BA34D6E21F05A96F0041EA39 /* MLPlaylist.h */,
+				BA34D6E31F05A96F0041EA39 /* MLPlaylistSong.cpp */,
+				BA34D6E41F05A96F0041EA39 /* MLPlaylistSong.h */,
+				BA34D6E51F05A96F0041EA39 /* MLSong.cpp */,
+				BA34D6E61F05A96F0041EA39 /* MLSong.h */,
+				BA34D6E71F05A96F0041EA39 /* SessionInfo.cpp */,
+				BA34D6E81F05A96F0041EA39 /* SessionInfo.h */,
+			);
+			name = DataContracts;
+			sourceTree = "<group>";
+		};
+		BA34D6F21F05AE1F0041EA39 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BAB3203E1F12385800F3C1BC /* ArtistsViewController.h */,
+				BAB3203F1F12385800F3C1BC /* ArtistsViewController.m */,
+				BA34D6F31F05AE340041EA39 /* AlbumsViewController.h */,
+				BA34D6F41F05AE340041EA39 /* AlbumsViewController.m */,
+				BA34D6F51F05AE340041EA39 /* NowPlayingController.h */,
+				BA34D6F61F05AE340041EA39 /* NowPlayingController.m */,
+				BA34D6F71F05AE340041EA39 /* SongsTableViewController.h */,
+				BA34D6F81F05AE340041EA39 /* SongsTableViewController.m */,
+				BAB3204C1F12430800F3C1BC /* Artists.storyboard */,
+				BAB3204E1F12433200F3C1BC /* Albums.storyboard */,
+				BAB320501F12435400F3C1BC /* NowPlaying.storyboard */,
+				BAB320521F12437300F3C1BC /* Songs.storyboard */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		BA83ED921EF5C999000E5DDA /* CustomPresentation */ = {
+			isa = PBXGroup;
+			children = (
+				BA83ED931EF5C9C1000E5DDA /* CustomPresentationController.h */,
+				BA83ED941EF5C9C1000E5DDA /* CustomPresentationController.m */,
+			);
+			name = CustomPresentation;
+			sourceTree = "<group>";
+		};
 		BA87FBC91EE7327200F56A7A = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +314,7 @@
 				BA87FC011EE7383A00F56A7A /* lame.xcodeproj */,
 				BA87FBD41EE7327300F56A7A /* MediaStorageApp */,
 				BA87FBF11EE7327300F56A7A /* MediaStorageAppTests */,
+				BA011D721EFF23EA004D7BDA /* Frameworks */,
 				BA87FBD31EE7327300F56A7A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -105,8 +331,23 @@
 		BA87FBD41EE7327300F56A7A /* MediaStorageApp */ = {
 			isa = PBXGroup;
 			children = (
-				BA87FBD81EE7327300F56A7A /* AppDelegate.h */,
+				BAB3205B1F12482C00F3C1BC /* MediaPlayerControlCenter */,
+				BA34D6F21F05AE1F0041EA39 /* ViewControllers */,
+				BA34D6D21F05A9360041EA39 /* MediaStorageWebApi */,
+				BA34D6CD1F05A9120041EA39 /* Player */,
+				BA34D6BD1F05A8BC0041EA39 /* MediaStream */,
+				BA83ED921EF5C999000E5DDA /* CustomPresentation */,
+				BA87FBD51EE7327300F56A7A /* Supporting Files */,
 				BA87FBD91EE7327300F56A7A /* AppDelegate.m */,
+				BA87FBD81EE7327300F56A7A /* AppDelegate.h */,
+				BAB320661F1270DC00F3C1BC /* MainTabBarController.h */,
+				BAB320671F1270DC00F3C1BC /* MainTabBarController.m */,
+				BAB320581F1247D000F3C1BC /* MediaStreamingSessionInfo.h */,
+				BAB320591F1247D000F3C1BC /* MediaStreamingSessionInfo.m */,
+				BAB320461F12407100F3C1BC /* PlayerQueueManager.h */,
+				BAB320471F12407100F3C1BC /* PlayerQueueManager.m */,
+				BAB320431F123FB400F3C1BC /* MediaStorageRuntimeInfo.h */,
+				BAB320441F123FB400F3C1BC /* MediaStorageRuntimeInfo.m */,
 				BA87FBDB1EE7327300F56A7A /* ViewController.h */,
 				BA87FBDC1EE7327300F56A7A /* ViewController.m */,
 				BA87FBDE1EE7327300F56A7A /* Main.storyboard */,
@@ -114,7 +355,6 @@
 				BA87FBE61EE7327300F56A7A /* LaunchScreen.storyboard */,
 				BA87FBE91EE7327300F56A7A /* Info.plist */,
 				BA87FBE11EE7327300F56A7A /* MediaStorageApp.xcdatamodeld */,
-				BA87FBD51EE7327300F56A7A /* Supporting Files */,
 			);
 			path = MediaStorageApp;
 			sourceTree = "<group>";
@@ -152,6 +392,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		BAB3205B1F12482C00F3C1BC /* MediaPlayerControlCenter */ = {
+			isa = PBXGroup;
+			children = (
+				BAB320541F1245A200F3C1BC /* MediaPlayerControlCenter.h */,
+				BAB320551F1245A200F3C1BC /* MediaPlayerControlCenter.m */,
+				BAB320561F1245A200F3C1BC /* RemoteCommandsProtocol.h */,
+			);
+			name = MediaPlayerControlCenter;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -176,9 +426,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA87FBFA1EE7327300F56A7A /* Build configuration list for PBXNativeTarget "MediaStorageAppTests" */;
 			buildPhases = (
+				5D11B7044BDA2719C113F63A /* [CP] Check Pods Manifest.lock */,
 				BA87FBEA1EE7327300F56A7A /* Sources */,
 				BA87FBEB1EE7327300F56A7A /* Frameworks */,
 				BA87FBEC1EE7327300F56A7A /* Resources */,
+				0E5A6C9FA3C79EF5D34ABF75 /* [CP] Embed Pods Frameworks */,
+				F788121376ABE4DE1A23B7B9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -201,8 +454,7 @@
 				TargetAttributes = {
 					BA87FBD11EE7327200F56A7A = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = Q32RM795VQ;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -268,9 +520,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAB320531F12437300F3C1BC /* Songs.storyboard in Resources */,
 				BA87FBE81EE7327300F56A7A /* LaunchScreen.storyboard in Resources */,
+				BAB3204F1F12433200F3C1BC /* Albums.storyboard in Resources */,
 				BA87FBE51EE7327300F56A7A /* Assets.xcassets in Resources */,
 				BA87FBE01EE7327300F56A7A /* Main.storyboard in Resources */,
+				BAB320511F12435400F3C1BC /* NowPlaying.storyboard in Resources */,
+				BAB3204D1F12430800F3C1BC /* Artists.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,15 +539,89 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0E5A6C9FA3C79EF5D34ABF75 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MediaStorageAppTests/Pods-MediaStorageAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5D11B7044BDA2719C113F63A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F788121376ABE4DE1A23B7B9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MediaStorageAppTests/Pods-MediaStorageAppTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BA87FBCE1EE7327200F56A7A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA34D6C61F05A8D40041EA39 /* MediaFileStream.m in Sources */,
+				BA34D6FA1F05AE340041EA39 /* NowPlayingController.m in Sources */,
+				BAB3204B1F12413F00F3C1BC /* MediaInfo.m in Sources */,
+				BA34D6CC1F05A8E80041EA39 /* Mp3Decoder.m in Sources */,
+				BA34D6E91F05A96F0041EA39 /* MediaLibraryInfo.cpp in Sources */,
+				BAB320481F12407100F3C1BC /* PlayerQueueManager.m in Sources */,
+				BAB320401F12385800F3C1BC /* ArtistsViewController.m in Sources */,
+				BA34D6F11F05A96F0041EA39 /* SessionInfo.cpp in Sources */,
 				BA87FBDD1EE7327300F56A7A /* ViewController.m in Sources */,
+				BA34D6FB1F05AE340041EA39 /* SongsTableViewController.m in Sources */,
+				BA34D6EE1F05A96F0041EA39 /* MLPlaylist.cpp in Sources */,
+				BAB320451F123FB400F3C1BC /* MediaStorageRuntimeInfo.m in Sources */,
 				BA87FBDA1EE7327300F56A7A /* AppDelegate.m in Sources */,
 				BA87FBE31EE7327300F56A7A /* MediaStorageApp.xcdatamodeld in Sources */,
+				BA34D6EC1F05A96F0041EA39 /* MLAlbum.cpp in Sources */,
 				BA87FBD71EE7327300F56A7A /* main.m in Sources */,
+				BA34D6D11F05A91E0041EA39 /* Player.m in Sources */,
+				BA34D6EB1F05A96F0041EA39 /* MediaPackets.cpp in Sources */,
+				BA34D6EA1F05A96F0041EA39 /* MediaPacket.cpp in Sources */,
+				BA34D6C81F05A8D40041EA39 /* MediaURLStream.m in Sources */,
+				BA34D6C71F05A8D40041EA39 /* MediaStreamDownloader.m in Sources */,
+				BA34D6D51F05A94F0041EA39 /* MediaStreamingService.m in Sources */,
+				BA34D6F01F05A96F0041EA39 /* MLSong.cpp in Sources */,
+				BAB3205A1F1247D000F3C1BC /* MediaStreamingSessionInfo.m in Sources */,
+				BA83ED951EF5C9C1000E5DDA /* CustomPresentationController.m in Sources */,
+				BAB320571F1245A200F3C1BC /* MediaPlayerControlCenter.m in Sources */,
+				BAB320681F1270DC00F3C1BC /* MainTabBarController.m in Sources */,
+				BA34D6F91F05AE340041EA39 /* AlbumsViewController.m in Sources */,
+				BA34D6ED1F05A96F0041EA39 /* MLArtist.cpp in Sources */,
+				BA34D6EF1F05A96F0041EA39 /* MLPlaylistSong.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,11 +757,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = Q32RM795VQ;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_TESTABILITY = YES;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = MediaStorageApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ZqrTalent.MediaStorageApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "../../lame/lame ../../Mercury";
 			};
 			name = Debug;
@@ -440,11 +779,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = Q32RM795VQ;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_TESTABILITY = YES;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = MediaStorageApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ZqrTalent.MediaStorageApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "../../lame/lame ../../Mercury";
 			};
 			name = Release;
@@ -494,6 +842,7 @@
 				BA87FBF91EE7327300F56A7A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BA87FBFA1EE7327300F56A7A /* Build configuration list for PBXNativeTarget "MediaStorageAppTests" */ = {
 			isa = XCConfigurationList;
@@ -502,6 +851,7 @@
 				BA87FBFC1EE7327300F56A7A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

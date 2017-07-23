@@ -7,7 +7,7 @@ StringHelper::Split(_string* pString, TCHAR* pszDelimiter, CStringArray& arrStri
 
 	if( !pString || !nDelimiterLen )
 		return 0;
-
+    
 	int nFind			= (int)pString->find(pszDelimiter, 0);
 	while (nFind != -1){
 		_string sFind = pString->substr(nFindStart, (nFind - nFindStart));
