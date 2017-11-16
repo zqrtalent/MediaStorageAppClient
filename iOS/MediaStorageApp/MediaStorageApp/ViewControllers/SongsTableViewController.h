@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#include "../MediaStorageWebApi/DataContracts/MLArtist.h"
+class MLArtist;
+class MLAlbum;
 
 @interface SongsTableViewController : UITableViewController
 

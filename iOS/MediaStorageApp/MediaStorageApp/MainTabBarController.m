@@ -7,39 +7,57 @@
 //
 
 #import "MainTabBarController.h"
-#import "MediaStorageWebApi/MediaStreamingService.h"
-#import "MediaStorageRuntimeInfo.h"
-
-#include "Serialize/Serializable.h"
-#include "Utility/GrowableMemory.h"
-#include "MediaStorageWebApi/DataContracts/MediaLibraryInfo.h"
-
 #import "ViewControllers/ArtistsViewController.h"
+#import "Streaming/StreamingSession.h"
+#import "MediaStorageWebApi/MediaStreamingService.h"
+#include "MediaStorageWebApi/DataContracts/MediaLibraryInfo.h"
+#import "MediaStorageWebApi/AuthRequest.h"
+#import "MediaStorageWebApi/LibraryInfoRequest.h"
 
-@interface MainTabBarContoller() <UITabBarDelegate, MediaStreamingServiceDelegate>
-{
-    MediaStreamingService* _service;
-    std::unique_ptr<MediaLibraryInfo> _mediaLibraryInfo;
-    NSString* _sessionKey;
-}
+#import "AppDelegate.h"
+
+@interface MainTabBarContoller() <UITabBarDelegate, StreamingSessionProtocol>
 
 @property (nonatomic, strong) UIActivityIndicatorView* refreshControl;
 @property (nonatomic, strong) UINavigationController* artistsNav;
 @property (nonatomic, strong) ArtistsViewController* artistsView;
 
+-(void)setupRefreshControl;
+-(void)setupTabBarViews;
+
 @end
 
 @implementation MainTabBarContoller
 
-- (void)viewDidLoad {
+-(void)viewDidLoad
+{
     [super viewDidLoad];
     
-    [self setupViews];
+    [self setupTabBarViews];
     
-    // Do any additional setup after loading the view.
-    _service = [[MediaStreamingService alloc] init:self];
-    [_service Authenticate:@"zqrtalent" Password:@"77e7980a"];
+    [self setupRefreshControl];
     
+    // Authenticate streaming session.
+    StreamingSession* session = ((AppDelegate*)[UIApplication sharedApplication].delegate).streamingSession;
+    session.delegate = self;
+    [session authenticate:@"zack" Password:@"zackpass"];
+    
+    /*
+    __typeof__(self) __weak weakSelf = self;
+    AuthRequest* __block authReq = [[AuthRequest alloc] init:@"zack" Pass:@"zackpass" Hash:@"temphash"];
+    [authReq makeRequest:^(SessionInfo* pSessInfo)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^()
+        {
+            [weakSelf OnAuthenticateResponse:pSessInfo];
+            [authReq cancelTasksAndInvalidate];
+            authReq = nil;
+        });
+    }];*/
+}
+
+-(void)setupRefreshControl
+{
     UIView* parentView = self.artistsView.view;
     self.refreshControl = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [self.refreshControl setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -62,7 +80,8 @@
     self.refreshControl.hidden = NO;
 }
 
--(void)setupViews{
+-(void)setupTabBarViews
+{
     NSMutableArray* arrTabViews = [[NSMutableArray alloc] init];
     UIStoryboard* stBoard = [UIStoryboard storyboardWithName:@"Artists" bundle:[NSBundle mainBundle]];
     self.artistsView = (ArtistsViewController*)[stBoard instantiateViewControllerWithIdentifier:@"artistsViewId"];
@@ -70,73 +89,45 @@
     [arrTabViews addObject:self.artistsNav];
     
     [self setViewControllers:arrTabViews];
-    self.artistsNav.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Library" image:nil selectedImage:nil];
+    
+    self.artistsNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Library" image:nil selectedImage:nil];
 }
-
--(void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(void)onTouchDown{
-    NSLog(@"Down");
-}
-
-#pragma mark- Tapbar delegate
-
-//- (void)deselectTabBarItem:(UITabBar*)tabBar
-//{
-//    tabBar.selectedItem = nil;
-//}
-
-//- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
-//{
-//    [self performSelector:@selector(deselectTabBarItem:) withObject:tabBar afterDelay:0.2];
-//    
-//    switch (item.tag) {
-//        case 0:
-//            //perform action
-//            break;
-//        case 1:
-//            //do whatever you want to do.
-//            break;
-//        case 2:
-//            //call method
-//            break;
-//        default:
-//            break;
-//    }
-//}
 
 #pragma mark - MediaStreamingService delegate methods
 
--(void)OnAuthenticateResponse:(SessionInfo *)sesInfo{
-    _sessionKey = [NSString stringWithCString:sesInfo->_sessionKey.c_str() encoding:NSUTF8StringEncoding];
-    [_service GetLibraryInfo:_sessionKey];
-    
-    // Setup streaming session.
-    [MediaStorageRuntimeInfo sharedInstance].sessionInfo = [[MediaStreamingSessionInfo alloc] init:sesInfo];
-    // Setup player instance object.
-    [MediaStorageRuntimeInfo sharedInstance].player = [[Player alloc] init:_sessionKey];
-    delete sesInfo;
+-(void)streamingSession:(StreamingSession*)sess Authenticated:(BOOL)status
+{
+    if(status)
+    {
+        // Request for library info metadata.
+        [sess getAllMediaLibraryMetadata];
+    }
+    else
+    {
+        NSLog(@"Streaming session authentication has failed!");
+    }
 }
 
--(void)OnLibraryInfoResponse:(MediaLibraryInfo *)libraryInfo{
-    _mediaLibraryInfo = std::unique_ptr<MediaLibraryInfo>(libraryInfo);
-    [[MediaStorageRuntimeInfo sharedInstance] updateMediaLibraryInfo:libraryInfo];
+-(void)streamingSession:(StreamingSession*)sess AllMediaLibraryMetadata:(MediaLibraryInfo*)pInfo
+{
+    // Keep media library info metadata object.
+    [((AppDelegate*)[UIApplication sharedApplication].delegate) setMediaLibraryInfo:pInfo];
     
-    UIViewController* currentViewController = nil;
-    if([self.selectedViewController isKindOfClass:[UINavigationController class]])
-        currentViewController = ((UINavigationController*)self.selectedViewController).topViewController;
-    else
-        currentViewController = self.selectedViewController;
-    
-    SEL updateDataSel = NSSelectorFromString(@"updateData");
-    if([currentViewController respondsToSelector:updateDataSel])
-        [currentViewController performSelector:updateDataSel];
-    
-    if(self.refreshControl != nil)
-        [self.refreshControl stopAnimating];
+    dispatch_async(dispatch_get_main_queue(), ^()
+    {
+        UIViewController* currentViewController = nil;
+        if([self.selectedViewController isKindOfClass:[UINavigationController class]])
+            currentViewController = ((UINavigationController*)self.selectedViewController).topViewController;
+        else
+            currentViewController = self.selectedViewController;
+        
+        SEL updateDataSel = NSSelectorFromString(@"updateData");
+        if([currentViewController respondsToSelector:updateDataSel])
+            [currentViewController performSelector:updateDataSel];
+        
+        if(self.refreshControl != nil)
+            [self.refreshControl stopAnimating];
+    });
 }
 
 @end

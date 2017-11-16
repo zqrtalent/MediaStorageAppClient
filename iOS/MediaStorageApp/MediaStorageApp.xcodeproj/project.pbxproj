@@ -9,15 +9,19 @@
 /* Begin PBXBuildFile section */
 		BA011D741EFF23EA004D7BDA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA011D731EFF23EA004D7BDA /* MediaPlayer.framework */; };
 		BA011D781EFF2445004D7BDA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA011D771EFF2445004D7BDA /* AVFoundation.framework */; };
+		BA15B6E71F9B625A0038F066 /* AudioMetadataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BA15B6E61F9B625A0038F066 /* AudioMetadataInfo.m */; };
+		BA15B6EB1F9B78340038F066 /* AudioMetadataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BA15B6E61F9B625A0038F066 /* AudioMetadataInfo.m */; };
+		BA15B6EC1F9B784F0038F066 /* MLAlbum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6DD1F05A96F0041EA39 /* MLAlbum.cpp */; };
+		BA15B6ED1F9B78550038F066 /* MLArtist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6DF1F05A96F0041EA39 /* MLArtist.cpp */; };
+		BA15B6EE1F9B78590038F066 /* MLSong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6E51F05A96F0041EA39 /* MLSong.cpp */; };
+		BA15B6F01F9B78BE0038F066 /* ModiaStorageAppModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA15B6EF1F9B78BE0038F066 /* ModiaStorageAppModelTests.m */; };
+		BA1EDA1D1F8102480075B640 /* LibraryInfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1EDA1C1F8102480075B640 /* LibraryInfoRequest.m */; };
+		BA1EDA231F8103680075B640 /* ImageResourceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1EDA221F8103680075B640 /* ImageResourceRequest.m */; };
+		BA1EDA261F8104860075B640 /* AudioPacketsByOffsetRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1EDA251F8104860075B640 /* AudioPacketsByOffsetRequest.m */; };
 		BA34D6B11F0598880041EA39 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34D6B01F0598880041EA39 /* CoreGraphics.framework */; };
 		BA34D6B51F0598980041EA39 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34D6B41F0598980041EA39 /* AudioToolbox.framework */; };
 		BA34D6B71F0598A70041EA39 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34D6B61F0598A70041EA39 /* UIKit.framework */; };
 		BA34D6B91F0598AF0041EA39 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34D6B81F0598AF0041EA39 /* CoreFoundation.framework */; };
-		BA34D6C61F05A8D40041EA39 /* MediaFileStream.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6BF1F05A8D40041EA39 /* MediaFileStream.m */; };
-		BA34D6C71F05A8D40041EA39 /* MediaStreamDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6C11F05A8D40041EA39 /* MediaStreamDownloader.m */; };
-		BA34D6C81F05A8D40041EA39 /* MediaURLStream.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6C51F05A8D40041EA39 /* MediaURLStream.m */; };
-		BA34D6CC1F05A8E80041EA39 /* Mp3Decoder.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6CB1F05A8E80041EA39 /* Mp3Decoder.m */; };
-		BA34D6D11F05A91E0041EA39 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6CF1F05A91E0041EA39 /* Player.m */; };
 		BA34D6D51F05A94F0041EA39 /* MediaStreamingService.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6D41F05A94F0041EA39 /* MediaStreamingService.m */; };
 		BA34D6E91F05A96F0041EA39 /* MediaLibraryInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6D71F05A96F0041EA39 /* MediaLibraryInfo.cpp */; };
 		BA34D6EA1F05A96F0041EA39 /* MediaPacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6D91F05A96F0041EA39 /* MediaPacket.cpp */; };
@@ -31,29 +35,42 @@
 		BA34D6F91F05AE340041EA39 /* AlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6F41F05AE340041EA39 /* AlbumsViewController.m */; };
 		BA34D6FA1F05AE340041EA39 /* NowPlayingController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6F61F05AE340041EA39 /* NowPlayingController.m */; };
 		BA34D6FB1F05AE340041EA39 /* SongsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6F81F05AE340041EA39 /* SongsTableViewController.m */; };
+		BA3638321F9BD12E00BAD05A /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = BA36382C1F9BD12E00BAD05A /* Player.m */; };
+		BA3638331F9BD12E00BAD05A /* StreamPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA36382F1F9BD12E00BAD05A /* StreamPlayerManager.m */; };
+		BA3638341F9BD12E00BAD05A /* StreamPlayerPlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3638311F9BD12E00BAD05A /* StreamPlayerPlaylist.m */; };
+		BA3638381F9BE9F400BAD05A /* AudioStreamDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3638371F9BE9F400BAD05A /* AudioStreamDecoder.m */; };
+		BA4A20431F9D42F1009DA8BF /* AudioStreamPacketsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4A20421F9D42F1009DA8BF /* AudioStreamPacketsInfo.m */; };
+		BA4A20441F9D42F1009DA8BF /* AudioStreamPacketsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4A20421F9D42F1009DA8BF /* AudioStreamPacketsInfo.m */; };
+		BA744A561FAE583800962CA8 /* AudioMetadataInfo+DataContracts.m in Sources */ = {isa = PBXBuildFile; fileRef = BA744A551FAE583800962CA8 /* AudioMetadataInfo+DataContracts.m */; };
+		BA744A5A1FAE586600962CA8 /* MediaPlayerControlCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BA744A581FAE586600962CA8 /* MediaPlayerControlCenter.m */; };
 		BA83ED951EF5C9C1000E5DDA /* CustomPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA83ED941EF5C9C1000E5DDA /* CustomPresentationController.m */; };
 		BA87FBD71EE7327300F56A7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA87FBD61EE7327300F56A7A /* main.m */; };
 		BA87FBDA1EE7327300F56A7A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA87FBD91EE7327300F56A7A /* AppDelegate.m */; };
-		BA87FBDD1EE7327300F56A7A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA87FBDC1EE7327300F56A7A /* ViewController.m */; };
 		BA87FBE01EE7327300F56A7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA87FBDE1EE7327300F56A7A /* Main.storyboard */; };
 		BA87FBE31EE7327300F56A7A /* MediaStorageApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BA87FBE11EE7327300F56A7A /* MediaStorageApp.xcdatamodeld */; };
 		BA87FBE51EE7327300F56A7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA87FBE41EE7327300F56A7A /* Assets.xcassets */; };
 		BA87FBE81EE7327300F56A7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA87FBE61EE7327300F56A7A /* LaunchScreen.storyboard */; };
 		BA87FBF31EE7327300F56A7A /* MediaStorageAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA87FBF21EE7327300F56A7A /* MediaStorageAppTests.m */; };
-		BA87FC0D1EE7385300F56A7A /* liblame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA87FC061EE7383A00F56A7A /* liblame.a */; };
+		BAA45CE41FB7A62600648F1E /* AudioFileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA45CE31FB7A62600648F1E /* AudioFileSource.m */; };
+		BAA45CE51FB7A62600648F1E /* AudioFileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA45CE31FB7A62600648F1E /* AudioFileSource.m */; };
+		BAAB20D01F88E21D00F3EF77 /* NSString+MercuryString.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAB20CF1F88E21D00F3EF77 /* NSString+MercuryString.m */; };
+		BAAB20D31F88F21E00F3EF77 /* WebApiAudioStreamSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAB20D21F88F21E00F3EF77 /* WebApiAudioStreamSource.m */; };
+		BAAB20D61F88F2B800F3EF77 /* WebApiAudioStreamReaderSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAB20D51F88F2B800F3EF77 /* WebApiAudioStreamReaderSettings.m */; };
+		BAAB20D91F89384100F3EF77 /* WebApiAudioPackatesDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAB20D81F89384100F3EF77 /* WebApiAudioPackatesDownloader.m */; };
 		BAB320401F12385800F3C1BC /* ArtistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB3203F1F12385800F3C1BC /* ArtistsViewController.m */; };
-		BAB320451F123FB400F3C1BC /* MediaStorageRuntimeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB320441F123FB400F3C1BC /* MediaStorageRuntimeInfo.m */; };
-		BAB320481F12407100F3C1BC /* PlayerQueueManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB320471F12407100F3C1BC /* PlayerQueueManager.m */; };
-		BAB3204B1F12413F00F3C1BC /* MediaInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB3204A1F12413F00F3C1BC /* MediaInfo.m */; };
 		BAB3204D1F12430800F3C1BC /* Artists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB3204C1F12430800F3C1BC /* Artists.storyboard */; };
 		BAB3204F1F12433200F3C1BC /* Albums.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB3204E1F12433200F3C1BC /* Albums.storyboard */; };
 		BAB320511F12435400F3C1BC /* NowPlaying.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB320501F12435400F3C1BC /* NowPlaying.storyboard */; };
 		BAB320531F12437300F3C1BC /* Songs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB320521F12437300F3C1BC /* Songs.storyboard */; };
-		BAB320571F1245A200F3C1BC /* MediaPlayerControlCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB320551F1245A200F3C1BC /* MediaPlayerControlCenter.m */; };
-		BAB3205A1F1247D000F3C1BC /* MediaStreamingSessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB320591F1247D000F3C1BC /* MediaStreamingSessionInfo.m */; };
 		BAB320631F126C5B00F3C1BC /* libMercury.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA87FC0C1EE7384600F56A7A /* libMercury.a */; };
 		BAB320651F12708C00F3C1BC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAB320641F12708C00F3C1BC /* CoreData.framework */; };
 		BAB320681F1270DC00F3C1BC /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB320671F1270DC00F3C1BC /* MainTabBarController.m */; };
+		BAD51E251F7FE15300B34D7D /* AuthRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD51E241F7FE15300B34D7D /* AuthRequest.m */; };
+		BAD51E281F7FE57600B34D7D /* ApiRequestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD51E271F7FE57600B34D7D /* ApiRequestBase.m */; };
+		BAF559AC1FAF3A1D0097E03A /* StreamingSession+ApiRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF559AB1FAF3A1D0097E03A /* StreamingSession+ApiRequests.m */; };
+		BAF559AD1FAF3A1D0097E03A /* StreamingSession+ApiRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF559AB1FAF3A1D0097E03A /* StreamingSession+ApiRequests.m */; };
+		BAF80DF11F856FFE00E19958 /* StreamingSession.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF80DF01F856FFE00E19958 /* StreamingSession.m */; };
+		BAF80DF41F85701C00E19958 /* StreamingSessionSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF80DF31F85701C00E19958 /* StreamingSessionSettings.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,13 +80,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = BA87FBD11EE7327200F56A7A;
 			remoteInfo = MediaStorageApp;
-		};
-		BA87FC051EE7383A00F56A7A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BA87FC011EE7383A00F56A7A /* lame.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BA1256931E0EE2BF0032D346;
-			remoteInfo = lame;
 		};
 		BA87FC0B1EE7384600F56A7A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -83,23 +93,19 @@
 /* Begin PBXFileReference section */
 		BA011D731EFF23EA004D7BDA /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		BA011D771EFF2445004D7BDA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		BA15B6E51F9B625A0038F066 /* AudioMetadataInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioMetadataInfo.h; path = Models/AudioMetadataInfo.h; sourceTree = "<group>"; };
+		BA15B6E61F9B625A0038F066 /* AudioMetadataInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioMetadataInfo.m; path = Models/AudioMetadataInfo.m; sourceTree = "<group>"; };
+		BA15B6EF1F9B78BE0038F066 /* ModiaStorageAppModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModiaStorageAppModelTests.m; sourceTree = "<group>"; };
+		BA1EDA1B1F8102480075B640 /* LibraryInfoRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LibraryInfoRequest.h; path = MediaStorageWebApi/LibraryInfoRequest.h; sourceTree = "<group>"; };
+		BA1EDA1C1F8102480075B640 /* LibraryInfoRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LibraryInfoRequest.m; path = MediaStorageWebApi/LibraryInfoRequest.m; sourceTree = "<group>"; };
+		BA1EDA211F8103680075B640 /* ImageResourceRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageResourceRequest.h; path = MediaStorageWebApi/ImageResourceRequest.h; sourceTree = "<group>"; };
+		BA1EDA221F8103680075B640 /* ImageResourceRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageResourceRequest.m; path = MediaStorageWebApi/ImageResourceRequest.m; sourceTree = "<group>"; };
+		BA1EDA241F8104860075B640 /* AudioPacketsByOffsetRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioPacketsByOffsetRequest.h; path = MediaStorageWebApi/AudioPacketsByOffsetRequest.h; sourceTree = "<group>"; };
+		BA1EDA251F8104860075B640 /* AudioPacketsByOffsetRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioPacketsByOffsetRequest.m; path = MediaStorageWebApi/AudioPacketsByOffsetRequest.m; sourceTree = "<group>"; };
 		BA34D6B01F0598880041EA39 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		BA34D6B41F0598980041EA39 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BA34D6B61F0598A70041EA39 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BA34D6B81F0598AF0041EA39 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		BA34D6BE1F05A8D40041EA39 /* MediaFileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaFileStream.h; path = MediaStream/MediaFileStream.h; sourceTree = "<group>"; };
-		BA34D6BF1F05A8D40041EA39 /* MediaFileStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaFileStream.m; path = MediaStream/MediaFileStream.m; sourceTree = "<group>"; };
-		BA34D6C01F05A8D40041EA39 /* MediaStreamDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStreamDownloader.h; path = MediaStream/MediaStreamDownloader.h; sourceTree = "<group>"; };
-		BA34D6C11F05A8D40041EA39 /* MediaStreamDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaStreamDownloader.m; path = MediaStream/MediaStreamDownloader.m; sourceTree = "<group>"; };
-		BA34D6C21F05A8D40041EA39 /* MediaStreamProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStreamProtocol.h; path = MediaStream/MediaStreamProtocol.h; sourceTree = "<group>"; };
-		BA34D6C31F05A8D40041EA39 /* MediaStreamReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStreamReaderProtocol.h; path = MediaStream/MediaStreamReaderProtocol.h; sourceTree = "<group>"; };
-		BA34D6C41F05A8D40041EA39 /* MediaURLStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaURLStream.h; path = MediaStream/MediaURLStream.h; sourceTree = "<group>"; };
-		BA34D6C51F05A8D40041EA39 /* MediaURLStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaURLStream.m; path = MediaStream/MediaURLStream.m; sourceTree = "<group>"; };
-		BA34D6CA1F05A8E80041EA39 /* Mp3Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mp3Decoder.h; path = MediaStream/Decoder/Mp3Decoder.h; sourceTree = "<group>"; };
-		BA34D6CB1F05A8E80041EA39 /* Mp3Decoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mp3Decoder.m; path = MediaStream/Decoder/Mp3Decoder.m; sourceTree = "<group>"; };
-		BA34D6CE1F05A91E0041EA39 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Player/Player.h; sourceTree = "<group>"; };
-		BA34D6CF1F05A91E0041EA39 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = Player/Player.m; sourceTree = "<group>"; };
-		BA34D6D01F05A91E0041EA39 /* PlayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerDelegate.h; path = Player/PlayerDelegate.h; sourceTree = "<group>"; };
 		BA34D6D31F05A94F0041EA39 /* MediaStreamingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStreamingService.h; path = MediaStorageWebApi/MediaStreamingService.h; sourceTree = "<group>"; };
 		BA34D6D41F05A94F0041EA39 /* MediaStreamingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaStreamingService.m; path = MediaStorageWebApi/MediaStreamingService.m; sourceTree = "<group>"; };
 		BA34D6D71F05A96F0041EA39 /* MediaLibraryInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MediaLibraryInfo.cpp; path = MediaStorageWebApi/DataContracts/MediaLibraryInfo.cpp; sourceTree = "<group>"; };
@@ -126,14 +132,29 @@
 		BA34D6F61F05AE340041EA39 /* NowPlayingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NowPlayingController.m; path = ViewControllers/NowPlayingController.m; sourceTree = "<group>"; };
 		BA34D6F71F05AE340041EA39 /* SongsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SongsTableViewController.h; path = ViewControllers/SongsTableViewController.h; sourceTree = "<group>"; };
 		BA34D6F81F05AE340041EA39 /* SongsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SongsTableViewController.m; path = ViewControllers/SongsTableViewController.m; sourceTree = "<group>"; };
+		BA36382B1F9BD12E00BAD05A /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = StreamPlayer/Player.h; sourceTree = "<group>"; };
+		BA36382C1F9BD12E00BAD05A /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = StreamPlayer/Player.m; sourceTree = "<group>"; };
+		BA36382D1F9BD12E00BAD05A /* PlayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerDelegate.h; path = StreamPlayer/PlayerDelegate.h; sourceTree = "<group>"; };
+		BA36382E1F9BD12E00BAD05A /* StreamPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamPlayerManager.h; path = StreamPlayer/StreamPlayerManager.h; sourceTree = "<group>"; };
+		BA36382F1F9BD12E00BAD05A /* StreamPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamPlayerManager.m; path = StreamPlayer/StreamPlayerManager.m; sourceTree = "<group>"; };
+		BA3638301F9BD12E00BAD05A /* StreamPlayerPlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamPlayerPlaylist.h; path = StreamPlayer/StreamPlayerPlaylist.h; sourceTree = "<group>"; };
+		BA3638311F9BD12E00BAD05A /* StreamPlayerPlaylist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamPlayerPlaylist.m; path = StreamPlayer/StreamPlayerPlaylist.m; sourceTree = "<group>"; };
+		BA3638361F9BE9F400BAD05A /* AudioStreamDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioStreamDecoder.h; path = StreamPlayer/Decoder/AudioStreamDecoder.h; sourceTree = "<group>"; };
+		BA3638371F9BE9F400BAD05A /* AudioStreamDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioStreamDecoder.m; path = StreamPlayer/Decoder/AudioStreamDecoder.m; sourceTree = "<group>"; };
+		BA4A20411F9D42F1009DA8BF /* AudioStreamPacketsInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioStreamPacketsInfo.h; path = Models/AudioStreamPacketsInfo.h; sourceTree = "<group>"; };
+		BA4A20421F9D42F1009DA8BF /* AudioStreamPacketsInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioStreamPacketsInfo.m; path = Models/AudioStreamPacketsInfo.m; sourceTree = "<group>"; };
+		BA70A6AB1F8A37560080D3EE /* AudioPacketsDownloaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioPacketsDownloaderProtocol.h; path = Streaming/AudioPacketsDownloaderProtocol.h; sourceTree = "<group>"; };
+		BA744A541FAE583800962CA8 /* AudioMetadataInfo+DataContracts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AudioMetadataInfo+DataContracts.h"; path = "Extensions/AudioMetadataInfo+DataContracts.h"; sourceTree = "<group>"; };
+		BA744A551FAE583800962CA8 /* AudioMetadataInfo+DataContracts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AudioMetadataInfo+DataContracts.m"; path = "Extensions/AudioMetadataInfo+DataContracts.m"; sourceTree = "<group>"; };
+		BA744A571FAE586600962CA8 /* MediaPlayerControlCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaPlayerControlCenter.h; path = MediaPlayerControlCenter/MediaPlayerControlCenter.h; sourceTree = "<group>"; };
+		BA744A581FAE586600962CA8 /* MediaPlayerControlCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaPlayerControlCenter.m; path = MediaPlayerControlCenter/MediaPlayerControlCenter.m; sourceTree = "<group>"; };
+		BA744A591FAE586600962CA8 /* RemoteCommandsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemoteCommandsProtocol.h; path = MediaPlayerControlCenter/RemoteCommandsProtocol.h; sourceTree = "<group>"; };
 		BA83ED931EF5C9C1000E5DDA /* CustomPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPresentationController.h; sourceTree = "<group>"; };
 		BA83ED941EF5C9C1000E5DDA /* CustomPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPresentationController.m; sourceTree = "<group>"; };
 		BA87FBD21EE7327300F56A7A /* MediaStorageApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaStorageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA87FBD61EE7327300F56A7A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BA87FBD81EE7327300F56A7A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BA87FBD91EE7327300F56A7A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		BA87FBDB1EE7327300F56A7A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		BA87FBDC1EE7327300F56A7A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		BA87FBDF1EE7327300F56A7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BA87FBE21EE7327300F56A7A /* MediaStorageApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MediaStorageApp.xcdatamodel; sourceTree = "<group>"; };
 		BA87FBE41EE7327300F56A7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -142,28 +163,37 @@
 		BA87FBEE1EE7327300F56A7A /* MediaStorageAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MediaStorageAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA87FBF21EE7327300F56A7A /* MediaStorageAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaStorageAppTests.m; sourceTree = "<group>"; };
 		BA87FBF41EE7327300F56A7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BA87FC011EE7383A00F56A7A /* lame.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lame.xcodeproj; path = ../../lame/lame.xcodeproj; sourceTree = "<group>"; };
 		BA87FC071EE7384600F56A7A /* Mercury.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Mercury.xcodeproj; path = ../../Mercury/Mercury.xcodeproj; sourceTree = "<group>"; };
+		BAA45CE21FB7A62600648F1E /* AudioFileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioFileSource.h; path = Streaming/AudioFileSource.h; sourceTree = "<group>"; };
+		BAA45CE31FB7A62600648F1E /* AudioFileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioFileSource.m; path = Streaming/AudioFileSource.m; sourceTree = "<group>"; };
+		BAAB20C41F88D84F00F3EF77 /* MediaStreamSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStreamSource.h; path = Streaming/MediaStreamSource.h; sourceTree = "<group>"; };
+		BAAB20CE1F88E21D00F3EF77 /* NSString+MercuryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MercuryString.h"; path = "Extensions/NSString+MercuryString.h"; sourceTree = "<group>"; };
+		BAAB20CF1F88E21D00F3EF77 /* NSString+MercuryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MercuryString.m"; path = "Extensions/NSString+MercuryString.m"; sourceTree = "<group>"; };
+		BAAB20D11F88F21E00F3EF77 /* WebApiAudioStreamSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebApiAudioStreamSource.h; path = Streaming/WebApiAudioStreamSource.h; sourceTree = "<group>"; };
+		BAAB20D21F88F21E00F3EF77 /* WebApiAudioStreamSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebApiAudioStreamSource.m; path = Streaming/WebApiAudioStreamSource.m; sourceTree = "<group>"; };
+		BAAB20D41F88F2B800F3EF77 /* WebApiAudioStreamReaderSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebApiAudioStreamReaderSettings.h; path = Streaming/WebApiAudioStreamReaderSettings.h; sourceTree = "<group>"; };
+		BAAB20D51F88F2B800F3EF77 /* WebApiAudioStreamReaderSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebApiAudioStreamReaderSettings.m; path = Streaming/WebApiAudioStreamReaderSettings.m; sourceTree = "<group>"; };
+		BAAB20D71F89384100F3EF77 /* WebApiAudioPackatesDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebApiAudioPackatesDownloader.h; path = Streaming/WebApiAudioPackatesDownloader.h; sourceTree = "<group>"; };
+		BAAB20D81F89384100F3EF77 /* WebApiAudioPackatesDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebApiAudioPackatesDownloader.m; path = Streaming/WebApiAudioPackatesDownloader.m; sourceTree = "<group>"; };
 		BAB3203E1F12385800F3C1BC /* ArtistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArtistsViewController.h; path = ViewControllers/ArtistsViewController.h; sourceTree = "<group>"; };
 		BAB3203F1F12385800F3C1BC /* ArtistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArtistsViewController.m; path = ViewControllers/ArtistsViewController.m; sourceTree = "<group>"; };
-		BAB320431F123FB400F3C1BC /* MediaStorageRuntimeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStorageRuntimeInfo.h; sourceTree = "<group>"; };
-		BAB320441F123FB400F3C1BC /* MediaStorageRuntimeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStorageRuntimeInfo.m; sourceTree = "<group>"; };
-		BAB320461F12407100F3C1BC /* PlayerQueueManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerQueueManager.h; sourceTree = "<group>"; };
-		BAB320471F12407100F3C1BC /* PlayerQueueManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerQueueManager.m; sourceTree = "<group>"; };
-		BAB320491F12413F00F3C1BC /* MediaInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaInfo.h; path = MediaStream/MediaInfo.h; sourceTree = "<group>"; };
-		BAB3204A1F12413F00F3C1BC /* MediaInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaInfo.m; path = MediaStream/MediaInfo.m; sourceTree = "<group>"; };
 		BAB3204C1F12430800F3C1BC /* Artists.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Artists.storyboard; path = ViewControllers/Artists.storyboard; sourceTree = "<group>"; };
 		BAB3204E1F12433200F3C1BC /* Albums.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Albums.storyboard; path = ViewControllers/Albums.storyboard; sourceTree = "<group>"; };
 		BAB320501F12435400F3C1BC /* NowPlaying.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = NowPlaying.storyboard; path = ViewControllers/NowPlaying.storyboard; sourceTree = "<group>"; };
 		BAB320521F12437300F3C1BC /* Songs.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Songs.storyboard; path = ViewControllers/Songs.storyboard; sourceTree = "<group>"; };
-		BAB320541F1245A200F3C1BC /* MediaPlayerControlCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlayerControlCenter.h; sourceTree = "<group>"; };
-		BAB320551F1245A200F3C1BC /* MediaPlayerControlCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPlayerControlCenter.m; sourceTree = "<group>"; };
-		BAB320561F1245A200F3C1BC /* RemoteCommandsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteCommandsProtocol.h; sourceTree = "<group>"; };
-		BAB320581F1247D000F3C1BC /* MediaStreamingSessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamingSessionInfo.h; sourceTree = "<group>"; };
-		BAB320591F1247D000F3C1BC /* MediaStreamingSessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamingSessionInfo.m; sourceTree = "<group>"; };
 		BAB320641F12708C00F3C1BC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		BAB320661F1270DC00F3C1BC /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		BAB320671F1270DC00F3C1BC /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
+		BAD51E231F7FE15300B34D7D /* AuthRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthRequest.h; path = MediaStorageWebApi/AuthRequest.h; sourceTree = "<group>"; };
+		BAD51E241F7FE15300B34D7D /* AuthRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthRequest.m; path = MediaStorageWebApi/AuthRequest.m; sourceTree = "<group>"; };
+		BAD51E261F7FE57600B34D7D /* ApiRequestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ApiRequestBase.h; path = MediaStorageWebApi/ApiRequestBase.h; sourceTree = "<group>"; };
+		BAD51E271F7FE57600B34D7D /* ApiRequestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ApiRequestBase.m; path = MediaStorageWebApi/ApiRequestBase.m; sourceTree = "<group>"; };
+		BAF559AA1FAF3A1D0097E03A /* StreamingSession+ApiRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "StreamingSession+ApiRequests.h"; path = "Extensions/StreamingSession+ApiRequests.h"; sourceTree = "<group>"; };
+		BAF559AB1FAF3A1D0097E03A /* StreamingSession+ApiRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "StreamingSession+ApiRequests.m"; path = "Extensions/StreamingSession+ApiRequests.m"; sourceTree = "<group>"; };
+		BAF80DEF1F856FFE00E19958 /* StreamingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamingSession.h; path = Streaming/StreamingSession.h; sourceTree = "<group>"; };
+		BAF80DF01F856FFE00E19958 /* StreamingSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamingSession.m; path = Streaming/StreamingSession.m; sourceTree = "<group>"; };
+		BAF80DF21F85701C00E19958 /* StreamingSessionSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamingSessionSettings.h; path = Streaming/StreamingSessionSettings.h; sourceTree = "<group>"; };
+		BAF80DF31F85701C00E19958 /* StreamingSessionSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamingSessionSettings.m; path = Streaming/StreamingSessionSettings.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,7 +205,6 @@
 				BA34D6B91F0598AF0041EA39 /* CoreFoundation.framework in Frameworks */,
 				BA34D6B71F0598A70041EA39 /* UIKit.framework in Frameworks */,
 				BAB320631F126C5B00F3C1BC /* libMercury.a in Frameworks */,
-				BA87FC0D1EE7385300F56A7A /* liblame.a in Frameworks */,
 				BA34D6B51F0598980041EA39 /* AudioToolbox.framework in Frameworks */,
 				BA34D6B11F0598880041EA39 /* CoreGraphics.framework in Frameworks */,
 				BA011D781EFF2445004D7BDA /* AVFoundation.framework in Frameworks */,
@@ -207,46 +236,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		BA34D6BD1F05A8BC0041EA39 /* MediaStream */ = {
+		BA15B6E31F9B620F0038F066 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				BA34D6C91F05A8D90041EA39 /* Decoder */,
-				BAB320491F12413F00F3C1BC /* MediaInfo.h */,
-				BAB3204A1F12413F00F3C1BC /* MediaInfo.m */,
-				BA34D6BE1F05A8D40041EA39 /* MediaFileStream.h */,
-				BA34D6BF1F05A8D40041EA39 /* MediaFileStream.m */,
-				BA34D6C01F05A8D40041EA39 /* MediaStreamDownloader.h */,
-				BA34D6C11F05A8D40041EA39 /* MediaStreamDownloader.m */,
-				BA34D6C21F05A8D40041EA39 /* MediaStreamProtocol.h */,
-				BA34D6C31F05A8D40041EA39 /* MediaStreamReaderProtocol.h */,
-				BA34D6C41F05A8D40041EA39 /* MediaURLStream.h */,
-				BA34D6C51F05A8D40041EA39 /* MediaURLStream.m */,
+				BA15B6E51F9B625A0038F066 /* AudioMetadataInfo.h */,
+				BA15B6E61F9B625A0038F066 /* AudioMetadataInfo.m */,
+				BA4A20411F9D42F1009DA8BF /* AudioStreamPacketsInfo.h */,
+				BA4A20421F9D42F1009DA8BF /* AudioStreamPacketsInfo.m */,
 			);
-			name = MediaStream;
-			sourceTree = "<group>";
-		};
-		BA34D6C91F05A8D90041EA39 /* Decoder */ = {
-			isa = PBXGroup;
-			children = (
-				BA34D6CA1F05A8E80041EA39 /* Mp3Decoder.h */,
-				BA34D6CB1F05A8E80041EA39 /* Mp3Decoder.m */,
-			);
-			name = Decoder;
-			sourceTree = "<group>";
-		};
-		BA34D6CD1F05A9120041EA39 /* Player */ = {
-			isa = PBXGroup;
-			children = (
-				BA34D6CE1F05A91E0041EA39 /* Player.h */,
-				BA34D6CF1F05A91E0041EA39 /* Player.m */,
-				BA34D6D01F05A91E0041EA39 /* PlayerDelegate.h */,
-			);
-			name = Player;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		BA34D6D21F05A9360041EA39 /* MediaStorageWebApi */ = {
 			isa = PBXGroup;
 			children = (
+				BAD51E1F1F7FE10000B34D7D /* ApiRequest */,
 				BA34D6D61F05A9520041EA39 /* DataContracts */,
 				BA34D6D31F05A94F0041EA39 /* MediaStreamingService.h */,
 				BA34D6D41F05A94F0041EA39 /* MediaStreamingService.m */,
@@ -298,6 +302,30 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
+		BA36382A1F9BCF2700BAD05A /* StreamPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				BA3638351F9BE94F00BAD05A /* Decoder */,
+				BA36382B1F9BD12E00BAD05A /* Player.h */,
+				BA36382C1F9BD12E00BAD05A /* Player.m */,
+				BA36382D1F9BD12E00BAD05A /* PlayerDelegate.h */,
+				BA36382E1F9BD12E00BAD05A /* StreamPlayerManager.h */,
+				BA36382F1F9BD12E00BAD05A /* StreamPlayerManager.m */,
+				BA3638301F9BD12E00BAD05A /* StreamPlayerPlaylist.h */,
+				BA3638311F9BD12E00BAD05A /* StreamPlayerPlaylist.m */,
+			);
+			name = StreamPlayer;
+			sourceTree = "<group>";
+		};
+		BA3638351F9BE94F00BAD05A /* Decoder */ = {
+			isa = PBXGroup;
+			children = (
+				BA3638361F9BE9F400BAD05A /* AudioStreamDecoder.h */,
+				BA3638371F9BE9F400BAD05A /* AudioStreamDecoder.m */,
+			);
+			name = Decoder;
+			sourceTree = "<group>";
+		};
 		BA83ED921EF5C999000E5DDA /* CustomPresentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,7 +339,6 @@
 			isa = PBXGroup;
 			children = (
 				BA87FC071EE7384600F56A7A /* Mercury.xcodeproj */,
-				BA87FC011EE7383A00F56A7A /* lame.xcodeproj */,
 				BA87FBD41EE7327300F56A7A /* MediaStorageApp */,
 				BA87FBF11EE7327300F56A7A /* MediaStorageAppTests */,
 				BA011D721EFF23EA004D7BDA /* Frameworks */,
@@ -331,25 +358,19 @@
 		BA87FBD41EE7327300F56A7A /* MediaStorageApp */ = {
 			isa = PBXGroup;
 			children = (
+				BA36382A1F9BCF2700BAD05A /* StreamPlayer */,
+				BA15B6E31F9B620F0038F066 /* Models */,
+				BAAB20CD1F88E1DD00F3EF77 /* Extensions */,
+				BAF80DEB1F856F9F00E19958 /* Streaming */,
 				BAB3205B1F12482C00F3C1BC /* MediaPlayerControlCenter */,
 				BA34D6F21F05AE1F0041EA39 /* ViewControllers */,
 				BA34D6D21F05A9360041EA39 /* MediaStorageWebApi */,
-				BA34D6CD1F05A9120041EA39 /* Player */,
-				BA34D6BD1F05A8BC0041EA39 /* MediaStream */,
 				BA83ED921EF5C999000E5DDA /* CustomPresentation */,
 				BA87FBD51EE7327300F56A7A /* Supporting Files */,
 				BA87FBD91EE7327300F56A7A /* AppDelegate.m */,
 				BA87FBD81EE7327300F56A7A /* AppDelegate.h */,
 				BAB320661F1270DC00F3C1BC /* MainTabBarController.h */,
 				BAB320671F1270DC00F3C1BC /* MainTabBarController.m */,
-				BAB320581F1247D000F3C1BC /* MediaStreamingSessionInfo.h */,
-				BAB320591F1247D000F3C1BC /* MediaStreamingSessionInfo.m */,
-				BAB320461F12407100F3C1BC /* PlayerQueueManager.h */,
-				BAB320471F12407100F3C1BC /* PlayerQueueManager.m */,
-				BAB320431F123FB400F3C1BC /* MediaStorageRuntimeInfo.h */,
-				BAB320441F123FB400F3C1BC /* MediaStorageRuntimeInfo.m */,
-				BA87FBDB1EE7327300F56A7A /* ViewController.h */,
-				BA87FBDC1EE7327300F56A7A /* ViewController.m */,
 				BA87FBDE1EE7327300F56A7A /* Main.storyboard */,
 				BA87FBE41EE7327300F56A7A /* Assets.xcassets */,
 				BA87FBE61EE7327300F56A7A /* LaunchScreen.storyboard */,
@@ -372,16 +393,9 @@
 			children = (
 				BA87FBF21EE7327300F56A7A /* MediaStorageAppTests.m */,
 				BA87FBF41EE7327300F56A7A /* Info.plist */,
+				BA15B6EF1F9B78BE0038F066 /* ModiaStorageAppModelTests.m */,
 			);
 			path = MediaStorageAppTests;
-			sourceTree = "<group>";
-		};
-		BA87FC021EE7383A00F56A7A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BA87FC061EE7383A00F56A7A /* liblame.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		BA87FC081EE7384600F56A7A /* Products */ = {
@@ -392,14 +406,65 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		BAAB20CD1F88E1DD00F3EF77 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BA744A541FAE583800962CA8 /* AudioMetadataInfo+DataContracts.h */,
+				BA744A551FAE583800962CA8 /* AudioMetadataInfo+DataContracts.m */,
+				BAAB20CE1F88E21D00F3EF77 /* NSString+MercuryString.h */,
+				BAAB20CF1F88E21D00F3EF77 /* NSString+MercuryString.m */,
+				BAF559AA1FAF3A1D0097E03A /* StreamingSession+ApiRequests.h */,
+				BAF559AB1FAF3A1D0097E03A /* StreamingSession+ApiRequests.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		BAB3205B1F12482C00F3C1BC /* MediaPlayerControlCenter */ = {
 			isa = PBXGroup;
 			children = (
-				BAB320541F1245A200F3C1BC /* MediaPlayerControlCenter.h */,
-				BAB320551F1245A200F3C1BC /* MediaPlayerControlCenter.m */,
-				BAB320561F1245A200F3C1BC /* RemoteCommandsProtocol.h */,
+				BA744A571FAE586600962CA8 /* MediaPlayerControlCenter.h */,
+				BA744A581FAE586600962CA8 /* MediaPlayerControlCenter.m */,
+				BA744A591FAE586600962CA8 /* RemoteCommandsProtocol.h */,
 			);
 			name = MediaPlayerControlCenter;
+			sourceTree = "<group>";
+		};
+		BAD51E1F1F7FE10000B34D7D /* ApiRequest */ = {
+			isa = PBXGroup;
+			children = (
+				BAD51E231F7FE15300B34D7D /* AuthRequest.h */,
+				BAD51E241F7FE15300B34D7D /* AuthRequest.m */,
+				BAD51E261F7FE57600B34D7D /* ApiRequestBase.h */,
+				BAD51E271F7FE57600B34D7D /* ApiRequestBase.m */,
+				BA1EDA1B1F8102480075B640 /* LibraryInfoRequest.h */,
+				BA1EDA1C1F8102480075B640 /* LibraryInfoRequest.m */,
+				BA1EDA211F8103680075B640 /* ImageResourceRequest.h */,
+				BA1EDA221F8103680075B640 /* ImageResourceRequest.m */,
+				BA1EDA241F8104860075B640 /* AudioPacketsByOffsetRequest.h */,
+				BA1EDA251F8104860075B640 /* AudioPacketsByOffsetRequest.m */,
+			);
+			name = ApiRequest;
+			sourceTree = "<group>";
+		};
+		BAF80DEB1F856F9F00E19958 /* Streaming */ = {
+			isa = PBXGroup;
+			children = (
+				BAF80DEF1F856FFE00E19958 /* StreamingSession.h */,
+				BAF80DF01F856FFE00E19958 /* StreamingSession.m */,
+				BAF80DF21F85701C00E19958 /* StreamingSessionSettings.h */,
+				BAF80DF31F85701C00E19958 /* StreamingSessionSettings.m */,
+				BAAB20C41F88D84F00F3EF77 /* MediaStreamSource.h */,
+				BAAB20D11F88F21E00F3EF77 /* WebApiAudioStreamSource.h */,
+				BAAB20D21F88F21E00F3EF77 /* WebApiAudioStreamSource.m */,
+				BAAB20D41F88F2B800F3EF77 /* WebApiAudioStreamReaderSettings.h */,
+				BAAB20D51F88F2B800F3EF77 /* WebApiAudioStreamReaderSettings.m */,
+				BAAB20D71F89384100F3EF77 /* WebApiAudioPackatesDownloader.h */,
+				BAAB20D81F89384100F3EF77 /* WebApiAudioPackatesDownloader.m */,
+				BA70A6AB1F8A37560080D3EE /* AudioPacketsDownloaderProtocol.h */,
+				BAA45CE21FB7A62600648F1E /* AudioFileSource.h */,
+				BAA45CE31FB7A62600648F1E /* AudioFileSource.m */,
+			);
+			name = Streaming;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -426,12 +491,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA87FBFA1EE7327300F56A7A /* Build configuration list for PBXNativeTarget "MediaStorageAppTests" */;
 			buildPhases = (
-				5D11B7044BDA2719C113F63A /* [CP] Check Pods Manifest.lock */,
 				BA87FBEA1EE7327300F56A7A /* Sources */,
 				BA87FBEB1EE7327300F56A7A /* Frameworks */,
 				BA87FBEC1EE7327300F56A7A /* Resources */,
-				0E5A6C9FA3C79EF5D34ABF75 /* [CP] Embed Pods Frameworks */,
-				F788121376ABE4DE1A23B7B9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -482,10 +544,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = BA87FC021EE7383A00F56A7A /* Products */;
-					ProjectRef = BA87FC011EE7383A00F56A7A /* lame.xcodeproj */;
-				},
-				{
 					ProductGroup = BA87FC081EE7384600F56A7A /* Products */;
 					ProjectRef = BA87FC071EE7384600F56A7A /* Mercury.xcodeproj */;
 				},
@@ -499,13 +557,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		BA87FC061EE7383A00F56A7A /* liblame.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liblame.a;
-			remoteRef = BA87FC051EE7383A00F56A7A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		BA87FC0C1EE7384600F56A7A /* libMercury.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -539,89 +590,51 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		0E5A6C9FA3C79EF5D34ABF75 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MediaStorageAppTests/Pods-MediaStorageAppTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5D11B7044BDA2719C113F63A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		F788121376ABE4DE1A23B7B9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MediaStorageAppTests/Pods-MediaStorageAppTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		BA87FBCE1EE7327200F56A7A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA34D6C61F05A8D40041EA39 /* MediaFileStream.m in Sources */,
+				BA3638341F9BD12E00BAD05A /* StreamPlayerPlaylist.m in Sources */,
 				BA34D6FA1F05AE340041EA39 /* NowPlayingController.m in Sources */,
-				BAB3204B1F12413F00F3C1BC /* MediaInfo.m in Sources */,
-				BA34D6CC1F05A8E80041EA39 /* Mp3Decoder.m in Sources */,
+				BA744A5A1FAE586600962CA8 /* MediaPlayerControlCenter.m in Sources */,
+				BA15B6E71F9B625A0038F066 /* AudioMetadataInfo.m in Sources */,
+				BAAB20D61F88F2B800F3EF77 /* WebApiAudioStreamReaderSettings.m in Sources */,
 				BA34D6E91F05A96F0041EA39 /* MediaLibraryInfo.cpp in Sources */,
-				BAB320481F12407100F3C1BC /* PlayerQueueManager.m in Sources */,
+				BAD51E251F7FE15300B34D7D /* AuthRequest.m in Sources */,
+				BAF80DF41F85701C00E19958 /* StreamingSessionSettings.m in Sources */,
 				BAB320401F12385800F3C1BC /* ArtistsViewController.m in Sources */,
 				BA34D6F11F05A96F0041EA39 /* SessionInfo.cpp in Sources */,
-				BA87FBDD1EE7327300F56A7A /* ViewController.m in Sources */,
+				BAD51E281F7FE57600B34D7D /* ApiRequestBase.m in Sources */,
+				BAF80DF11F856FFE00E19958 /* StreamingSession.m in Sources */,
+				BAAB20D31F88F21E00F3EF77 /* WebApiAudioStreamSource.m in Sources */,
+				BAF559AC1FAF3A1D0097E03A /* StreamingSession+ApiRequests.m in Sources */,
 				BA34D6FB1F05AE340041EA39 /* SongsTableViewController.m in Sources */,
 				BA34D6EE1F05A96F0041EA39 /* MLPlaylist.cpp in Sources */,
-				BAB320451F123FB400F3C1BC /* MediaStorageRuntimeInfo.m in Sources */,
 				BA87FBDA1EE7327300F56A7A /* AppDelegate.m in Sources */,
+				BA1EDA1D1F8102480075B640 /* LibraryInfoRequest.m in Sources */,
+				BA3638331F9BD12E00BAD05A /* StreamPlayerManager.m in Sources */,
+				BA3638381F9BE9F400BAD05A /* AudioStreamDecoder.m in Sources */,
 				BA87FBE31EE7327300F56A7A /* MediaStorageApp.xcdatamodeld in Sources */,
+				BA744A561FAE583800962CA8 /* AudioMetadataInfo+DataContracts.m in Sources */,
 				BA34D6EC1F05A96F0041EA39 /* MLAlbum.cpp in Sources */,
 				BA87FBD71EE7327300F56A7A /* main.m in Sources */,
-				BA34D6D11F05A91E0041EA39 /* Player.m in Sources */,
+				BAAB20D01F88E21D00F3EF77 /* NSString+MercuryString.m in Sources */,
 				BA34D6EB1F05A96F0041EA39 /* MediaPackets.cpp in Sources */,
 				BA34D6EA1F05A96F0041EA39 /* MediaPacket.cpp in Sources */,
-				BA34D6C81F05A8D40041EA39 /* MediaURLStream.m in Sources */,
-				BA34D6C71F05A8D40041EA39 /* MediaStreamDownloader.m in Sources */,
+				BA3638321F9BD12E00BAD05A /* Player.m in Sources */,
+				BAAB20D91F89384100F3EF77 /* WebApiAudioPackatesDownloader.m in Sources */,
 				BA34D6D51F05A94F0041EA39 /* MediaStreamingService.m in Sources */,
 				BA34D6F01F05A96F0041EA39 /* MLSong.cpp in Sources */,
-				BAB3205A1F1247D000F3C1BC /* MediaStreamingSessionInfo.m in Sources */,
 				BA83ED951EF5C9C1000E5DDA /* CustomPresentationController.m in Sources */,
-				BAB320571F1245A200F3C1BC /* MediaPlayerControlCenter.m in Sources */,
+				BA1EDA261F8104860075B640 /* AudioPacketsByOffsetRequest.m in Sources */,
+				BA4A20431F9D42F1009DA8BF /* AudioStreamPacketsInfo.m in Sources */,
 				BAB320681F1270DC00F3C1BC /* MainTabBarController.m in Sources */,
 				BA34D6F91F05AE340041EA39 /* AlbumsViewController.m in Sources */,
+				BA1EDA231F8103680075B640 /* ImageResourceRequest.m in Sources */,
 				BA34D6ED1F05A96F0041EA39 /* MLArtist.cpp in Sources */,
 				BA34D6EF1F05A96F0041EA39 /* MLPlaylistSong.cpp in Sources */,
+				BAA45CE41FB7A62600648F1E /* AudioFileSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,7 +642,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAF559AD1FAF3A1D0097E03A /* StreamingSession+ApiRequests.m in Sources */,
+				BA4A20441F9D42F1009DA8BF /* AudioStreamPacketsInfo.m in Sources */,
+				BA15B6EE1F9B78590038F066 /* MLSong.cpp in Sources */,
 				BA87FBF31EE7327300F56A7A /* MediaStorageAppTests.m in Sources */,
+				BAA45CE51FB7A62600648F1E /* AudioFileSource.m in Sources */,
+				BA15B6F01F9B78BE0038F066 /* ModiaStorageAppModelTests.m in Sources */,
+				BA15B6ED1F9B78550038F066 /* MLArtist.cpp in Sources */,
+				BA15B6EB1F9B78340038F066 /* AudioMetadataInfo.m in Sources */,
+				BA15B6EC1F9B784F0038F066 /* MLAlbum.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,7 +705,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zqrtalent1@gmail.com (Q96HQ957R5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -732,6 +754,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: zqrtalent1@gmail.com (Q96HQ957R5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -759,6 +782,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zqrtalent1@gmail.com (Q96HQ957R5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
@@ -781,6 +805,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zqrtalent1@gmail.com (Q96HQ957R5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
@@ -802,11 +827,13 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = Q32RM795VQ;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				INFOPLIST_FILE = MediaStorageAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ZqrTalent.MediaStorageAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MediaStorageApp.app/MediaStorageApp";
+				USER_HEADER_SEARCH_PATHS = ../../Mercury;
 			};
 			name = Debug;
 		};
@@ -815,11 +842,13 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = Q32RM795VQ;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				INFOPLIST_FILE = MediaStorageAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ZqrTalent.MediaStorageAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MediaStorageApp.app/MediaStorageApp";
+				USER_HEADER_SEARCH_PATHS = ../../Mercury;
 			};
 			name = Release;
 		};

@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "MediaStreamingService.h"
 #include "../MediaStorageWebApi/DataContracts/MediaPackets.h"
+#include "../MediaStorageWebApi/AudioPacketsByOffsetRequest.h"
 #include <pthread.h>
 
 @interface MediaStreamDownloader() <MediaStreamingServiceDelegate>
@@ -17,6 +18,7 @@
     UInt32 _bytesPerPacket;
     AudioStreamBasicDescription _mediaFormat;
     MediaPackets* _packetsReceived;
+    AudioPacketsByOffsetRequest* _audioPacketsReq;
 }
 
 @property (nonatomic, strong) MediaStreamingService* streamSvc;
@@ -77,8 +79,10 @@
 
 -(void)cleanup{
     // Destroy MediaFrame objects dictionary.
-    if(self.mediaPacketsByOffset){
-        for(int i=0; i<self.mediaPacketsByOffset->GetCount(); i++){
+    if(self.mediaPacketsByOffset)
+    {
+        for(int i=0; i<self.mediaPacketsByOffset->GetCount(); i++)
+        {
             auto* pFrame = self.mediaPacketsByOffset->GetValueByIndex(i);
             if(pFrame)
                 delete pFrame;
@@ -97,7 +101,8 @@
 //    self.thread = nil;
 }
 
--(MediaStreamDownloader*)init:(id<MediaStreamReaderProtocol>)delegate{
+-(MediaStreamDownloader*)init:(id<MediaStreamReaderProtocol>)delegate
+{
     self.downloadPacketsAtTheTime = 50;
     self.delegate = delegate;
     self.objects_lock = [[NSCondition alloc] init];
@@ -136,7 +141,8 @@
     return self;
 }
 
--(void)downloaderThreadEntry{
+-(void)downloaderThreadEntry
+{
     bool isEof = false;
     self.isInProgress = true;
     [self.delegate mediaPacketsDownloadStarted:NO]; // Start event.
@@ -145,7 +151,8 @@
         if(isEof) break;
         
         // Seeking operation.
-        if(self.seeking){
+        if(self.seeking)
+        {
             [self.objects_lock lock];
             self.packetOffsetCurrent = self.packetOffsetCurrentNew;
             self.packetOffsetCurrentNew = 0;
@@ -154,7 +161,8 @@
         }
         
         // Download packets data.
-        if(![self download:self.packetOffsetCurrent Packets:self.downloadPacketsAtTheTime IsEof:&isEof]){
+        if(![self download:self.packetOffsetCurrent Packets:self.downloadPacketsAtTheTime IsEof:&isEof])
+        {
             [self.objects_lock lock]; // lock
             self.isEof = isEof;
             [self.objects_lock unlock]; // Unlock
@@ -185,26 +193,44 @@
     }
 }
 
--(bool)download:(long)packetOffset Packets:(int)packetsCt IsEof:(bool*)pIsEof{
+-(bool)download:(long)packetOffset Packets:(int)packetsCt IsEof:(bool*)pIsEof
+{
     // Download audio packets.
-    [self.streamSvc AudioPacketsByOffset:_sessionKey SongId:_mediaId byOffset:(unsigned int)packetOffset Packets:packetsCt];
+    //[self.streamSvc AudioPacketsByOffset:_sessionKey SongId:_mediaId byOffset:(unsigned int)packetOffset Packets:packetsCt];
+    //dispatch_semaphore_wait(self.download_sync, DISPATCH_TIME_FOREVER);
+    
+    if(!_audioPacketsReq)
+        _audioPacketsReq = [[AudioPacketsByOffsetRequest alloc] init:_sessionKey SongId:_mediaId byOffset:(int)packetOffset Packets:packetsCt];
+    else
+        [_audioPacketsReq setQueryParams:_sessionKey SongId:_mediaId byOffset:(int)packetOffset Packets:packetsCt];
+    
+    __weak __typeof__(self) weakSelf = self;
+    [_audioPacketsReq makeRequest:^(MediaPackets* packets)
+    {
+        [weakSelf OnAudioPacketsByOffsetResponse:packets];
+    }];
     dispatch_semaphore_wait(self.download_sync, DISPATCH_TIME_FOREVER);
+    //_audioPacketsReq = nil; // Delete request object.
     
     MediaPackets* packets = _packetsReceived;
     _packetsReceived = nullptr;
     
-    if(packets){
+    if(packets)
+    {
         int numberOfPackets = 0;
         [self.objects_lock lock];           // Lock
         if(self.mediaPacketsByOffset == nil)
             self.mediaPacketsByOffset = new AutoSortedArrayTempl<long, MediaPacket*>();
         //long offset = self.packetOffsetCurrent;
         long offset = packetOffset;
-        for(int i=0; i<packets->_packets.GetCount(); i++){
+        for(int i=0; i<packets->_packets.GetCount(); i++)
+        {
             auto f = packets->_packets.GetAt(i);
-            if(f && f->_data.GetBinarySize() > 0){
+            if(f && f->_data.GetBinarySize() > 0)
+            {
                 auto frameExisting = self.mediaPacketsByOffset->GetValue(offset);
-                if(frameExisting){
+                if(frameExisting)
+                {
                     delete frameExisting;   // Destroy media frame object.
                     self.mediaPacketsByOffset->SetAt(offset, f);
                 }
@@ -238,7 +264,8 @@
     return packets != nullptr;
 }
 
--(void)OnAudioPacketsByTimeResponse:(MediaPackets *)packetsInfo{
+-(void)OnAudioPacketsByTimeResponse:(MediaPackets *)packetsInfo
+{
     _packetsReceived = packetsInfo;
     dispatch_async(dispatch_get_main_queue(), ^{
         // Signal download sync.

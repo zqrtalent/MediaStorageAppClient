@@ -8,7 +8,8 @@
 
 #include "MediaLibraryInfo.h"
 
-MediaLibraryInfo::MediaLibraryInfo(){
+MediaLibraryInfo::MediaLibraryInfo()
+{
     _artists.CreateVariableIndex(_T("Id"), Compare_String);
 }
 

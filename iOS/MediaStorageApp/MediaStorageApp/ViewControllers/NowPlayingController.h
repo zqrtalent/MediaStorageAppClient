@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MediaInfo.h"
 
 @interface NowPlayingController : UIViewController
 

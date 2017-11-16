@@ -8,6 +8,7 @@
 
 #import "AlbumsViewController.h"
 #import "SongsTableViewController.h"
+#include "../MediaStorageWebApi/DataContracts/MLArtist.h"
 
 @interface AlbumsViewController () <UITableViewDelegate, UITableViewDataSource>
 {
@@ -18,7 +19,8 @@
 
 @implementation AlbumsViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
@@ -27,17 +29,14 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(void)setData:(MLArtist*)artist{
+-(void)setData:(MLArtist*)artist
+{
     _artist = artist;
     [self.tableView reloadData];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     UIStoryboard* stBoard = [UIStoryboard storyboardWithName:@"Songs" bundle:[NSBundle mainBundle]];
     SongsTableViewController* viewCtrl = [stBoard instantiateViewControllerWithIdentifier:@"songsViewId"];
     if(viewCtrl != nil){
@@ -48,21 +47,26 @@
     }
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return 1;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return _artist ? _artist->_albums.GetCount() : 0;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell0"];
     MLAlbum* album = _artist->_albums.GetAt((int)indexPath.row);
-    if(album->_year > 0){
+    if(album->_year > 0)
+    {
         [cell textLabel].text = [NSString stringWithFormat:@"%s - %i", album->_name.c_str(), album->_year];
     }
-    else{
+    else
+    {
         [cell textLabel].text = [NSString stringWithUTF8String: album->_name.c_str()];
     }
     return cell;

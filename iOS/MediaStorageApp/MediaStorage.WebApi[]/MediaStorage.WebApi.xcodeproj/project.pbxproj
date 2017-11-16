@@ -1,0 +1,339 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BA3459EE1F7998AC0078E425 /* MediaStreamingService.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3459ED1F7998AC0078E425 /* MediaStreamingService.m */; };
+		BA345A021F7998C00078E425 /* MediaLibraryInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA3459F01F7998C00078E425 /* MediaLibraryInfo.cpp */; };
+		BA345A031F7998C00078E425 /* MediaPacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA3459F21F7998C00078E425 /* MediaPacket.cpp */; };
+		BA345A041F7998C00078E425 /* MediaPackets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA3459F41F7998C00078E425 /* MediaPackets.cpp */; };
+		BA345A051F7998C00078E425 /* MLAlbum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA3459F61F7998C00078E425 /* MLAlbum.cpp */; };
+		BA345A061F7998C00078E425 /* MLArtist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA3459F81F7998C00078E425 /* MLArtist.cpp */; };
+		BA345A071F7998C00078E425 /* MLPlaylist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA3459FA1F7998C00078E425 /* MLPlaylist.cpp */; };
+		BA345A081F7998C00078E425 /* MLPlaylistSong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA3459FC1F7998C00078E425 /* MLPlaylistSong.cpp */; };
+		BA345A091F7998C00078E425 /* MLSong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA3459FE1F7998C00078E425 /* MLSong.cpp */; };
+		BA345A0A1F7998C00078E425 /* SessionInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA345A001F7998C00078E425 /* SessionInfo.cpp */; };
+		BA345A0D1F7999000078E425 /* libMercury.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA345A0C1F7999000078E425 /* libMercury.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BA3459D81F79985F0078E425 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		BA3459DA1F79985F0078E425 /* libMediaStorage.WebApi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMediaStorage.WebApi.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA3459EC1F7998AC0078E425 /* MediaStreamingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamingService.h; sourceTree = "<group>"; };
+		BA3459ED1F7998AC0078E425 /* MediaStreamingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamingService.m; sourceTree = "<group>"; };
+		BA3459F01F7998C00078E425 /* MediaLibraryInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MediaLibraryInfo.cpp; path = DataContracts/MediaLibraryInfo.cpp; sourceTree = "<group>"; };
+		BA3459F11F7998C00078E425 /* MediaLibraryInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaLibraryInfo.h; path = DataContracts/MediaLibraryInfo.h; sourceTree = "<group>"; };
+		BA3459F21F7998C00078E425 /* MediaPacket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MediaPacket.cpp; path = DataContracts/MediaPacket.cpp; sourceTree = "<group>"; };
+		BA3459F31F7998C00078E425 /* MediaPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaPacket.h; path = DataContracts/MediaPacket.h; sourceTree = "<group>"; };
+		BA3459F41F7998C00078E425 /* MediaPackets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MediaPackets.cpp; path = DataContracts/MediaPackets.cpp; sourceTree = "<group>"; };
+		BA3459F51F7998C00078E425 /* MediaPackets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaPackets.h; path = DataContracts/MediaPackets.h; sourceTree = "<group>"; };
+		BA3459F61F7998C00078E425 /* MLAlbum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLAlbum.cpp; path = DataContracts/MLAlbum.cpp; sourceTree = "<group>"; };
+		BA3459F71F7998C00078E425 /* MLAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLAlbum.h; path = DataContracts/MLAlbum.h; sourceTree = "<group>"; };
+		BA3459F81F7998C00078E425 /* MLArtist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLArtist.cpp; path = DataContracts/MLArtist.cpp; sourceTree = "<group>"; };
+		BA3459F91F7998C00078E425 /* MLArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLArtist.h; path = DataContracts/MLArtist.h; sourceTree = "<group>"; };
+		BA3459FA1F7998C00078E425 /* MLPlaylist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLPlaylist.cpp; path = DataContracts/MLPlaylist.cpp; sourceTree = "<group>"; };
+		BA3459FB1F7998C00078E425 /* MLPlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLPlaylist.h; path = DataContracts/MLPlaylist.h; sourceTree = "<group>"; };
+		BA3459FC1F7998C00078E425 /* MLPlaylistSong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLPlaylistSong.cpp; path = DataContracts/MLPlaylistSong.cpp; sourceTree = "<group>"; };
+		BA3459FD1F7998C00078E425 /* MLPlaylistSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLPlaylistSong.h; path = DataContracts/MLPlaylistSong.h; sourceTree = "<group>"; };
+		BA3459FE1F7998C00078E425 /* MLSong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MLSong.cpp; path = DataContracts/MLSong.cpp; sourceTree = "<group>"; };
+		BA3459FF1F7998C00078E425 /* MLSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLSong.h; path = DataContracts/MLSong.h; sourceTree = "<group>"; };
+		BA345A001F7998C00078E425 /* SessionInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SessionInfo.cpp; path = DataContracts/SessionInfo.cpp; sourceTree = "<group>"; };
+		BA345A011F7998C00078E425 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionInfo.h; path = DataContracts/SessionInfo.h; sourceTree = "<group>"; };
+		BA345A0C1F7999000078E425 /* libMercury.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMercury.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/MediaStorageApp-asfiszymrciflpdynuyfwgrqkrtv/Build/Products/Debug-iphonesimulator/libMercury.a"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BA3459D71F79985F0078E425 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA345A0D1F7999000078E425 /* libMercury.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BA3459D11F79985F0078E425 = {
+			isa = PBXGroup;
+			children = (
+				BA3459DC1F79985F0078E425 /* MediaStorage.WebApi */,
+				BA3459DB1F79985F0078E425 /* Products */,
+				BA345A0B1F7999000078E425 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		BA3459DB1F79985F0078E425 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA3459DA1F79985F0078E425 /* libMediaStorage.WebApi.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA3459DC1F79985F0078E425 /* MediaStorage.WebApi */ = {
+			isa = PBXGroup;
+			children = (
+				BA3459EF1F7998B10078E425 /* DataContracts */,
+				BA3459EC1F7998AC0078E425 /* MediaStreamingService.h */,
+				BA3459ED1F7998AC0078E425 /* MediaStreamingService.m */,
+			);
+			path = MediaStorage.WebApi;
+			sourceTree = "<group>";
+		};
+		BA3459EF1F7998B10078E425 /* DataContracts */ = {
+			isa = PBXGroup;
+			children = (
+				BA3459F01F7998C00078E425 /* MediaLibraryInfo.cpp */,
+				BA3459F11F7998C00078E425 /* MediaLibraryInfo.h */,
+				BA3459F21F7998C00078E425 /* MediaPacket.cpp */,
+				BA3459F31F7998C00078E425 /* MediaPacket.h */,
+				BA3459F41F7998C00078E425 /* MediaPackets.cpp */,
+				BA3459F51F7998C00078E425 /* MediaPackets.h */,
+				BA3459F61F7998C00078E425 /* MLAlbum.cpp */,
+				BA3459F71F7998C00078E425 /* MLAlbum.h */,
+				BA3459F81F7998C00078E425 /* MLArtist.cpp */,
+				BA3459F91F7998C00078E425 /* MLArtist.h */,
+				BA3459FA1F7998C00078E425 /* MLPlaylist.cpp */,
+				BA3459FB1F7998C00078E425 /* MLPlaylist.h */,
+				BA3459FC1F7998C00078E425 /* MLPlaylistSong.cpp */,
+				BA3459FD1F7998C00078E425 /* MLPlaylistSong.h */,
+				BA3459FE1F7998C00078E425 /* MLSong.cpp */,
+				BA3459FF1F7998C00078E425 /* MLSong.h */,
+				BA345A001F7998C00078E425 /* SessionInfo.cpp */,
+				BA345A011F7998C00078E425 /* SessionInfo.h */,
+			);
+			name = DataContracts;
+			sourceTree = "<group>";
+		};
+		BA345A0B1F7999000078E425 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA345A0C1F7999000078E425 /* libMercury.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BA3459D91F79985F0078E425 /* MediaStorage.WebApi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA3459E31F79985F0078E425 /* Build configuration list for PBXNativeTarget "MediaStorage.WebApi" */;
+			buildPhases = (
+				BA3459D61F79985F0078E425 /* Sources */,
+				BA3459D71F79985F0078E425 /* Frameworks */,
+				BA3459D81F79985F0078E425 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MediaStorage.WebApi;
+			productName = MediaStorage.WebApi;
+			productReference = BA3459DA1F79985F0078E425 /* libMediaStorage.WebApi.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BA3459D21F79985F0078E425 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "zaqro butskrikidze";
+				TargetAttributes = {
+					BA3459D91F79985F0078E425 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = Q32RM795VQ;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = BA3459D51F79985F0078E425 /* Build configuration list for PBXProject "MediaStorage.WebApi" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = BA3459D11F79985F0078E425;
+			productRefGroup = BA3459DB1F79985F0078E425 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BA3459D91F79985F0078E425 /* MediaStorage.WebApi */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BA3459D61F79985F0078E425 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA345A0A1F7998C00078E425 /* SessionInfo.cpp in Sources */,
+				BA345A041F7998C00078E425 /* MediaPackets.cpp in Sources */,
+				BA345A051F7998C00078E425 /* MLAlbum.cpp in Sources */,
+				BA345A021F7998C00078E425 /* MediaLibraryInfo.cpp in Sources */,
+				BA345A061F7998C00078E425 /* MLArtist.cpp in Sources */,
+				BA3459EE1F7998AC0078E425 /* MediaStreamingService.m in Sources */,
+				BA345A081F7998C00078E425 /* MLPlaylistSong.cpp in Sources */,
+				BA345A031F7998C00078E425 /* MediaPacket.cpp in Sources */,
+				BA345A071F7998C00078E425 /* MLPlaylist.cpp in Sources */,
+				BA345A091F7998C00078E425 /* MLSong.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BA3459E11F79985F0078E425 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		BA3459E21F79985F0078E425 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BA3459E41F79985F0078E425 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = Q32RM795VQ;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = ../../Mercury;
+			};
+			name = Debug;
+		};
+		BA3459E51F79985F0078E425 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = Q32RM795VQ;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = ../../Mercury;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BA3459D51F79985F0078E425 /* Build configuration list for PBXProject "MediaStorage.WebApi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA3459E11F79985F0078E425 /* Debug */,
+				BA3459E21F79985F0078E425 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA3459E31F79985F0078E425 /* Build configuration list for PBXNativeTarget "MediaStorage.WebApi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA3459E41F79985F0078E425 /* Debug */,
+				BA3459E51F79985F0078E425 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BA3459D21F79985F0078E425 /* Project object */;
+}

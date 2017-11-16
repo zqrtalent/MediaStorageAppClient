@@ -28,7 +28,13 @@ public:
 		m_nUsedSize = nSizeUsed;
 		};
 
+    /* This method is not safe, because we return plain pointer to buffer*/
 	BYTE*	EmptyBufferGetPtr		();
+    /*
+        Copies this object keeps settings as it is,
+        and based on "bCopyData" flag performs copy or move operations.
+     */
+    GrowableMemory*   CopyGrowableMemoryObject(BOOL bCopyData = true);
 
 	bool	ReadInt8				(char* cVal);
 	bool	ReadInt16				(short* shVal);

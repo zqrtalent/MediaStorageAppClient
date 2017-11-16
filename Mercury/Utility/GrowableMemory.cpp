@@ -147,6 +147,34 @@ GrowableMemory::EmptyBufferGetPtr(){
 	return pBuff;
 	}
 
+GrowableMemory*
+GrowableMemory::CopyGrowableMemoryObject(BOOL bCopyData /*= true*/){
+    GrowableMemory* pCopy = new GrowableMemory(0, m_nGrowSize, m_bUseHeap);
+    if(bCopyData){
+        if(m_bReadOnly){
+            pCopy->SetReadonlyBuffer(m_pBuffer, m_nBufferSize);
+        }
+        else{
+            pCopy->AddBytes(m_pBuffer, m_nBufferSize);
+        }
+    }
+    else{
+        if(m_bReadOnly){
+            pCopy->SetReadonlyBuffer(m_pBuffer, m_nBufferSize);
+        }
+        else{
+            pCopy->m_pBuffer = m_pBuffer;
+            pCopy->m_nBufferSize = m_nBufferSize;
+            pCopy->m_nUsedSize = m_nUsedSize;
+            pCopy->m_pBuffer = m_pBuffer;
+            
+            m_pBuffer = NULL;
+            m_nBufferSize = m_nUsedSize = m_nOffset = 0;
+        }
+    }
+    return pCopy;
+}
+
 BYTE*
 GrowableMemory::GetCurrentOffsetPtr(){
 	if( !m_pBuffer ) return NULL;

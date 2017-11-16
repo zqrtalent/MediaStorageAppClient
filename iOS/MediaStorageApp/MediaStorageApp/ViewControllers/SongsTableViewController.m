@@ -7,13 +7,15 @@
 //
 
 #import "SongsTableViewController.h"
-#import "NowPlayingController.h"
-
+#import "AppDelegate.h"
+#import "../Extensions/NSString+MercuryString.h"
 #import "../CustomPresentationController.h"
-#import "../MediaStream/MediaInfo.h"
-#import "../MediaStorageRuntimeInfo.h"
+#import "../StreamPlayer/StreamPlayerManager.h"
+#import "NowPlayingController.h"
+#include "../MediaStorageWebApi/DataContracts/MLArtist.h"
 
-@interface SongsTableViewController (){
+@interface SongsTableViewController ()
+{
     MLAlbum* _album;
     MLArtist* _artist;
 }
@@ -22,52 +24,69 @@
 
 @implementation SongsTableViewController
 
--(void)setData:(MLAlbum*)album Artist:(MLArtist*)artist{
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    if(_album != nullptr)
+    {
+        self.navigationItem.title = [NSString stringWithUTF8String:_album->_name.c_str()];
+    }
+}
+
+-(void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)setData:(MLAlbum*)album Artist:(MLArtist*)artist
+{
     _album = album;
     _artist = artist;
     [self.tableView reloadData];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    if(_album != nullptr)
-        self.navigationItem.backBarButtonItem.title = [NSString stringWithUTF8String:_album->_name.c_str()];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return _album ? _album->_songs.GetCount() : 0;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell0" forIndexPath:indexPath];
     auto song = _album->_songs.GetAt((int)indexPath.row);
-    [cell textLabel].text = [NSString stringWithUTF8String:song->_name.c_str()];
+    [cell textLabel].text = [NSString stringFromMercuryCString:&song->_name];
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     UIStoryboard* storyBoard = [UIStoryboard storyboardWithName:@"NowPlaying" bundle:nil];
     NowPlayingController* nowPlaying = (NowPlayingController*)[storyBoard instantiateViewControllerWithIdentifier:@"nowPlayingViewId"];
-    MLSong* song = _album->_songs.GetAt((int)indexPath.row);
     
-    // Schedule media to play.
-    MediaStorageRuntimeInfo* info = [MediaStorageRuntimeInfo sharedInstance];
-    if(info.NowPlaying == nil || [info.NowPlaying.mediaId compare:[NSString stringWithUTF8String:song->_id.c_str()] options:NSCaseInsensitiveSearch] != NSOrderedSame)
-    {
-        [info scheduleMedia:[NSString stringWithUTF8String:song->_id.c_str()] FromArtist:[NSString stringWithUTF8String:_artist->_id.c_str()] AndFromAlbum:[NSString stringWithUTF8String:_album->_id.c_str()] PlayInstantly:YES];
-    }
+    MLSong* song = _album->_songs.GetAt((int)indexPath.row);
+    StreamPlayerManager* playerMan = [AppDelegate sharedInstance].playerManager;
+    
+    // Add songs into playlist.
+    [playerMan scheduleMedia:[NSString stringFromMercuryCString:&song->_id] FromArtist:[NSString stringFromMercuryCString:&_artist->_id] AndFromAlbum:[NSString stringFromMercuryCString:&_album->_id] ClearPlaylist:YES];
+    
+    // Play song.
+    [playerMan play: (int)indexPath.row];
+    
+//    // Schedule media to play.
+//    MediaStorageRuntimeInfo* info = [MediaStorageRuntimeInfo sharedInstance];
+//    if(info.NowPlaying == nil || [info.NowPlaying.mediaId compare:[NSString stringWithUTF8String:song->_id.c_str()] options:NSCaseInsensitiveSearch] != NSOrderedSame)
+//    {
+//        [info scheduleMedia:[NSString stringWithUTF8String:song->_id.c_str()] FromArtist:[NSString stringWithUTF8String:_artist->_id.c_str()] AndFromAlbum:[NSString stringWithUTF8String:_album->_id.c_str()] PlayInstantly:YES];
+//    }
     
     [nowPlaying setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     [nowPlaying setModalPresentationStyle:UIModalPresentationPopover];

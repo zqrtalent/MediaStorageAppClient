@@ -7,11 +7,18 @@
 //
 
 #import "AppDelegate.h"
-#include "MediaStorageRuntimeInfo.h"
-#import "MediaPlayerControlCenter.h"
-#import "RemoteCommandsProtocol.h"
+#import "MediaPlayerControlCenter/MediaPlayerControlCenter.h"
+#import "MediaPlayerControlCenter/RemoteCommandsProtocol.h"
+#import "Streaming/StreamingSession.h"
+#import "StreamPlayer/StreamPlayerManager.h"
+#import "StreamPlayer/PlayerDelegate.h"
+#import "Streaming/StreamingSessionSettings.h"
+#include "MediaStorageWebApi/DataContracts/MediaLibraryInfo.h"
 
 @interface AppDelegate()<PlayerDelegate, RemoteCommandsProtocol>
+{
+    std::unique_ptr<MediaLibraryInfo> _mlInfo;
+}
 
 @property (nonatomic, strong) MediaPlayerControlCenter* mpControlCenter;
 @property (nonatomic, assign) unsigned int currentPlayTimeSec;
@@ -21,8 +28,20 @@
 
 @implementation AppDelegate
 
++(instancetype)sharedInstance
+{
+    return (AppDelegate*)[UIApplication sharedApplication].delegate;
+}
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    // Initialize streaming session instance.
+    self.streamingSession = [[StreamingSession alloc] init:[StreamingSessionSettings sharedSettings]];
+    
+    self.playerManager = [StreamPlayerManager sharedInstance];
+    [self.playerManager updateStreamingSession:self.streamingSession];
+    
+    
     // Override point for customization after application launch.
     self.mpControlCenter = [[MediaPlayerControlCenter alloc] init];
     self.currentPlayTimeSec = 0;
@@ -53,17 +72,30 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
-
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     
-    // Cleanup runtime info object.
-    [[MediaStorageRuntimeInfo sharedInstance] cleanUp];
+    // Destroy media library info object.
+    _mlInfo.reset();
+    
+    [self.playerManager cleanUp];
+    
     // Destroy media player control center object.
     [self.mpControlCenter cleanUp];
     
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+}
+
+-(void)setMediaLibraryInfo:(MediaLibraryInfo*)pInfo
+{
+    [self.playerManager updateMediaLibraryInfo:pInfo];
+    _mlInfo = std::unique_ptr<MediaLibraryInfo>(pInfo);
+}
+
+-(MediaLibraryInfo*)getMediaLibraryInfo
+{
+    return _mlInfo.get();
 }
 
 
@@ -114,27 +146,32 @@
 
 #pragma mark - PlayerDelegate methods
 
--(void)onPlayStarted:(BOOL)resumed{
+-(void)onPlayStarted:(BOOL)resumed
+{
     void (^playStartedBlock)();
+    
+    __typeof__(self) __weak weakSelf = self;
     playStartedBlock = ^{
         if(!resumed){ // Start play
-            [self.mpControlCenter setActiveRemoteCommands:YES];
-            self.mpControlCenter.remoteCommandsDelegate = self;
+            [weakSelf.mpControlCenter setActiveRemoteCommands:YES];
+            weakSelf.mpControlCenter.remoteCommandsDelegate = weakSelf;
             
-            MediaInfo* playingMedia = [MediaStorageRuntimeInfo sharedInstance].NowPlaying;
+            AudioMetadataInfo* playingMedia = weakSelf.playerManager.NowPlaying;
+            
             // Initialize now playing info.
-            [self.mpControlCenter setNowPlayingTitle:playingMedia.songName];
-            [self.mpControlCenter setNowPlayingArtistName:playingMedia.artist];
-            [self.mpControlCenter setNowPlayingAlbumName:playingMedia.album];
-            [self.mpControlCenter setNowPlayingDuration:(double)playingMedia.DurationInSec];
-            [self.mpControlCenter setNowPlayingPlaybackProgress:(double)playingMedia.CurrentPositionInSec];
-            [self.mpControlCenter setNowPlayingElapsedPlaybackTime:(double)playingMedia.CurrentPositionInSec];
-            [self.mpControlCenter setNowPlayingState:YES];
-            [self.mpControlCenter setActiveNowPlayingInfo:YES];
+            [weakSelf.mpControlCenter setNowPlayingTitle:playingMedia.songName];
+            [weakSelf.mpControlCenter setNowPlayingArtistName:playingMedia.artistName];
+            [weakSelf.mpControlCenter setNowPlayingAlbumName:playingMedia.albumName];
+            [weakSelf.mpControlCenter setNowPlayingDuration:(double)playingMedia.durationSec];
+            
+            //[weakSelf.mpControlCenter setNowPlayingPlaybackProgress:(double)playingMedia.CurrentPositionInSec];
+            //[weakSelf.mpControlCenter setNowPlayingElapsedPlaybackTime:(double)playingMedia.CurrentPositionInSec];
+            
+            [weakSelf.mpControlCenter setNowPlayingState:YES];
+            [weakSelf.mpControlCenter setActiveNowPlayingInfo:YES];
         }
-        else{
-            [self.mpControlCenter setNowPlayingState:YES];
-        }
+        else
+            [weakSelf.mpControlCenter setNowPlayingState:YES];
     };
     
     if([NSThread isMainThread])
@@ -145,8 +182,10 @@
 
 -(void)onPlayEnded{
     void (^playEndedBlock)();
+    
+    __typeof__(self) __weak weakSelf = self;
     playEndedBlock = ^{
-        [self.mpControlCenter setActiveNowPlayingInfo:NO];
+        [weakSelf.mpControlCenter setActiveNowPlayingInfo:NO];
     };
     
     if([NSThread isMainThread])
@@ -155,10 +194,12 @@
         dispatch_async(dispatch_get_main_queue(), playEndedBlock);
 }
 
--(void)onPaused{
+-(void)onPaused
+{
     void (^playPausedBlock)();
+    __typeof__(self) __weak weakSelf = self;
     playPausedBlock = ^{
-        [self.mpControlCenter setNowPlayingState:NO];
+        [weakSelf.mpControlCenter setNowPlayingState:NO];
     };
     
     if([NSThread isMainThread])
@@ -167,7 +208,8 @@
         dispatch_async(dispatch_get_main_queue(), playPausedBlock);
 }
 
--(void)onBufferingStarted{
+-(void)onBufferingStarted
+{
     //    dispatch_async(dispatch_get_main_queue(), ^(){
     //        NSLog(@"onBufferingStarted");
     //        [[NowPlayInfo sharedInstance].miniPlayerView onBufferingStarted];
@@ -181,7 +223,8 @@
     //    });
 }
 
--(void)onPlayTimeUpdate:(unsigned int)msec{
+-(void)onPlayTimeUpdate:(unsigned int)msec
+{
     self.currentPlayTimeSecFloat = (msec/1000.0);
     int currentTimeSec = (int)self.currentPlayTimeSecFloat;
     if(currentTimeSec != self.currentPlayTimeSec){ //  Dont update time change less than second.
@@ -190,10 +233,11 @@
         // Update now playing info.
         if(self.mpControlCenter){
             void (^playTimeUpdatelock)();
+            __typeof__(self) __weak weakSelf = self;
             playTimeUpdatelock = ^{
                 //[self.mpControlCenter setNowPlayingPlaybackProgress:(double)currentTimeSec];
-                [self.mpControlCenter setNowPlayingElapsedPlaybackTime:(double)currentTimeSec];
-                [self.mpControlCenter updateNowPlayingInfo];
+                [weakSelf.mpControlCenter setNowPlayingElapsedPlaybackTime:(double)currentTimeSec];
+                [weakSelf.mpControlCenter updateNowPlayingInfo];
             };
             
             if([NSThread isMainThread])
@@ -225,4 +269,17 @@
     return MPRemoteCommandHandlerStatusSuccess;
 }
 
+#pragma mark - Streaming session protocol methods
+
+-(void)streamingSession:(StreamingSession*)sess Authenticated:(BOOL)status
+{
+}
+
+@end
+
+@implementation NSURLRequest(DataController)
++ (BOOL)allowsAnyHTTPSCertificateForHost:(NSString *)host
+{
+    return YES;
+}
 @end

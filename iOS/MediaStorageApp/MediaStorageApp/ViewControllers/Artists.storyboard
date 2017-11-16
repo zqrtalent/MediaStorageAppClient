@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0do-f4-nTl" id="AMB-sU-jd4">
-                                    <frame key="frameInset" width="375" height="44.5"/>
+                                    <frame key="frameInset" width="375" height="45"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
