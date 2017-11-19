@@ -101,7 +101,7 @@
             _streamReadCallback = nil;
             
             [self.downloader start:range.location];
-            NSLog(@"read packets: %ld", range.location);
+            //NSLog(@"read packets: %ld", range.location);
         }
         
         // Unlock section.
@@ -197,8 +197,8 @@
 #pragma mark - AudioPacketsDelegate protocol methods.
 -(void)audioPacketsDownloadStarted:(BOOL)resumed
 {
-    if(resumed)
-        NSLog(@"Download resumed");
+    //if(resumed)
+    //    NSLog(@"Download resumed");
 }
 
 -(void)audioPacketsDownloadStopped
@@ -207,7 +207,7 @@
 
 -(void)audioPacketsDownloadPaused
 {
-    NSLog(@"Download paused");
+    //NSLog(@"Download paused");
 }
 
 -(void)audioPacketsDownloadProgress:(long)packetOffset PacketsCt:(int)packetsCt IsEof:(bool)isEof

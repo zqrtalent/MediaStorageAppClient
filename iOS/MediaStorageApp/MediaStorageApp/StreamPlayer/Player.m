@@ -11,6 +11,13 @@
 #import "../Streaming/MediaStreamSource.h"
 #import "../Models/AudioMetadataInfo.h"
 
+/* Playing buffer info structure. */
+typedef struct PlayingBufferInfoStruct{
+    bool isPlaying;
+    long packetPos;
+    UInt32 packetsSize;
+} PlayingBufferInfo, * PPlayingBufferInfoStruct;
+
 @interface Player()
 {
 @protected
@@ -19,7 +26,7 @@
     NSError*                _error;
     AVAudioPCMBuffer*       _buffers[2];
     AVAudioPCMBuffer*       _bufferNoSound;     // Used empty sound PCM buffer to interrupt all the scheduling PCM buffers.
-    bool                   _buffersPlaying[2];
+    PlayingBufferInfo       _buffersPlaying[2];
 }
 
 @property (nonatomic, strong) AudioStreamDecoder* decoder;
@@ -31,6 +38,7 @@
 @property (atomic, assign) bool Seeking;
 @property (atomic, assign) long PacketPosNew;
 @property (atomic, assign) long PacketPos;
+@property (atomic, assign) long PacketPosPlaying;
 @property (atomic, assign) long packetOffsetDownloading;
 @property (atomic, assign) long isEof;
 @property (atomic, assign) bool isWaitingForBuffering;
@@ -43,6 +51,7 @@
 
 -(void)prepareForPlay: (int)msecStartAt;
 -(void)resetPlay;
+-(float)getCurrentTimeInMSecByPos:(long)packetPos;
 
 @end
 
@@ -121,8 +130,10 @@
     {
         dispatch_semaphore_signal(self.player_pause_semaphore);
         
+        //__typeof__(self) __weak weakSelf = self;
         // Interrupt scheduled playing buffers with silent audio buffer.
         [_playerNode scheduleBuffer:_bufferNoSound atTime:nil options:AVAudioPlayerNodeBufferInterrupts completionHandler:^{
+           
         }];
     }
 }
@@ -144,6 +155,7 @@
 
 -(void)seekAtTime:(float)seconds
 {
+    // TODO: Check seek packet position value for max or min.
     long packetPosNew = (seconds * 1000.0) / MP3_FRAME_DURATION_MSEC;
     if(packetPosNew == self.PacketPos)
         return;
@@ -162,6 +174,10 @@
             }];
         }
         else{ // Paused.
+            self.PacketPosNew = packetPosNew;
+            self.Seeking = YES;
+            
+            [self.delegate onPlayTimeUpdate: (int)([self getCurrentTimeInMSecByPos:packetPosNew])];
         }
     }
 }
@@ -215,6 +231,11 @@
     return (float)(self.PacketPos * MP3_FRAME_DURATION_MSEC);
 }
 
+-(float)getCurrentTimeInMSecByPos:(long)packetPos
+{
+    return (float)(packetPos * MP3_FRAME_DURATION_MSEC);
+}
+
 -(void)setVolume:(float)volume
 {
     // Set player volume.
@@ -232,8 +253,9 @@
     [_playerNode stop];
     [_engine stop];
     
-    _buffersPlaying[0] = NO;
-    _buffersPlaying[1] = NO;
+    _buffersPlaying[0].isPlaying = _buffersPlaying[1].isPlaying = NO;
+    _buffersPlaying[0].packetPos = _buffersPlaying[1].packetPos = 0;
+    _buffersPlaying[0].packetsSize = _buffersPlaying[1].packetsSize = 0;
     
     // Reset decoder.
     [_decoder reset];
@@ -269,7 +291,9 @@
     _buffers[0] = [[AVAudioPCMBuffer alloc] initWithPCMFormat:audioOutFormat frameCapacity: [_decoder getOutputBufferSize]];
     _buffers[1] = [[AVAudioPCMBuffer alloc] initWithPCMFormat:audioOutFormat frameCapacity:[_decoder getOutputBufferSize]];
     
-    _buffersPlaying[0] = _buffersPlaying[1] = NO;
+    _buffersPlaying[0].isPlaying = _buffersPlaying[1].isPlaying = NO;
+    _buffersPlaying[0].packetPos = _buffersPlaying[1].packetPos = 0;
+    _buffersPlaying[0].packetsSize = _buffersPlaying[1].packetsSize = 0;
     
      // Initialize playback slider.
      //self.DurationInSec = [_media getMediaDurationInSeconds];
@@ -337,9 +361,15 @@
             {
                 bufferIndex = 0;
                 weakSelf.Seeking = NO;
-                _buffersPlaying[0] = NO;
-                _buffersPlaying[1] = NO;
+                
+                _buffersPlaying[0].isPlaying = _buffersPlaying[1].isPlaying = NO;
+                _buffersPlaying[0].packetPos = _buffersPlaying[1].packetPos = 0;
+                _buffersPlaying[0].packetsSize = _buffersPlaying[1].packetsSize = 0;
+                
                 dispatch_semaphore_wait(weakSelf.playSyncSemaphore, DISPATCH_TIME_FOREVER);
+                
+                // Update play time.
+                [weakSelf.delegate onPlayTimeUpdate: (int)(weakSelf.CurrentTimeInMSec)];
                 
                 // Reset decoder.
                 [weakSelf.decoder reset];
@@ -349,8 +379,10 @@
             }
             else
             {
-                if(_buffersPlaying[bufferIndex])
+                if(_buffersPlaying[bufferIndex].isPlaying)
+                {
                     dispatch_semaphore_wait(weakSelf.playSyncSemaphore, DISPATCH_TIME_FOREVER);
+                }
             }
             
         retry:
@@ -362,6 +394,21 @@
                 
                 // Wait until pause semaphore is signaled.
                 dispatch_semaphore_wait(weakSelf.player_pause_semaphore, DISPATCH_TIME_FOREVER);
+                
+                // If there was seek operation while pause.
+                if(weakSelf.Seeking)
+                {
+                    // Update decode packet position.
+                    weakSelf.PacketPos = weakSelf.PacketPosNew;
+                    weakSelf.PacketPosNew = 0;
+                    continue;
+                }
+                
+                // Reset decoder.
+                [weakSelf.decoder reset];
+                
+                // Update decode packet position to last playing packet position.
+                weakSelf.PacketPos = self.PacketPosPlaying;
                 
                 // Set playing state.
                 [weakSelf updateState:AudioPlayer_Playing];
@@ -437,28 +484,62 @@
                 break; // EOF or error
             }
             
+            long packetPosPlaying = weakSelf.PacketPos;
+            PlayingBufferInfo* buffersPlaying = &_buffersPlaying[0];
+            assert(buffersPlaying[0].isPlaying == NO || buffersPlaying[1].isPlaying == NO);
+            
             [_playerNode scheduleBuffer:_buffers[bufferIndex] completionHandler:^()
             {
+                buffersPlaying[bufferIndex].isPlaying = NO;
+                
                 if(!weakSelf.Seeking && weakSelf.state != AudioPlayer_Stopped)
                 {
-                    [weakSelf.delegate onPlayTimeUpdate: (int)(weakSelf.CurrentTimeInMSec)];
-                    _buffersPlaying[bufferIndex] = NO;
+                    // Seed playing packet position.
+                    int nextBufferIndex = (bufferIndex + 1) % buffersCt;
+                    if(buffersPlaying[nextBufferIndex].isPlaying)
+                        weakSelf.PacketPosPlaying = buffersPlaying[nextBufferIndex].packetPos;
+                    
+                    //[weakSelf.delegate onPlayTimeUpdate: (int)(weakSelf.CurrentTimeInMSec)];
+                    [weakSelf.delegate onPlayTimeUpdate: (int)([weakSelf getCurrentTimeInMSecByPos:packetPosPlaying + packetSizeOut])];
+                    //buffersPlaying[bufferIndex].isPlaying = NO;
+                    
                     dispatch_semaphore_signal(weakSelf.playSyncSemaphore);
                 }
             }];
             
             if(!weakSelf.Seeking)
             {
-                _buffersPlaying[bufferIndex] = YES;
+                _buffersPlaying[bufferIndex].isPlaying = YES;
+                _buffersPlaying[bufferIndex].packetPos = weakSelf.PacketPos;
+                _buffersPlaying[bufferIndex].packetsSize = packetSizeOut;
+                
+                // Set playing packet position.
+                int prevBufferIndex = bufferIndex - 1;
+                if(prevBufferIndex == -1)
+                    prevBufferIndex = buffersCt - 1;
+                if(!_buffersPlaying[prevBufferIndex].isPlaying)
+                {
+                    weakSelf.PacketPosPlaying = weakSelf.PacketPos;
+                    // Update play time.
+                    [weakSelf.delegate onPlayTimeUpdate: (int)(weakSelf.getCurrentTimeInMSec)];
+                }
+                
+                // Reset play sync event if signaled.
+                if(_buffersPlaying[0].isPlaying == YES && _buffersPlaying[1].isPlaying == YES)
+                {
+                    dispatch_semaphore_wait(weakSelf.playSyncSemaphore, DISPATCH_TIME_NOW);
+                }
+                
+                // Advance decode packet position.
+                weakSelf.PacketPos += packetSizeOut;
             }
             else
             {
+                // Update decode packet position.
                 weakSelf.PacketPos = weakSelf.PacketPosNew;
                 weakSelf.PacketPosNew = 0;
             }
             
-            weakSelf.PacketPos += packetSizeOut;
-            //NSLog(@"%ld", weakSelf.PacketPos);
             bufferIndex = (bufferIndex + 1) % buffersCt;
         }
     });

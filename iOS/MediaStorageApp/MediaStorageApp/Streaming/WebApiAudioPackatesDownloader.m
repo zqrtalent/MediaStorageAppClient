@@ -398,13 +398,13 @@
 
 -(bool)download:(NSRange)range IsEof:(bool*)pIsEof
 {
-    NSLog(@"start download: %ld - %ld", range.location, range.length);
+    //NSLog(@"start download: %ld - %ld", range.location, range.length);
     // Download audio packets.
     MediaPackets* packets = [self downloadPackets:range andWait:0.0];
     
     if(packets)
     {
-        NSLog(@"finish download: %ld - %d", packets->_offset, packets->_numPackets);
+        //NSLog(@"finish download: %ld - %d", packets->_offset, packets->_numPackets);
         
         int numberOfPackets = 0;
         [self.objects_lock lock];           // Lock
