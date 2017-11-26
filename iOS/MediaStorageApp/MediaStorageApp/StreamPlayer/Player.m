@@ -351,7 +351,9 @@ typedef struct PlayingBufferInfoStruct{
     self.decodeAndPlayBlock =
     dispatch_block_create(DISPATCH_BLOCK_ASSIGN_CURRENT, ^{
         int bufferIndex = 0, buffersCt = 2;
-        UInt32 packetSizeOut = 0;
+        DecodedAudioInfo info = {0};
+        //memset(&info, sizeof(info), 0);
+        
         bool isBuffering = true;
         weakSelf.state = AudioPlayer_Buffering;
         
@@ -422,10 +424,8 @@ typedef struct PlayingBufferInfoStruct{
                 break;
             }
             
-            // Decode packets to fill audio buffer.
-            packetSizeOut = 0;
-            OSType error = [weakSelf.decoder decode:weakSelf.PacketPos OutPacketsNum:&packetSizeOut];
-            if(error == noErr)
+            // Decode audio packets.
+            if([weakSelf.decoder decode:weakSelf.PacketPos AndWriteResultInto:info])
             {
                 if(isBuffering)
                 {
@@ -440,8 +440,8 @@ typedef struct PlayingBufferInfoStruct{
             }
             else
             {
-                // -50 means need more data.
-                if(error == -50)
+                // Need more data.
+                if(info.status == Decoder_ErrorNeedMoreData)
                 {
                     NSLog(@"Decoder: need more data");
                     
@@ -474,7 +474,9 @@ typedef struct PlayingBufferInfoStruct{
                 }
             }
             
-            if(!packetSizeOut)
+            if(info.isEof == YES ||
+               info.status == Decoder_ErrorUnavailableData ||
+               info.status == Decoder_UnknownError )
             {
                 // Set ended state.
                 [weakSelf updateState:AudioPlayer_Stopped];
@@ -492,6 +494,8 @@ typedef struct PlayingBufferInfoStruct{
             {
                 buffersPlaying[bufferIndex].isPlaying = NO;
                 
+                NSLog(@"%ld", packetPosPlaying);
+                
                 if(!weakSelf.Seeking && weakSelf.state != AudioPlayer_Stopped)
                 {
                     // Seed playing packet position.
@@ -500,7 +504,7 @@ typedef struct PlayingBufferInfoStruct{
                         weakSelf.PacketPosPlaying = buffersPlaying[nextBufferIndex].packetPos;
                     
                     //[weakSelf.delegate onPlayTimeUpdate: (int)(weakSelf.CurrentTimeInMSec)];
-                    [weakSelf.delegate onPlayTimeUpdate: (int)([weakSelf getCurrentTimeInMSecByPos:packetPosPlaying + packetSizeOut])];
+                    [weakSelf.delegate onPlayTimeUpdate: (int)([weakSelf getCurrentTimeInMSecByPos:packetPosPlaying + info.numPackets])];
                     //buffersPlaying[bufferIndex].isPlaying = NO;
                     
                     dispatch_semaphore_signal(weakSelf.playSyncSemaphore);
@@ -511,7 +515,7 @@ typedef struct PlayingBufferInfoStruct{
             {
                 _buffersPlaying[bufferIndex].isPlaying = YES;
                 _buffersPlaying[bufferIndex].packetPos = weakSelf.PacketPos;
-                _buffersPlaying[bufferIndex].packetsSize = packetSizeOut;
+                _buffersPlaying[bufferIndex].packetsSize = info.numPackets;
                 
                 // Set playing packet position.
                 int prevBufferIndex = bufferIndex - 1;
@@ -531,7 +535,7 @@ typedef struct PlayingBufferInfoStruct{
                 }
                 
                 // Advance decode packet position.
-                weakSelf.PacketPos += packetSizeOut;
+                weakSelf.PacketPos += info.numPackets;
             }
             else
             {

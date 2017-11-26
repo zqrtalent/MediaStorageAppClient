@@ -25,9 +25,11 @@
 -(bool)checkIfPaused;
 -(bool)checkIfEof;
 
--(bool)checkIfDownloadedCompleted;
+-(bool)checkIfDownloadCompleted;
 -(bool)checkAudioPacketsAvailability:(NSRange)packetsRange;
 
 -(bool)copyAudioPacketsData:(NSRange)range PacketsInfo:(AudioStreamPacketsInfo*)packets OutSize:(UInt32*)outDataSize;
+
+-(UInt32)getNumberOfPackets;
 
 @end

@@ -36,7 +36,7 @@
 @property (assign, nonatomic) long packetOffsetCurrentNew;
 @property (assign, atomic) bool seeking;
 @property (assign, nonatomic) int downloadPacketsAtTheTime;
-@property (assign, atomic) int numberOfPackets;
+@property (assign, atomic) UInt32 numberOfPackets;
 
 @property (assign, atomic) BOOL isPaused;
 @property (assign, atomic) BOOL pauseRequested;
@@ -102,7 +102,7 @@
     assert(packetOffset >= 0);
     if(!self.thread.isExecuting)
     {
-        if([self checkIfDownloadedCompleted])
+        if([self checkIfDownloadCompleted])
             return ret; // Already downloaded.
         
         [self.objects_lock lock];
@@ -199,7 +199,12 @@
     return YES;
 }
 
--(bool)checkIfDownloadedCompleted
+-(UInt32)getNumberOfPackets
+{
+    return self.numberOfPackets;
+}
+
+-(bool)checkIfDownloadCompleted
 {
     return (self.isEof && [self checkAudioPacketsAvailability:NSMakeRange(0, self.numberOfPackets)]);
 }
@@ -406,7 +411,7 @@
     {
         //NSLog(@"finish download: %ld - %d", packets->_offset, packets->_numPackets);
         
-        int numberOfPackets = 0;
+        int numAllPackets = 0;
         [self.objects_lock lock];           // Lock
         if(self.mediaPacketsByOffset == nil)
             self.mediaPacketsByOffset = new AutoSortedArrayTempl<long, MediaPacket*>();
@@ -431,12 +436,16 @@
             offset ++;
         }
         
-        numberOfPackets = (int)packets->_framesCt;
+        numAllPackets = (int)packets->_framesCt;
         self.packetOffsetCurrent = offset;
         if(packets->_numPackets == 0)
             self.isEof = true;
         else
+        {
             self.isEof = packets->_isEof;
+            if(self.isEof)
+                self.numberOfPackets = (UInt32)(packets->_offset);
+        }
         
         *pIsEof = self.isEof;
         
@@ -445,7 +454,7 @@
         
         // Update number of packets.
         if(!self.numberOfPackets)
-            self.numberOfPackets = numberOfPackets;
+            self.numberOfPackets = numAllPackets;
         
         // Download progress event.
         [self.delegate audioPacketsDownloadProgress:self.packetOffsetCurrent PacketsCt:packets->_numPackets IsEof:*pIsEof];

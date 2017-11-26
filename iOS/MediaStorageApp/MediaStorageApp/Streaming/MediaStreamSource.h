@@ -20,6 +20,8 @@ typedef void(^AudioPacketsReadCallback)(AudioStreamPacketsInfo* packetsInfo);
 
 -(UInt32)getPacketSizeInBytes;
 
+-(UInt32)getNumberOfPackets;
+
 -(AudioStreamPacketsInfo*)readPackets:(NSRange)range;
 
 -(bool)readPackets:(NSRange)range InPacketsInfoObject:(AudioStreamPacketsInfo*)packetsInfo;

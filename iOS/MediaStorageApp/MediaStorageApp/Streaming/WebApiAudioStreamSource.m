@@ -55,6 +55,11 @@
     return 1052; // kAudioFilePropertyPacketSizeUpperBound
 }
 
+-(UInt32)getNumberOfPackets
+{
+    return [self.downloader getNumberOfPackets];
+}
+
 -(bool)getStreamDescription:(AudioStreamBasicDescription*)streamDescOut
 {
     NSAssert(streamDescOut != nil, @"Stream description object can't be nil!");

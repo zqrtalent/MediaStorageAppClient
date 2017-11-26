@@ -15,21 +15,36 @@
 #define MP3_FRAME_DURATION_MSEC 26.122449
 #endif
 
-@interface AudioStreamDecoder : NSObject
+// Decoder error codes.
+typedef NS_ENUM(NSInteger, AudioStreamDecoderError)
 {
-}
+    Decoder_NoError = noErr,
+    Decoder_ErrorNeedMoreData = -50,
+    Decoder_ErrorUnavailableData = -52,
+    Decoder_UnknownError = -1
+};
+
+#pragma pack(1)
+typedef struct DecodedAudioInfoStruct
+{
+    long packetOffset;              // Packets offset used as a starting offset for reading audio packets.
+    UInt32 numPackets;              // Number of packets used for decode operation.
+    AudioStreamDecoderError status; // Status of decode operation.
+    bool isEof;                     // Indicates that there are no more packets available.
+} DecodedAudioInfo;
+
+@interface AudioStreamDecoder : NSObject
 
 // Initialize decoder object and set LinierPCM as a output format.
 -(instancetype)init:(id<MediaStreamSourceProtocol>)mediaSource WithLinierPCMOutputBufferMsec:(UInt32)outputBufferMsec;
 
-// Initialize decore and use defined format as an output format.
+// Initialize decode and use defined format as an output format.
 -(instancetype)init:(id<MediaStreamSourceProtocol>)mediaSource WithCustomOutputFormat:(AudioStreamBasicDescription*)outFormat OutputBufferSize:(UInt32)outputBufferBytesSize;
 
 // Reset converter.
 -(void)reset;
 
--(OSStatus)decode:(long)audioPacketOffset OutPacketsNum:(UInt32*)decodedPacketsNum;
-
+-(bool)decode:(long)audioPacketOffset AndWriteResultInto:(DecodedAudioInfo&)info;
 
 // TODO: Review code and optimize it!
 -(UInt32)fillAudioPCMBuffer:(AVAudioPCMBuffer*)audioBuffer;
