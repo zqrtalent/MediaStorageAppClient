@@ -14,6 +14,8 @@
 #import "NowPlayingController.h"
 #include "../MediaStorageWebApi/DataContracts/MLArtist.h"
 
+#import "CustomUI/AlbumSongsTableViewCell.h"
+
 @interface SongsTableViewController ()
 {
     MLAlbum* _album;
@@ -61,9 +63,10 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell0" forIndexPath:indexPath];
+    AlbumSongsTableViewCell *cell = (AlbumSongsTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"cell0" forIndexPath:indexPath];
     auto song = _album->_songs.GetAt((int)indexPath.row);
-    [cell textLabel].text = [NSString stringFromMercuryCString:&song->_name];
+    cell.songName.text = [NSString stringFromMercuryCString:&song->_name];
+    cell.duration.text = [NSString stringWithFormat:@"%02d:%02d", song->_durationSec/60, song->_durationSec%60];
     return cell;
 }
 

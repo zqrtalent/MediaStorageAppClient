@@ -8,7 +8,10 @@
 
 #import "AlbumsViewController.h"
 #import "SongsTableViewController.h"
+#import "CustomUI/AlbumsTableViewCell.h"
+#import "../Extensions/NSString+MercuryString.h"
 #include "../MediaStorageWebApi/DataContracts/MLArtist.h"
+
 
 @interface AlbumsViewController () <UITableViewDelegate, UITableViewDataSource>
 {
@@ -39,7 +42,8 @@
 {
     UIStoryboard* stBoard = [UIStoryboard storyboardWithName:@"Songs" bundle:[NSBundle mainBundle]];
     SongsTableViewController* viewCtrl = [stBoard instantiateViewControllerWithIdentifier:@"songsViewId"];
-    if(viewCtrl != nil){
+    if(viewCtrl != nil)
+    {
         int albumIndex = (int)indexPath.row;
         auto album = _artist->_albums.GetAt(albumIndex);
         [viewCtrl setData:album Artist:_artist];
@@ -59,16 +63,12 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell0"];
+    AlbumsTableViewCell* cell = (AlbumsTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"cell0"];
     MLAlbum* album = _artist->_albums.GetAt((int)indexPath.row);
-    if(album->_year > 0)
-    {
-        [cell textLabel].text = [NSString stringWithFormat:@"%s - %i", album->_name.c_str(), album->_year];
-    }
-    else
-    {
-        [cell textLabel].text = [NSString stringWithUTF8String: album->_name.c_str()];
-    }
+    
+    cell.albumName.text = [NSString stringFromMercuryCString:&album->_name];
+    cell.year.text = album->_year > 0 ? [NSString stringWithFormat:@"%d", album->_year] : @"-";
+    cell.genre.text = [NSString stringFromMercuryCString:&_artist->_genre];
     return cell;
 }
 

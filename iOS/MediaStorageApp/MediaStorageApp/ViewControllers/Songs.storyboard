@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,17 +12,47 @@
             <objects>
                 <tableViewController storyboardIdentifier="songsViewId" id="4g1-hS-Tle" customClass="SongsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="nJP-Ds-HC2">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell0" id="HJx-BX-gYR">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell0" id="HJx-BX-gYR" customClass="AlbumSongsTableViewCell">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HJx-BX-gYR" id="ZFH-lw-nTH">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5JK-3Y-4GC">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="OlX-zU-XVY"/>
+                                                <constraint firstAttribute="width" constant="220" id="gBR-Uc-PnH"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbv-UX-y8j">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="53" id="0sD-H7-cwO"/>
+                                                <constraint firstAttribute="height" constant="44" id="yod-7n-wZd"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.91316936392858239" green="0.4736479850434826" blue="0.37230014927108651" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="5JK-3Y-4GC" firstAttribute="leading" secondItem="ZFH-lw-nTH" secondAttribute="leadingMargin" constant="13" id="DnI-Ge-Fav"/>
+                                        <constraint firstItem="5JK-3Y-4GC" firstAttribute="top" secondItem="ZFH-lw-nTH" secondAttribute="top" id="KJZ-eA-VUz"/>
+                                        <constraint firstItem="tbv-UX-y8j" firstAttribute="trailing" secondItem="ZFH-lw-nTH" secondAttribute="trailingMargin" id="Lbg-JE-yHs"/>
+                                        <constraint firstItem="tbv-UX-y8j" firstAttribute="baseline" secondItem="5JK-3Y-4GC" secondAttribute="baseline" id="iCI-L2-Tsv"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="duration" destination="tbv-UX-y8j" id="2my-g6-ZcS"/>
+                                    <outlet property="songName" destination="5JK-3Y-4GC" id="CIa-aG-4MD"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -32,7 +63,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s7F-8w-6g6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="350" y="179"/>
+            <point key="canvasLocation" x="349.60000000000002" y="178.56071964017991"/>
         </scene>
     </scenes>
 </document>

@@ -11,6 +11,7 @@
 #import "../../Streaming/MediaStreamSource.h"
 
 #ifndef MP3_FRAME_DURATION_MSEC
+// 1152 /*samples per packet (frame)*/ / 44100 /*samples per second*/) * 1000 = 26,122449
 #define MP3_FRAME_DURATION_MSEC 26.122449
 #endif
 

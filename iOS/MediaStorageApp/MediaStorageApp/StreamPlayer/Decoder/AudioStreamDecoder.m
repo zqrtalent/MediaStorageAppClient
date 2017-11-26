@@ -196,13 +196,16 @@ AudioConverterComplexInputDataProcMy(AudioConverterRef  inAudioConverter,
     int framesCt = MIN(framesCtMax, _bufferSizeUsed / _outFormat.mBytesPerFrame);
     
     const float* fSamples = (const float*)_buffer.get();
+    //const int* nSamples = (const int*)_buffer.get();
     int loop = 0;
     
     for(int i=0; i<framesCt; i++)
     {
         audioBuffer.floatChannelData[0][i] = fSamples[loop];   // Left
         audioBuffer.floatChannelData[1][i] = fSamples[loop+1]; // Right
-        loop += 2;
+        //audioBuffer.int32ChannelData[0][i] = nSamples[loop];   // Left
+        //audioBuffer.int32ChannelData[1][i] = nSamples[loop+1]; // Right
+loop += 2;
     }
     
     audioBuffer.frameLength = framesCt;

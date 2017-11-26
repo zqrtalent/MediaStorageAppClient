@@ -39,6 +39,8 @@
 		BA3638331F9BD12E00BAD05A /* StreamPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA36382F1F9BD12E00BAD05A /* StreamPlayerManager.m */; };
 		BA3638341F9BD12E00BAD05A /* StreamPlayerPlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3638311F9BD12E00BAD05A /* StreamPlayerPlaylist.m */; };
 		BA3638381F9BE9F400BAD05A /* AudioStreamDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3638371F9BE9F400BAD05A /* AudioStreamDecoder.m */; };
+		BA49BDEB1FCAE6BB0030C7A3 /* AlbumSongsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA49BDEA1FCAE6BB0030C7A3 /* AlbumSongsTableViewCell.m */; };
+		BA49BDF01FCAF3400030C7A3 /* AlbumsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA49BDEF1FCAF3400030C7A3 /* AlbumsTableViewCell.m */; };
 		BA4A20431F9D42F1009DA8BF /* AudioStreamPacketsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4A20421F9D42F1009DA8BF /* AudioStreamPacketsInfo.m */; };
 		BA4A20441F9D42F1009DA8BF /* AudioStreamPacketsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4A20421F9D42F1009DA8BF /* AudioStreamPacketsInfo.m */; };
 		BA744A561FAE583800962CA8 /* AudioMetadataInfo+DataContracts.m in Sources */ = {isa = PBXBuildFile; fileRef = BA744A551FAE583800962CA8 /* AudioMetadataInfo+DataContracts.m */; };
@@ -141,6 +143,10 @@
 		BA3638311F9BD12E00BAD05A /* StreamPlayerPlaylist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamPlayerPlaylist.m; path = StreamPlayer/StreamPlayerPlaylist.m; sourceTree = "<group>"; };
 		BA3638361F9BE9F400BAD05A /* AudioStreamDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioStreamDecoder.h; path = StreamPlayer/Decoder/AudioStreamDecoder.h; sourceTree = "<group>"; };
 		BA3638371F9BE9F400BAD05A /* AudioStreamDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioStreamDecoder.m; path = StreamPlayer/Decoder/AudioStreamDecoder.m; sourceTree = "<group>"; };
+		BA49BDE91FCAE6BB0030C7A3 /* AlbumSongsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumSongsTableViewCell.h; path = ViewControllers/CustomUI/AlbumSongsTableViewCell.h; sourceTree = "<group>"; };
+		BA49BDEA1FCAE6BB0030C7A3 /* AlbumSongsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumSongsTableViewCell.m; path = ViewControllers/CustomUI/AlbumSongsTableViewCell.m; sourceTree = "<group>"; };
+		BA49BDEE1FCAF3400030C7A3 /* AlbumsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumsTableViewCell.h; path = ViewControllers/CustomUI/AlbumsTableViewCell.h; sourceTree = "<group>"; };
+		BA49BDEF1FCAF3400030C7A3 /* AlbumsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumsTableViewCell.m; path = ViewControllers/CustomUI/AlbumsTableViewCell.m; sourceTree = "<group>"; };
 		BA4A20411F9D42F1009DA8BF /* AudioStreamPacketsInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioStreamPacketsInfo.h; path = Models/AudioStreamPacketsInfo.h; sourceTree = "<group>"; };
 		BA4A20421F9D42F1009DA8BF /* AudioStreamPacketsInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioStreamPacketsInfo.m; path = Models/AudioStreamPacketsInfo.m; sourceTree = "<group>"; };
 		BA70A6AB1F8A37560080D3EE /* AudioPacketsDownloaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioPacketsDownloaderProtocol.h; path = Streaming/AudioPacketsDownloaderProtocol.h; sourceTree = "<group>"; };
@@ -286,6 +292,7 @@
 		BA34D6F21F05AE1F0041EA39 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				BA49BDE71FCAE6610030C7A3 /* CustomUI */,
 				BAB3203E1F12385800F3C1BC /* ArtistsViewController.h */,
 				BAB3203F1F12385800F3C1BC /* ArtistsViewController.m */,
 				BA34D6F31F05AE340041EA39 /* AlbumsViewController.h */,
@@ -324,6 +331,17 @@
 				BA3638371F9BE9F400BAD05A /* AudioStreamDecoder.m */,
 			);
 			name = Decoder;
+			sourceTree = "<group>";
+		};
+		BA49BDE71FCAE6610030C7A3 /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				BA49BDE91FCAE6BB0030C7A3 /* AlbumSongsTableViewCell.h */,
+				BA49BDEA1FCAE6BB0030C7A3 /* AlbumSongsTableViewCell.m */,
+				BA49BDEE1FCAF3400030C7A3 /* AlbumsTableViewCell.h */,
+				BA49BDEF1FCAF3400030C7A3 /* AlbumsTableViewCell.m */,
+			);
+			name = CustomUI;
 			sourceTree = "<group>";
 		};
 		BA83ED921EF5C999000E5DDA /* CustomPresentation */ = {
@@ -602,6 +620,7 @@
 				BAAB20D61F88F2B800F3EF77 /* WebApiAudioStreamReaderSettings.m in Sources */,
 				BA34D6E91F05A96F0041EA39 /* MediaLibraryInfo.cpp in Sources */,
 				BAD51E251F7FE15300B34D7D /* AuthRequest.m in Sources */,
+				BA49BDF01FCAF3400030C7A3 /* AlbumsTableViewCell.m in Sources */,
 				BAF80DF41F85701C00E19958 /* StreamingSessionSettings.m in Sources */,
 				BAB320401F12385800F3C1BC /* ArtistsViewController.m in Sources */,
 				BA34D6F11F05A96F0041EA39 /* SessionInfo.cpp in Sources */,
@@ -623,6 +642,7 @@
 				BA34D6EB1F05A96F0041EA39 /* MediaPackets.cpp in Sources */,
 				BA34D6EA1F05A96F0041EA39 /* MediaPacket.cpp in Sources */,
 				BA3638321F9BD12E00BAD05A /* Player.m in Sources */,
+				BA49BDEB1FCAE6BB0030C7A3 /* AlbumSongsTableViewCell.m in Sources */,
 				BAAB20D91F89384100F3EF77 /* WebApiAudioPackatesDownloader.m in Sources */,
 				BA34D6D51F05A94F0041EA39 /* MediaStreamingService.m in Sources */,
 				BA34D6F01F05A96F0041EA39 /* MLSong.cpp in Sources */,
