@@ -29,6 +29,7 @@ typedef struct DecodedAudioInfoStruct
 {
     long packetOffset;              // Packets offset used as a starting offset for reading audio packets.
     UInt32 numPackets;              // Number of packets used for decode operation.
+    UInt32 durationMsec;            // Decoded audio duration in milliseconds.
     AudioStreamDecoderError status; // Status of decode operation.
     bool isEof;                     // Indicates that there are no more packets available.
 } DecodedAudioInfo;

@@ -10,7 +10,18 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "../Models/AudioStreamPacketsInfo.h"
 
+
+
 typedef void(^AudioPacketsReadCallback)(AudioStreamPacketsInfo* packetsInfo);
+
+typedef NS_ENUM(NSInteger, StreamReadPacketStatus)
+{
+    StreamReadPacketStatus_Success = noErr,         // Read completed successfully.
+    StreamReadPacketStatus_ReadError = -1,          // Read completed with error, could be multiple reason for that.
+    StreamReadPacketStatus_InvalidOffset = -2,      // Invalid packet offset, presumably greater than EOF packet index.
+    StreamReadPacketStatus_DownloadScheduled = -3,  // Read operation wasn't successfull but download was initiated afterwards.
+
+};
 
 @protocol MediaStreamSourceProtocol
 
@@ -24,7 +35,9 @@ typedef void(^AudioPacketsReadCallback)(AudioStreamPacketsInfo* packetsInfo);
 
 -(AudioStreamPacketsInfo*)readPackets:(NSRange)range;
 
--(bool)readPackets:(NSRange)range InPacketsInfoObject:(AudioStreamPacketsInfo*)packetsInfo;
+-(StreamReadPacketStatus)readPackets:(NSRange)range InPacketsInfoObject:(AudioStreamPacketsInfo*)packetsInfo;
+
+-(long)timeMsecOffset2PacketOffset:(UInt32)positionMsec;
 
 //-(bool)readPackets:(NSRange)range WithCallback:(AudioPacketsReadCallback)callback;
 

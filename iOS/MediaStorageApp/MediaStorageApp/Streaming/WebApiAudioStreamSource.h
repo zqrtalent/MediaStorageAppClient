@@ -19,9 +19,9 @@
 
 -(AudioStreamPacketsInfo*)readPackets:(NSRange)range;
 
--(bool)readPackets:(NSRange)range InPacketsInfoObject:(AudioStreamPacketsInfo*)packetsInfo;
+-(StreamReadPacketStatus)readPackets:(NSRange)range InPacketsInfoObject:(AudioStreamPacketsInfo*)packetsInfo;
 
-//-(bool)readPackets:(NSRange)range WithCallback:(AudioPacketsReadCallback)callback;
+-(long)timeMsecOffset2PacketOffset:(UInt32)positionMsec;
 
 -(void)closeAndInvalidate;
 

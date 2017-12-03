@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		BA011D741EFF23EA004D7BDA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA011D731EFF23EA004D7BDA /* MediaPlayer.framework */; };
 		BA011D781EFF2445004D7BDA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA011D771EFF2445004D7BDA /* AVFoundation.framework */; };
+		BA0339F41FD402B80065B8B3 /* AudioPacketsByTimeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0339F31FD402B80065B8B3 /* AudioPacketsByTimeRequest.m */; };
+		BA0339F51FD402B80065B8B3 /* AudioPacketsByTimeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0339F31FD402B80065B8B3 /* AudioPacketsByTimeRequest.m */; };
 		BA15B6E71F9B625A0038F066 /* AudioMetadataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BA15B6E61F9B625A0038F066 /* AudioMetadataInfo.m */; };
 		BA15B6EB1F9B78340038F066 /* AudioMetadataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BA15B6E61F9B625A0038F066 /* AudioMetadataInfo.m */; };
 		BA15B6EC1F9B784F0038F066 /* MLAlbum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34D6DD1F05A96F0041EA39 /* MLAlbum.cpp */; };
@@ -95,6 +97,8 @@
 /* Begin PBXFileReference section */
 		BA011D731EFF23EA004D7BDA /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		BA011D771EFF2445004D7BDA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		BA0339F21FD402B80065B8B3 /* AudioPacketsByTimeRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioPacketsByTimeRequest.h; path = MediaStorageWebApi/AudioPacketsByTimeRequest.h; sourceTree = "<group>"; };
+		BA0339F31FD402B80065B8B3 /* AudioPacketsByTimeRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioPacketsByTimeRequest.m; path = MediaStorageWebApi/AudioPacketsByTimeRequest.m; sourceTree = "<group>"; };
 		BA15B6E51F9B625A0038F066 /* AudioMetadataInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioMetadataInfo.h; path = Models/AudioMetadataInfo.h; sourceTree = "<group>"; };
 		BA15B6E61F9B625A0038F066 /* AudioMetadataInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioMetadataInfo.m; path = Models/AudioMetadataInfo.m; sourceTree = "<group>"; };
 		BA15B6EF1F9B78BE0038F066 /* ModiaStorageAppModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModiaStorageAppModelTests.m; sourceTree = "<group>"; };
@@ -460,6 +464,8 @@
 				BA1EDA221F8103680075B640 /* ImageResourceRequest.m */,
 				BA1EDA241F8104860075B640 /* AudioPacketsByOffsetRequest.h */,
 				BA1EDA251F8104860075B640 /* AudioPacketsByOffsetRequest.m */,
+				BA0339F21FD402B80065B8B3 /* AudioPacketsByTimeRequest.h */,
+				BA0339F31FD402B80065B8B3 /* AudioPacketsByTimeRequest.m */,
 			);
 			name = ApiRequest;
 			sourceTree = "<group>";
@@ -616,6 +622,7 @@
 				BA3638341F9BD12E00BAD05A /* StreamPlayerPlaylist.m in Sources */,
 				BA34D6FA1F05AE340041EA39 /* NowPlayingController.m in Sources */,
 				BA744A5A1FAE586600962CA8 /* MediaPlayerControlCenter.m in Sources */,
+				BA0339F41FD402B80065B8B3 /* AudioPacketsByTimeRequest.m in Sources */,
 				BA15B6E71F9B625A0038F066 /* AudioMetadataInfo.m in Sources */,
 				BAAB20D61F88F2B800F3EF77 /* WebApiAudioStreamReaderSettings.m in Sources */,
 				BA34D6E91F05A96F0041EA39 /* MediaLibraryInfo.cpp in Sources */,
@@ -664,6 +671,7 @@
 			files = (
 				BAF559AD1FAF3A1D0097E03A /* StreamingSession+ApiRequests.m in Sources */,
 				BA4A20441F9D42F1009DA8BF /* AudioStreamPacketsInfo.m in Sources */,
+				BA0339F51FD402B80065B8B3 /* AudioPacketsByTimeRequest.m in Sources */,
 				BA15B6EE1F9B78590038F066 /* MLSong.cpp in Sources */,
 				BA87FBF31EE7327300F56A7A /* MediaStorageAppTests.m in Sources */,
 				BAA45CE51FB7A62600648F1E /* AudioFileSource.m in Sources */,

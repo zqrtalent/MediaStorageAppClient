@@ -35,11 +35,13 @@ typedef struct PlayingBufferInfoStruct{
 @property (nonatomic, strong) dispatch_queue_t decode_play_queue;
 @property (nonatomic, strong) dispatch_semaphore_t playSyncSemaphore;
 
-@property (atomic, assign) bool Seeking;
-@property (atomic, assign) long PacketPosNew;
-@property (atomic, assign) long PacketPos;
-@property (atomic, assign) long PacketPosPlaying;
-@property (atomic, assign) long packetOffsetDownloading;
+@property (atomic, assign) bool Seeking;                    // Indicates seek operation.
+@property (atomic, assign) long SeekPacketPos;              // Seek packet position.
+
+@property (atomic, assign) long PacketPos;                  // Decoding audio packet position.
+@property (atomic, assign) long PacketPosPlaying;           // Playing audio packet position.
+@property (atomic, assign) UInt32 PlayingTimeMsec;          // Current playing time in milliseconds.
+
 @property (atomic, assign) long isEof;
 @property (atomic, assign) bool isWaitingForBuffering;
 
@@ -51,7 +53,7 @@ typedef struct PlayingBufferInfoStruct{
 
 -(void)prepareForPlay: (int)msecStartAt;
 -(void)resetPlay;
--(float)getCurrentTimeInMSecByPos:(long)packetPos;
+-(void)resetPlayBufferInfo;
 
 @end
 
@@ -59,6 +61,8 @@ typedef struct PlayingBufferInfoStruct{
 
 -(instancetype)init
 {
+    self = [super init];
+    
     self.state = AudioPlayer_Stopped;
     
     // Create decode and play queue.
@@ -133,7 +137,7 @@ typedef struct PlayingBufferInfoStruct{
         //__typeof__(self) __weak weakSelf = self;
         // Interrupt scheduled playing buffers with silent audio buffer.
         [_playerNode scheduleBuffer:_bufferNoSound atTime:nil options:AVAudioPlayerNodeBufferInterrupts completionHandler:^{
-           
+            
         }];
     }
 }
@@ -155,8 +159,17 @@ typedef struct PlayingBufferInfoStruct{
 
 -(void)seekAtTime:(float)seconds
 {
+    // TODO: Validate seconds parameter.
+    
+    
     // TODO: Check seek packet position value for max or min.
-    long packetPosNew = (seconds * 1000.0) / MP3_FRAME_DURATION_MSEC;
+    //long packetPosNew = (seconds * 1000.0) / MP3_FRAME_DURATION_MSEC;
+    //if(packetPosNew == self.PacketPos)
+    //    return;
+    
+    // Convert time sec into packet offset.
+    UInt32 seekTimeMs = seconds * 1000.0f;
+    long packetPosNew = [self.audioStream timeMsecOffset2PacketOffset:seekTimeMs];
     if(packetPosNew == self.PacketPos)
         return;
     
@@ -164,20 +177,28 @@ typedef struct PlayingBufferInfoStruct{
     {
         if([self getPlayerState] != AudioPlayer_Paused) // Playing or buffering.
         {
-            self.PacketPosNew = packetPosNew;
+            self.SeekPacketPos = packetPosNew;
             self.Seeking = YES;
             
             // Interrupt scheduled buffers.
+            __typeof__(self) __weak weakSelf = self;
             [_playerNode scheduleBuffer:_bufferNoSound atTime:nil options:AVAudioPlayerNodeBufferInterrupts completionHandler:^()
             {
+                // Update playing time.
+                weakSelf.PlayingTimeMsec = seekTimeMs;
+                [weakSelf.delegate onPlayTimeUpdate:seekTimeMs];
+                
                 dispatch_semaphore_signal(self.playSyncSemaphore); // Start decoding and playing from the new position.
             }];
         }
-        else{ // Paused.
-            self.PacketPosNew = packetPosNew;
+        else // Paused.
+        {
+            self.PlayingTimeMsec = seekTimeMs;
+            self.SeekPacketPos = packetPosNew;
             self.Seeking = YES;
             
-            [self.delegate onPlayTimeUpdate: (int)([self getCurrentTimeInMSecByPos:packetPosNew])];
+            //[self.delegate onPlayTimeUpdate: (int)([self getCurrentTimeInMSecByPos:packetPosNew])];
+            [self.delegate onPlayTimeUpdate: seekTimeMs];
         }
     }
 }
@@ -223,17 +244,14 @@ typedef struct PlayingBufferInfoStruct{
 
 -(float)getCurrentTimeInSec
 {
-    return (float)(self.PacketPos * MP3_FRAME_DURATION_MSEC)/1000.0;
+    return (float)(self.PlayingTimeMsec/1000.0);
+    //return (float)(self.PacketPos * MP3_FRAME_DURATION_MSEC)/1000.0;
 }
 
 -(float)getCurrentTimeInMSec
 {
-    return (float)(self.PacketPos * MP3_FRAME_DURATION_MSEC);
-}
-
--(float)getCurrentTimeInMSecByPos:(long)packetPos
-{
-    return (float)(packetPos * MP3_FRAME_DURATION_MSEC);
+    return (float)(self.PlayingTimeMsec);
+    //return (float)(self.PacketPos * MP3_FRAME_DURATION_MSEC);
 }
 
 -(void)setVolume:(float)volume
@@ -261,17 +279,16 @@ typedef struct PlayingBufferInfoStruct{
     [_decoder reset];
     
     self.Seeking = NO;
+    self.SeekPacketPos = 0;
     self.PacketPos = 0;
-    self.PacketPosNew = 0;
-    self.packetOffsetDownloading = 0;
+    self.PlayingTimeMsec = 0;
+    self.PacketPosPlaying = 0;
     self.isEof = NO;
     self.isWaitingForBuffering = NO;
 }
 
 -(void)prepareForPlay: (int)msecStartAt
 {
-    long packetPostStartAt = msecStartAt > 0 ? (long)(((float)msecStartAt) / MP3_FRAME_DURATION_MSEC) : 0;
-    
     // Create and initialize decoder for media.
     self.decoder = [[AudioStreamDecoder alloc] init:self.audioStream WithLinierPCMOutputBufferMsec: 4*27];
     
@@ -291,17 +308,15 @@ typedef struct PlayingBufferInfoStruct{
     _buffers[0] = [[AVAudioPCMBuffer alloc] initWithPCMFormat:audioOutFormat frameCapacity: [_decoder getOutputBufferSize]];
     _buffers[1] = [[AVAudioPCMBuffer alloc] initWithPCMFormat:audioOutFormat frameCapacity:[_decoder getOutputBufferSize]];
     
-    _buffersPlaying[0].isPlaying = _buffersPlaying[1].isPlaying = NO;
-    _buffersPlaying[0].packetPos = _buffersPlaying[1].packetPos = 0;
-    _buffersPlaying[0].packetsSize = _buffersPlaying[1].packetsSize = 0;
+    // Reset play buffer infos.
+    [self resetPlayBufferInfo];
     
-     // Initialize playback slider.
-     //self.DurationInSec = [_media getMediaDurationInSeconds];
-     
-     //float packetDurationInMS = 0.0;
-     //self.NumPackets =  [_media getNumberPackets:&packetDurationInMS];
-     //self.PacketDurationMS = packetDurationInMS;
-    self.PacketPos = packetPostStartAt;
+    // Reset play parameters.
+    [self resetPlay];
+    
+    // Seek at start position.
+    if(msecStartAt > 0)
+        [self seekAtTime:(float)(msecStartAt / 1000.0f)];
 }
 
 -(void)updateState:(AudioPlayerState)stateNew
@@ -332,6 +347,13 @@ typedef struct PlayingBufferInfoStruct{
     }
 }
 
+-(void)resetPlayBufferInfo
+{
+    _buffersPlaying[0].isPlaying = _buffersPlaying[1].isPlaying = NO;
+    _buffersPlaying[0].packetPos = _buffersPlaying[1].packetPos = 0;
+    _buffersPlaying[0].packetsSize = _buffersPlaying[1].packetsSize = 0;
+}
+
 -(void)decodeAndPlayLoop
 {
     __typeof__(self) __weak weakSelf = self;
@@ -357,27 +379,25 @@ typedef struct PlayingBufferInfoStruct{
         bool isBuffering = true;
         weakSelf.state = AudioPlayer_Buffering;
         
-        while(1)
+        while(YES)
         {
+            // Check for seek operation.
             if(weakSelf.Seeking)
             {
                 bufferIndex = 0;
                 weakSelf.Seeking = NO;
                 
-                _buffersPlaying[0].isPlaying = _buffersPlaying[1].isPlaying = NO;
-                _buffersPlaying[0].packetPos = _buffersPlaying[1].packetPos = 0;
-                _buffersPlaying[0].packetsSize = _buffersPlaying[1].packetsSize = 0;
+                // Reset play buffer infos.
+                [weakSelf resetPlayBufferInfo];
                 
                 dispatch_semaphore_wait(weakSelf.playSyncSemaphore, DISPATCH_TIME_FOREVER);
                 
-                // Update play time.
-                [weakSelf.delegate onPlayTimeUpdate: (int)(weakSelf.CurrentTimeInMSec)];
+                // Update decode packet position.
+                weakSelf.PacketPos = weakSelf.SeekPacketPos;
+                weakSelf.SeekPacketPos = 0;
                 
                 // Reset decoder.
                 [weakSelf.decoder reset];
-                
-                // Seek stream.
-                //[self.audioStream seek:weakSelf.PacketPos];
             }
             else
             {
@@ -401,8 +421,8 @@ typedef struct PlayingBufferInfoStruct{
                 if(weakSelf.Seeking)
                 {
                     // Update decode packet position.
-                    weakSelf.PacketPos = weakSelf.PacketPosNew;
-                    weakSelf.PacketPosNew = 0;
+                    //weakSelf.PacketPos = weakSelf.SeekPacketPos;
+                    //weakSelf.SeekPacketPos = 0;
                     continue;
                 }
                 
@@ -430,7 +450,6 @@ typedef struct PlayingBufferInfoStruct{
                 if(isBuffering)
                 {
                     isBuffering = NO;
-                    
                     // Set playing state.
                     [weakSelf updateState:AudioPlayer_Playing];
                 }
@@ -453,24 +472,6 @@ typedef struct PlayingBufferInfoStruct{
                     [NSThread sleepForTimeInterval:0.5];
                     
                     goto retry;
-                    
-                    /*
-                    // Buffering is not in progress.
-                    if(dispatch_semaphore_wait(weakSelf.downloader_buffering, DISPATCH_TIME_NOW))
-                    {
-                        // Set buffering state.
-                        [weakSelf updateState:AudioPlayer_Buffering];
-                        
-                        // Invoke buffering started callback.
-                        //[weakSelf.delegate onBufferingStarted];
-                        //weakSelf.state = AudioPlayer_Buffering;
-                        
-                        isBuffering = YES;
-                        // Wait while buffering.
-                        dispatch_semaphore_wait(weakSelf.downloader_buffering, DISPATCH_TIME_FOREVER);
-                        // Retry decode operation.
-                        goto retry;
-                    }*/
                 }
             }
             
@@ -488,13 +489,14 @@ typedef struct PlayingBufferInfoStruct{
             
             long packetPosPlaying = weakSelf.PacketPos;
             PlayingBufferInfo* buffersPlaying = &_buffersPlaying[0];
+            
+            // TODO: the logic below is not 100% correct, I encountered problem when I was playing with seeking operation!
             assert(buffersPlaying[0].isPlaying == NO || buffersPlaying[1].isPlaying == NO);
             
             [_playerNode scheduleBuffer:_buffers[bufferIndex] completionHandler:^()
             {
-                buffersPlaying[bufferIndex].isPlaying = NO;
-                
                 NSLog(@"%ld", packetPosPlaying);
+                buffersPlaying[bufferIndex].isPlaying = NO;
                 
                 if(!weakSelf.Seeking && weakSelf.state != AudioPlayer_Stopped)
                 {
@@ -503,8 +505,8 @@ typedef struct PlayingBufferInfoStruct{
                     if(buffersPlaying[nextBufferIndex].isPlaying)
                         weakSelf.PacketPosPlaying = buffersPlaying[nextBufferIndex].packetPos;
                     
-                    //[weakSelf.delegate onPlayTimeUpdate: (int)(weakSelf.CurrentTimeInMSec)];
-                    [weakSelf.delegate onPlayTimeUpdate: (int)([weakSelf getCurrentTimeInMSecByPos:packetPosPlaying + info.numPackets])];
+                    weakSelf.PlayingTimeMsec += info.durationMsec;
+                    [weakSelf.delegate onPlayTimeUpdate: weakSelf.PlayingTimeMsec];
                     //buffersPlaying[bufferIndex].isPlaying = NO;
                     
                     dispatch_semaphore_signal(weakSelf.playSyncSemaphore);
@@ -521,6 +523,7 @@ typedef struct PlayingBufferInfoStruct{
                 int prevBufferIndex = bufferIndex - 1;
                 if(prevBufferIndex == -1)
                     prevBufferIndex = buffersCt - 1;
+                
                 if(!_buffersPlaying[prevBufferIndex].isPlaying)
                 {
                     weakSelf.PacketPosPlaying = weakSelf.PacketPos;
@@ -540,8 +543,9 @@ typedef struct PlayingBufferInfoStruct{
             else
             {
                 // Update decode packet position.
-                weakSelf.PacketPos = weakSelf.PacketPosNew;
-                weakSelf.PacketPosNew = 0;
+                //weakSelf.PacketPos = weakSelf.SeekPacketPos;
+                //weakSelf.SeekPacketPos = 0;
+                continue;
             }
             
             bufferIndex = (bufferIndex + 1) % buffersCt;

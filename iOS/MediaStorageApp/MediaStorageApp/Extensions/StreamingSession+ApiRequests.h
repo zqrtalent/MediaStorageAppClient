@@ -13,6 +13,7 @@
 @class LibraryInfoRequest;
 @class ImageResourceRequest;
 @class AudioPacketsByOffsetRequest;
+@class AudioPacketsByTimeRequest;
 
 @interface StreamingSession(ApiRequests)
 
@@ -20,5 +21,6 @@
 -(LibraryInfoRequest*)libraryInfoRequest;
 -(ImageResourceRequest*)imageResourceRequest:(NSString*)imageId SizeType:(NSString*)sizeType;
 -(AudioPacketsByOffsetRequest*)audioPacketsByOffset:(NSString*)songId Range:(NSRange)packetsRange;
+-(AudioPacketsByTimeRequest*)audioPacketsByTime:(NSString*)songId Offset:(UInt32)timeMSec NumPackets:(UInt32)packets;
 
 @end

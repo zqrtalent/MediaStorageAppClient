@@ -119,8 +119,9 @@ AudioConverterComplexInputDataProcMy(AudioConverterRef  inAudioConverter,
 //    if (*ioNumberDataPackets > maxPackets)
 //        *ioNumberDataPackets = maxPackets;
     
-    if(![mediaSource readPackets:NSMakeRange(afio->srcFilePos, *ioNumberDataPackets) InPacketsInfoObject:packetsInfo])
-        return Decoder_ErrorNeedMoreData; // Need more data.
+    auto readStatus = [mediaSource readPackets:NSMakeRange(afio->srcFilePos, *ioNumberDataPackets) InPacketsInfoObject:packetsInfo];
+    if(readStatus != StreamReadPacketStatus_Success)
+        return (readStatus == StreamReadPacketStatus_DownloadScheduled) ? Decoder_ErrorNeedMoreData : Decoder_ErrorUnavailableData;
     
     // advance input file packet position
     afio->srcFilePos += *ioNumberDataPackets;
@@ -143,6 +144,7 @@ AudioConverterComplexInputDataProcMy(AudioConverterRef  inAudioConverter,
     
     // Initialize decoded audio info.
     info.packetOffset = audioPacketOffset;
+    info.durationMsec = 0;
     info.numPackets = 0;
     info.isEof = NO;
     info.status = Decoder_NoError;
@@ -190,15 +192,14 @@ AudioConverterComplexInputDataProcMy(AudioConverterRef  inAudioConverter,
     error = AudioConverterFillComplexBuffer(_converter, &AudioConverterComplexInputDataProcMy, &afio, &ioOutputDataPackets,
                                             &fillBufferList, outPacketDesc);
     
-    if(error == Decoder_NoError)
+    if(error == noErr)
     {
         info.numPackets = (UInt32)(afio.srcFilePos - audioPacketOffset);
         _bufferSizeUsed = fillBufferList.mBuffers[0].mDataByteSize;
+        info.durationMsec = (UInt32)((_bufferSizeUsed * 1000) / (_outFormat.mBytesPerFrame * _outFormat.mSampleRate));
     }
     else
-    {
         info.status = (error == Decoder_ErrorNeedMoreData ? Decoder_ErrorNeedMoreData : Decoder_UnknownError);
-    }
     
     // Clean up.
     //free(afio.packetDescriptions);

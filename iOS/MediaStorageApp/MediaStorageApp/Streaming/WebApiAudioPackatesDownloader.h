@@ -28,6 +28,11 @@
 -(bool)checkIfDownloadCompleted;
 -(bool)checkAudioPacketsAvailability:(NSRange)packetsRange;
 
+// Converts time offset (In milliseconds) into packet offset.
+-(long)timeMsecOffset2PacketOffset:(UInt32)positionMsec;
+
+//-(bool)checkAudioPacketsAvailability:(UInt32)numPackets ByTime:(UInt32)msecOffset;
+
 -(bool)copyAudioPacketsData:(NSRange)range PacketsInfo:(AudioStreamPacketsInfo*)packets OutSize:(UInt32*)outDataSize;
 
 -(UInt32)getNumberOfPackets;

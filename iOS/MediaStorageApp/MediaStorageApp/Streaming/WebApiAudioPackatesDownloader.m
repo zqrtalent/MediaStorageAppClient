@@ -10,6 +10,7 @@
 #include "../MediaStorageWebApi/DataContracts/MediaPackets.h"
 #import "../Extensions/StreamingSession+ApiRequests.h"
 #import "../MediaStorageWebApi/AudioPacketsByOffsetRequest.h"
+#import "../MediaStorageWebApi/AudioPacketsByTimeRequest.h"
 #import "../Models/AudioStreamPacketsInfo.h"
 
 @interface WebApiAudioPackatesDownloader()
@@ -155,11 +156,11 @@
 {
     [self.operations_lock lock];
     
-    if(self.thread.isExecuting &&
-       (self.isPaused || self.pauseRequested))
+    if(self.thread.isExecuting && (self.isPaused || self.pauseRequested))
     {
         dispatch_semaphore_signal(self.download_pause);
     }
+    
     [self.operations_lock unlock];
     return YES;
 }
@@ -221,6 +222,32 @@
     return available;
 }
 
+-(long)timeMsecOffset2PacketOffset:(UInt32)positionMsec
+{
+    if(positionMsec == 0)
+        return 0;
+    
+// TODO: Optimize that functionality.
+//    if([self checkIfDownloadCompleted])
+//    {
+//    }
+//    else
+//    {
+//    }
+    
+    auto request = [self.session audioPacketsByTime:_mediaId Offset:positionMsec NumPackets:1];
+    
+    MediaPackets* __block packets = nullptr;
+    dispatch_semaphore_t __block waitSemaphore = dispatch_semaphore_create(0);
+    
+    [request makeRequest:^(MediaPackets* respPackets){
+        packets = respPackets;
+        dispatch_semaphore_signal(waitSemaphore);
+    }];
+    
+    dispatch_semaphore_wait(waitSemaphore, DISPATCH_TIME_FOREVER);
+    return packets == nullptr ? -1 : packets->_offset;
+}
 
 -(bool)copyAudioPacketsData:(NSRange)range PacketsInfo:(AudioStreamPacketsInfo*)packets OutSize:(UInt32*)outDataSize
 {
@@ -376,7 +403,8 @@
     
     __weak __typeof__(self) weakSelf = self;
     MediaPackets* __block packets = nullptr;
-    [_audioPacketsReq makeRequest:^(MediaPackets* respPackets){
+    [_audioPacketsReq makeRequest:^(MediaPackets* respPackets)
+    {
         packets = respPackets;
         // Signal download sync.
         dispatch_semaphore_signal(weakSelf.download_sync);
@@ -410,7 +438,6 @@
     if(packets)
     {
         //NSLog(@"finish download: %ld - %d", packets->_offset, packets->_numPackets);
-        
         int numAllPackets = 0;
         [self.objects_lock lock];           // Lock
         if(self.mediaPacketsByOffset == nil)

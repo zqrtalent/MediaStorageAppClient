@@ -46,7 +46,7 @@
     memcpy(&_streamBasicDesc, streamDesc, sizeof(AudioStreamBasicDescription));
     
     _lockDownloadSync = [[NSCondition alloc] init];
-    return [super init];
+    return [super init];;
 }
 
 -(UInt32)getPacketSizeInBytes
@@ -73,23 +73,46 @@
     assert(range.location >= 0);
     
     AudioStreamPacketsInfo* packetsInfo = [[AudioStreamPacketsInfo alloc] init: [self getPacketSizeInBytes]*(UInt32)range.length];
-    if([self readPackets:range InPacketsInfoObject:packetsInfo])
+    if([self readPackets:range InPacketsInfoObject:packetsInfo] == StreamReadPacketStatus_Success)
         return packetsInfo;
     return nil;
 }
 
--(bool)readPackets:(NSRange)range InPacketsInfoObject:(AudioStreamPacketsInfo*)packetsInfo
+-(AudioStreamPacketsInfo*)readPackets:(UInt32)numPackets ByTimeOffset:(UInt32)msecOffset
 {
+    assert(numPackets > 0);
+    AudioStreamPacketsInfo* packetsInfo = [[AudioStreamPacketsInfo alloc] init: [self getPacketSizeInBytes]*(UInt32)numPackets];
+    if([self readPackets:numPackets ByTimeOffset:msecOffset InPacketsInfoObject:packetsInfo] == StreamReadPacketStatus_Success)
+        return packetsInfo;
+    return nil;
+}
+
+-(StreamReadPacketStatus)readPackets:(UInt32)numPackets ByTimeOffset:(UInt32)msecOffset InPacketsInfoObject:(AudioStreamPacketsInfo*)packetsInfo
+{
+    return StreamReadPacketStatus_Success;
+}
+
+-(StreamReadPacketStatus)readPackets:(NSRange)range InPacketsInfoObject:(AudioStreamPacketsInfo*)packetsInfo
+{
+    assert(self.downloader);
     assert(range.length > 0);
     assert(range.location >= 0);
     
-    BOOL ret = NO;
+    // Validate packet offset.
+    UInt32 numPackets = [self.downloader getNumberOfPackets];
+    if(numPackets && range.location >= (numPackets - 1))
+        return StreamReadPacketStatus_InvalidOffset; // Invalid packet offset.
+    
+    StreamReadPacketStatus ret = StreamReadPacketStatus_Success;
     // Check availability of audio packets.
     if([self.downloader checkAudioPacketsAvailability:range])
     {
         UInt32 packetsDataSize = 0;
         // Copy audio packets.
-        ret = [self.downloader copyAudioPacketsData:range PacketsInfo:packetsInfo OutSize:&packetsDataSize];
+        if(![self.downloader copyAudioPacketsData:range PacketsInfo:packetsInfo OutSize:&packetsDataSize])
+        {
+            ret = StreamReadPacketStatus_ReadError;
+        }
     }
     else
     {
@@ -97,8 +120,7 @@
         [_lockDownloadSync lock];
         
         // Wait for previous read request to complete.
-        bool r = [self waitForPacketsReadToComplete:range];
-        if(!r)
+        if(![self waitForPacketsReadToComplete:range])
         {
             // Download requesting packets.
             self.packetsReadIsInProgress = YES;
@@ -106,14 +128,17 @@
             _streamReadCallback = nil;
             
             [self.downloader start:range.location];
+            
+            ret = StreamReadPacketStatus_DownloadScheduled;
             //NSLog(@"read packets: %ld", range.location);
         }
-        
+        else
+            ret = StreamReadPacketStatus_ReadError;
         // Unlock section.
         [_lockDownloadSync unlock];
     }
     
-    if(ret)
+    if(ret == StreamReadPacketStatus_Success)
     {
         // Lock section.
         [_lockDownloadSync lock];
@@ -132,6 +157,12 @@
     }
     
     return ret;
+}
+
+-(long)timeMsecOffset2PacketOffset:(UInt32)positionMsec
+{
+    assert(self.downloader);
+    return [self.downloader timeMsecOffset2PacketOffset:positionMsec];
 }
 
 //-(bool)readPackets:(NSRange)range WithCallback:(AudioPacketsReadCallback)callback

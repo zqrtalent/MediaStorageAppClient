@@ -11,6 +11,7 @@
 #import "../MediaStorageWebApi/LibraryInfoRequest.h"
 #import "../MediaStorageWebApi/ImageResourceRequest.h"
 #import "../MediaStorageWebApi/AudioPacketsByOffsetRequest.h"
+#import "../MediaStorageWebApi/AudioPacketsByTimeRequest.h"
 
 @implementation StreamingSession(ApiRequests)
 
@@ -38,6 +39,13 @@
 -(AudioPacketsByOffsetRequest*)audioPacketsByOffset:(NSString*)songId Range:(NSRange)packetsRange
 {
     auto req = [[AudioPacketsByOffsetRequest alloc] init:self.sessionId SongId:songId Range:packetsRange];
+    req.host = self.settings.webApiHost;
+    return req;
+}
+
+-(AudioPacketsByTimeRequest*)audioPacketsByTime:(NSString*)songId Offset:(UInt32)timeMSec NumPackets:(UInt32)packets
+{
+    auto req = [[AudioPacketsByTimeRequest alloc] init:self.sessionId SongId:songId TimeMsec:timeMSec NumPackets:packets];
     req.host = self.settings.webApiHost;
     return req;
 }
