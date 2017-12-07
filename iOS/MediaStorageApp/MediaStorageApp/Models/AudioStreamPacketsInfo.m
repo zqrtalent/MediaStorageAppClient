@@ -95,6 +95,20 @@
     }
 }
 
+-(const void*)getAudioPacketDataByIndex:(UInt32)index
+{
+    UInt32 offset = 0;
+    if(index >= self.packetsCt)
+        return nullptr;
+    
+    int loop=0;
+    while(loop < index)
+    {
+        offset += self.packetsDesc[loop++].mDataByteSize;
+    }
+    return (const void*)&((Byte*)self.data)[offset];
+}
+
 -(UInt32)read:(NSRange)range OutBuffer:(void*)pBuffer OutBufferSize:(UInt32)bufferSize OutPacketsDesc:(AudioStreamPacketDescription*)packetsDesc;
 {
     if(range.location < self.offset || (range.location + range.length) > (self.offset + self.packetsCt))
@@ -135,6 +149,11 @@
 }
 
 -(UInt32)retrievePacketsDataBufferSize
+{
+    return (UInt32)self.packetsData.length;
+}
+
+-(UInt32)retrievePacketsDataBufferSizeUsed
 {
     return self.packetsDataSizeUsed;
 }

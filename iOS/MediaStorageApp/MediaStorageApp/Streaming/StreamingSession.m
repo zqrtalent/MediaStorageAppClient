@@ -8,6 +8,7 @@
 
 #import "StreamingSession.h"
 #import "WebApiAudioStreamSource.h"
+#import "AudioFileSource.h"
 
 #import "../Extensions/NSString+MercuryString.h"
 #import "../Extensions/StreamingSession+ApiRequests.h"
@@ -103,7 +104,8 @@
     //streamDesc.mFormatFlags = kLinearPCMFormatFlagIsFloat; // little-endian
     streamDesc.mReserved = 0;
     
-    return [[WebApiAudioStreamSource alloc] init:self MediaId:mediaId StreamDescription:&streamDesc WithSettings:[WebApiAudioStreamReaderSettings defaultSettings]];
+    return [[AudioFileSource alloc] init:self MediaId:[NSURL URLWithString:@"/Users/ZqrTalent/Desktop/01_blink_182_dumpweed_myzuka.me.mp3"] FileType:kAudioFileMP3Type];
+    //return [[WebApiAudioStreamSource alloc] init:self MediaId:mediaId StreamDescription:&streamDesc WithSettings:[WebApiAudioStreamReaderSettings defaultSettings]];
 }
 
 @end

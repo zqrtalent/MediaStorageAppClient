@@ -447,13 +447,6 @@ typedef struct PlayingBufferInfoStruct{
             // Decode audio packets.
             if([weakSelf.decoder decode:weakSelf.PacketPos AndWriteResultInto:info])
             {
-                if(isBuffering)
-                {
-                    isBuffering = NO;
-                    // Set playing state.
-                    [weakSelf updateState:AudioPlayer_Playing];
-                }
-                
                 // Fill play buffer with decoded audio data.
                 [weakSelf.decoder fillAudioPCMBuffer:_buffers[bufferIndex]];
             }
@@ -512,6 +505,14 @@ typedef struct PlayingBufferInfoStruct{
                     dispatch_semaphore_signal(weakSelf.playSyncSemaphore);
                 }
             }];
+            
+            if(isBuffering)
+            {
+                isBuffering = NO;
+                
+                // Set playing state.
+                [weakSelf updateState:AudioPlayer_Playing];
+            }
             
             if(!weakSelf.Seeking)
             {

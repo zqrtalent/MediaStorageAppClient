@@ -14,7 +14,8 @@
 @property (nonatomic, assign) long offset;
 @property (nonatomic, assign) UInt32 packetsCt;
 @property (nonatomic, readonly, getter=retrievePacketsDataBuffer) const void* data;
-@property (nonatomic, readonly, getter=retrievePacketsDataBufferSize) UInt32 dataSize;
+@property (nonatomic, readonly, getter=retrievePacketsDataBufferSizeUsed) UInt32 dataSize;
+@property (nonatomic, readonly, getter=retrievePacketsDataBufferSize) UInt32 dataBufferSize;
 @property (nonatomic, readonly, getter=retrievePacketsDescription) AudioStreamPacketDescription* streamPacketsDesc;
 
 -(instancetype)init:(UInt32)bufferCapacityInBytes;
@@ -22,6 +23,9 @@
 -(void)addAudioPacket:(const void*)packetData PacketDataSize:(UInt32)packetDataSize StreamPacketDesc:(AudioStreamPacketDescription&)streamPacketDesc;
 
 -(void)clearPacketsData:(bool)disposeMemoryBuffers;
+
+// Retrieves packet data by index of packet data.
+-(const void*)getAudioPacketDataByIndex:(UInt32)index;
 
 /*Returns number of packets read.*/
 -(UInt32)read:(NSRange)range OutBuffer:(void*)pBuffer OutBufferSize:(UInt32)bufferSize OutPacketsDesc:(AudioStreamPacketDescription*)packetsDesc;

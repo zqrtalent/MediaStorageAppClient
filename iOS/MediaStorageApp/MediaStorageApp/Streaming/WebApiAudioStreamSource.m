@@ -78,20 +78,6 @@
     return nil;
 }
 
--(AudioStreamPacketsInfo*)readPackets:(UInt32)numPackets ByTimeOffset:(UInt32)msecOffset
-{
-    assert(numPackets > 0);
-    AudioStreamPacketsInfo* packetsInfo = [[AudioStreamPacketsInfo alloc] init: [self getPacketSizeInBytes]*(UInt32)numPackets];
-    if([self readPackets:numPackets ByTimeOffset:msecOffset InPacketsInfoObject:packetsInfo] == StreamReadPacketStatus_Success)
-        return packetsInfo;
-    return nil;
-}
-
--(StreamReadPacketStatus)readPackets:(UInt32)numPackets ByTimeOffset:(UInt32)msecOffset InPacketsInfoObject:(AudioStreamPacketsInfo*)packetsInfo
-{
-    return StreamReadPacketStatus_Success;
-}
-
 -(StreamReadPacketStatus)readPackets:(NSRange)range InPacketsInfoObject:(AudioStreamPacketsInfo*)packetsInfo
 {
     assert(self.downloader);

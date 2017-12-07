@@ -119,6 +119,12 @@ AudioConverterComplexInputDataProcMy(AudioConverterRef  inAudioConverter,
 //    if (*ioNumberDataPackets > maxPackets)
 //        *ioNumberDataPackets = maxPackets;
     
+    // Clear packet data but keep memory used.
+    //[packetsInfo clearPacketsData: NO];
+    
+    //UInt32 dataSizeOld = packetsInfo.dataSize;
+    //UInt32 numPacketsOld = packetsInfo.packetsCt;
+    
     auto readStatus = [mediaSource readPackets:NSMakeRange(afio->srcFilePos, *ioNumberDataPackets) InPacketsInfoObject:packetsInfo];
     if(readStatus != StreamReadPacketStatus_Success)
         return (readStatus == StreamReadPacketStatus_DownloadScheduled) ? Decoder_ErrorNeedMoreData : Decoder_ErrorUnavailableData;
@@ -126,9 +132,15 @@ AudioConverterComplexInputDataProcMy(AudioConverterRef  inAudioConverter,
     // advance input file packet position
     afio->srcFilePos += *ioNumberDataPackets;
     
+    void* dt  = (void*)packetsInfo.data;
+    UInt32 size = packetsInfo.dataSize;
+    
     // put the data pointer into the buffer list
-    ioData->mBuffers[0].mData = (void*)packetsInfo.data;
-    ioData->mBuffers[0].mDataByteSize = packetsInfo.dataSize;
+    ioData->mBuffers[0].mData = dt;
+    ioData->mBuffers[0].mDataByteSize = size;
+    
+    //ioData->mBuffers[0].mData = (void*)packetsInfo.data;
+    //ioData->mBuffers[0].mDataByteSize = packetsInfo.dataSize;
     ioData->mBuffers[0].mNumberChannels = afio->srcFormat.mChannelsPerFrame;
     
     // don't forget the packet descriptions if required
@@ -177,6 +189,7 @@ AudioConverterComplexInputDataProcMy(AudioConverterRef  inAudioConverter,
     afio.srcSizePerPacket = [_media getPacketSizeInBytes];
     afio.mediaStream = (__bridge void*)_media;
     afio.audioStreamPacketsInfo = (__bridge void*)packetsInfo;
+    memcpy(&afio.srcFormat, &(_inFormat), sizeof(AudioStreamBasicDescription));
     
     // Set up output buffer list.
     AudioBufferList fillBufferList = {};

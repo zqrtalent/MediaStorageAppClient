@@ -35,6 +35,8 @@ typedef NS_ENUM(NSInteger, StreamReadPacketStatus)
 
 -(AudioStreamPacketsInfo*)readPackets:(NSRange)range;
 
+
+// @packetsInfo - packets info container object that holds (Existing info will be destroyed) read packets data info.
 -(StreamReadPacketStatus)readPackets:(NSRange)range InPacketsInfoObject:(AudioStreamPacketsInfo*)packetsInfo;
 
 -(long)timeMsecOffset2PacketOffset:(UInt32)positionMsec;
