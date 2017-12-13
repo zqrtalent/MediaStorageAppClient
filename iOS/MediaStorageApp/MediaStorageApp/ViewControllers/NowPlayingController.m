@@ -185,7 +185,7 @@
 -(void)initiateUIForPlay
 {
     NSString* sessionId =  [AppDelegate sharedInstance].streamingSession.sessionId;
-    AudioMetadataInfo* nowPlaying = [AppDelegate sharedInstance].playerManager.NowPlaying;
+    AudioMetadataInfo* nowPlaying = [AppDelegate sharedInstance].playerManager.nowPlaying;
     
     // Do any additional setup after loading the view.
     [self updateNowPlayingUI:YES WithTimingInfo:YES];
@@ -278,10 +278,10 @@
         if(currentTimeSec != _currentPlayTimeSec){
             _currentPlayTimeSec = currentTimeSec;
             if(!_trackbarIsCaptured)
-                [self.playbackTrackbar setValue:_currentPlayTimeSecFloat];
+                [weakSelf.playbackTrackbar setValue:_currentPlayTimeSecFloat];
             
             // Update track bar and playback time labels.
-            float timeLeftSec = [AppDelegate sharedInstance].playerManager.NowPlaying.durationSec - _currentPlayTimeSecFloat;
+            float timeLeftSec = [AppDelegate sharedInstance].playerManager.nowPlaying.durationSec - _currentPlayTimeSecFloat;
             // Update playback times.
             self.currTimeSecLabel.text = [NSString stringWithFormat:@"%d:%02d", currentTimeSec/60, currentTimeSec%60];
             self.currTimeSecLeftLabel.text = [NSString stringWithFormat:@"-%d:%02d", (int)(timeLeftSec/60), (int)(timeLeftSec)%60];
@@ -290,7 +290,7 @@
         }
         else{
             if(!_trackbarIsCaptured)
-                [self.playbackTrackbar setValue:_currentPlayTimeSecFloat];
+                [weakSelf.playbackTrackbar setValue:_currentPlayTimeSecFloat];
         }
     });
 }

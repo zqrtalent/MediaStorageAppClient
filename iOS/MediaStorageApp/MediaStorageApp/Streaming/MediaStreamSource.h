@@ -10,8 +10,6 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "../Models/AudioStreamPacketsInfo.h"
 
-
-
 typedef void(^AudioPacketsReadCallback)(AudioStreamPacketsInfo* packetsInfo);
 
 typedef NS_ENUM(NSInteger, StreamReadPacketStatus)

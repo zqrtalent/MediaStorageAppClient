@@ -16,6 +16,7 @@
 @property (nonatomic, strong) StreamingSession* session;
 
 -(AudioPlayerState)retrievePlayerState;
+-(double)retrieveElapsedPlaybackTimeInSec;
 
 @end
 
@@ -91,7 +92,7 @@
     id<MediaStreamSourceProtocol> stream = [self.session getMediaStream:metadata.mediaId];
     if(stream)
     {
-        self.NowPlaying = metadata;
+        self.nowPlaying = metadata;
         [self.player play:stream AudioMetadata:metadata At:0];
         return YES;
     }
@@ -104,6 +105,38 @@
     [self playByMetadataInfo: [self.playlist mediaByIndex:index UseAsCurrent:YES]];
 }
 
+-(BOOL)play
+{
+    assert(self.session);
+    if(self.player == nil || self.player.audioStream == nil)
+        return NO;
+    
+    // Start/Resume play
+    if(self.playerState == AudioPlayer_Stopped ||
+       self.playerState == AudioPlayer_Paused)
+    {
+        [self.player resume];
+        return YES;
+    }
+    return NO;
+}
+
+-(BOOL)pause
+{
+    assert(self.session);
+    if(self.player == nil || self.player.audioStream == nil)
+        return NO;
+    
+    // Pause play
+    if(self.playerState == AudioPlayer_Playing ||
+       self.playerState == AudioPlayer_Buffering)
+    {
+        [self.player pause:nil];
+        return YES;
+    }
+    return NO;
+}
+
 -(BOOL)playPauseToggle
 {
     assert(self.session);
@@ -112,10 +145,25 @@
         return NO;
     
     // Start play/resume
-    if([self.player getPlayerState] == AudioPlayer_Stopped || [_player getPlayerState] == AudioPlayer_Paused)
+    if(self.playerState == AudioPlayer_Stopped ||
+       self.playerState == AudioPlayer_Paused)
         [self.player resume];
     else
         [self.player pause: nil];
+    return YES;
+}
+
+-(BOOL)replay
+{
+    assert(self.session);
+    if(self.nowPlaying == nil || self.player == nil || self.player.audioStream == nil)
+        return NO;
+    
+    // Replay current song.
+    if(self.playerState == AudioPlayer_Stopped)
+        [self.player resume];
+    else
+        [self.player seekAtTime:0.0];
     return YES;
 }
 
@@ -138,13 +186,23 @@
     assert(self.session);
     if(![self isPrevAvailable])
         return NO;
-    return [self playByMetadataInfo: [self.playlist prevMedia:YES]];
+    
+    AudioMetadataInfo* prevMedia = [self.playlist prevMedia:NO];
+    if(prevMedia != nil) // Thre is a previous track
+    {
+        // Replay track if playing time is greater than 5 sec.
+        if(self.player.CurrentTimeInSec > 5)
+            return [self replay];
+        // Play previous track.
+        return [self playByMetadataInfo: [self.playlist prevMedia:YES]];
+    }
+    
+    return [self replay];
 }
 
 -(BOOL)isPrevAvailable
 {
-    AudioMetadataInfo* prevMedia = [self.playlist prevMedia:NO];
-    return prevMedia != nil;
+    return (self.nowPlaying != nil);
 }
 
 -(void)cleanUp
@@ -152,11 +210,19 @@
     self->_mlInfo = nullptr;
     self.playlist = nil;
     self.session = nil;
+    self.nowPlaying = nil;
 }
 
 -(AudioPlayerState)retrievePlayerState
 {
     return [self.player getPlayerState];
+}
+
+-(double)retrieveElapsedPlaybackTimeInSec
+{
+    if(self.player == nil)
+        return 0.0;
+    return (double)self.player.CurrentTimeInSec;
 }
 
 @end

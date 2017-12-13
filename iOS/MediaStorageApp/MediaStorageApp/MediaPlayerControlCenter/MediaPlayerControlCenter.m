@@ -19,12 +19,19 @@
 @property (nonatomic, strong) MPMediaItemArtwork* mediaArtwork;
 
 -(void)initRemoteCommandCenter:(BOOL)init;
+-(MPRemoteCommandHandlerStatus)onPlayTrack;
+-(MPRemoteCommandHandlerStatus)onPauseTrack;
+-(MPRemoteCommandHandlerStatus)onTogglePlayPauseTrack;
+-(MPRemoteCommandHandlerStatus)onNextTrack;
+-(MPRemoteCommandHandlerStatus)onPrevTrack;
+-(MPRemoteCommandHandlerStatus)onChangePlaybackPosition:(MPChangePlaybackPositionCommandEvent*)event;
 
 @end
 
 @implementation MediaPlayerControlCenter
 
--(instancetype)init{
+-(instancetype)init
+{
     self.isActiveMPNowPlayingInfo = NO;
     self.isActiveRemoteCommands = NO;
     self.remoteCommandsDelegate = nil;
@@ -51,15 +58,18 @@
     return [super init];
 }
 
--(void)cleanUp{
+-(void)cleanUp
+{
     [self setActiveRemoteCommands:NO];
     [self setActiveNowPlayingInfo:NO];
     
     self.remoteCommandsDelegate = nil;
 }
 
--(void)setActiveNowPlayingInfo:(BOOL)active{
-    if(self.isActiveMPNowPlayingInfo != active){
+-(void)setActiveNowPlayingInfo:(BOOL)active
+{
+    if(self.isActiveMPNowPlayingInfo != active)
+    {
         // Set isActive flag.
         self.isActiveMPNowPlayingInfo = active;
         
@@ -70,7 +80,8 @@
     }
 }
 
--(void)setActiveRemoteCommands:(BOOL)active{
+-(void)setActiveRemoteCommands:(BOOL)active
+{
     if(self.isActiveRemoteCommands != active)
         [self initRemoteCommandCenter:active];
     
@@ -83,117 +94,185 @@
     self.isActiveRemoteCommands = active;
 }
 
--(void)initRemoteCommandCenter:(BOOL)init{
+-(void)initRemoteCommandCenter:(BOOL)init
+{
     MPRemoteCommandCenter* commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
-    if(init){
+    if(init)
+    {
         [commandCenter.playCommand addTarget:self action:@selector(onPlayTrack)];
+        commandCenter.playCommand.enabled = YES;
+        
         [commandCenter.pauseCommand addTarget:self action:@selector(onPauseTrack)];
+        commandCenter.pauseCommand.enabled = YES;
+        
         [commandCenter.togglePlayPauseCommand addTarget:self action:@selector(onTogglePlayPauseTrack)];
+        commandCenter.togglePlayPauseCommand.enabled = YES;
+        
         [commandCenter.nextTrackCommand addTarget:self action:@selector(onNextTrack)];
+        commandCenter.nextTrackCommand.enabled = YES;
+        
+        [commandCenter.previousTrackCommand addTarget:self action:@selector(onPrevTrack)];
+        commandCenter.previousTrackCommand.enabled = YES;
+        
+        [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(onChangePlaybackPosition:)];
+        commandCenter.changePlaybackPositionCommand.enabled = YES;
     }
-    else{
+    else
+    {
         [commandCenter.playCommand removeTarget:self action:@selector(onPlayTrack)];
         [commandCenter.pauseCommand removeTarget:self action:@selector(onPauseTrack)];
         [commandCenter.togglePlayPauseCommand removeTarget:self action:@selector(onTogglePlayPauseTrack)];
         [commandCenter.nextTrackCommand removeTarget:self action:@selector(onNextTrack)];
+        [commandCenter.nextTrackCommand removeTarget:self action:@selector(onPrevTrack)];
     }
 }
 
 #pragma mark - Remote command event handlers.
 
--(MPRemoteCommandHandlerStatus)onPlayTrack{
+-(MPRemoteCommandHandlerStatus)onPlayTrack
+{
     if(self.remoteCommandsDelegate)
         return [self.remoteCommandsDelegate onPlayCommand];
     return MPRemoteCommandHandlerStatusNoActionableNowPlayingItem;
 }
 
--(MPRemoteCommandHandlerStatus)onPauseTrack{
+-(MPRemoteCommandHandlerStatus)onPauseTrack
+{
     if(self.remoteCommandsDelegate)
         return [self.remoteCommandsDelegate onPauseCommand];
     return MPRemoteCommandHandlerStatusNoActionableNowPlayingItem;
 }
 
--(MPRemoteCommandHandlerStatus)onTogglePlayPauseTrack{
+-(MPRemoteCommandHandlerStatus)onTogglePlayPauseTrack
+{
     if(self.remoteCommandsDelegate)
         return [self.remoteCommandsDelegate onTogglePlayPauseCommand];
     return MPRemoteCommandHandlerStatusNoActionableNowPlayingItem;
 }
 
--(MPRemoteCommandHandlerStatus)onNextTrack{
+-(MPRemoteCommandHandlerStatus)onNextTrack
+{
     if(self.remoteCommandsDelegate)
         return [self.remoteCommandsDelegate onNextTrackCommand];
     return MPRemoteCommandHandlerStatusNoActionableNowPlayingItem;
 }
 
--(MPRemoteCommandHandlerStatus)onPrevTrack{
+-(MPRemoteCommandHandlerStatus)onPrevTrack
+{
     if(self.remoteCommandsDelegate)
         return [self.remoteCommandsDelegate onPrevTrackCommand];
     return MPRemoteCommandHandlerStatusNoActionableNowPlayingItem;
 }
 
+-(MPRemoteCommandHandlerStatus)onChangePlaybackPosition:(MPChangePlaybackPositionCommandEvent*)event
+{
+    if(self.remoteCommandsDelegate)
+        return [self.remoteCommandsDelegate onChangePlaybackPosition: event.positionTime];
+    return MPRemoteCommandHandlerStatusNoActionableNowPlayingItem;
+}
+
+
 #pragma mark - Remote command center methods.
 
--(void)enablePlayCommand:(BOOL)enable{
-    if(self.isActiveRemoteCommands){
+-(void)enablePlayCommand:(BOOL)enable
+{
+    if(self.isActiveRemoteCommands)
         [MPRemoteCommandCenter sharedCommandCenter].playCommand.enabled = enable;
-    }
 }
 
--(void)enableNextTrackCommand:(BOOL)enable{
-    if(self.isActiveRemoteCommands){
+-(void)enableNextTrackCommand:(BOOL)enable
+{
+    if(self.isActiveRemoteCommands)
         [MPRemoteCommandCenter sharedCommandCenter].nextTrackCommand.enabled = enable;
-    }
 }
 
--(void)enablePrevTrackCommand:(BOOL)enable{
-    if(self.isActiveRemoteCommands){
+-(void)enablePrevTrackCommand:(BOOL)enable
+{
+    if(self.isActiveRemoteCommands)
         [MPRemoteCommandCenter sharedCommandCenter].previousTrackCommand.enabled = enable;
-    }
+}
+
+-(void)enableChangePlaybackPositionCommand:(BOOL)enable
+{
+    if(self.isActiveRemoteCommands)
+        [MPRemoteCommandCenter sharedCommandCenter].changePlaybackPositionCommand.enabled = enable;
 }
 
 #pragma mark - Mediaplayer now playing info update methods.
--(void)setNowPlayingState:(BOOL)playing {
-    if(self.isActiveMPNowPlayingInfo){
-        if(playing){
-            [self setNowPlayingPlaybackProgress:1.0];
+
+-(void)setNowPlayingState:(BOOL)playing
+{
+    if(self.isActiveMPNowPlayingInfo)
+    {
+        if(playing)
+        {
+            [self setNowPlayingPlaybackRate: 1.0];
             [self updateNowPlayingInfo];
         }
-        else{
-            [self setNowPlayingPlaybackProgress:0.0];
+        else
+        {
+            [self setNowPlayingPlaybackRate: 0.0];
             [self updateNowPlayingInfo];
         }
     }
 }
 
--(void)setNowPlayingArtistName:(NSString*)artistName{
+-(void)setNowPlayingState:(BOOL)playing WithElapsedPlaybackTimeSec:(double)elapsedTimeInSec
+{
+    if(self.isActiveMPNowPlayingInfo)
+    {
+        [self setNowPlayingElapsedPlaybackTime: elapsedTimeInSec];
+        
+        if(playing)
+        {
+            [self setNowPlayingPlaybackRate: 1.0];
+            [self updateNowPlayingInfo];
+        }
+        else
+        {
+            [self setNowPlayingPlaybackRate: 0.0];
+            [self updateNowPlayingInfo];
+        }
+    }
+}
+
+-(void)setNowPlayingArtistName:(NSString*)artistName
+{
     [self.nowPlayingInfo setValue:artistName forKey:MPMediaItemPropertyArtist];
 }
 
--(void)setNowPlayingAlbumName:(NSString*)albumName{
+-(void)setNowPlayingAlbumName:(NSString*)albumName
+{
     [self.nowPlayingInfo setValue:albumName forKey:MPMediaItemPropertyAlbumTitle];
 }
 
--(void)setNowPlayingTitle:(NSString*)title{
+-(void)setNowPlayingTitle:(NSString*)title
+{
     [self.nowPlayingInfo setValue:title forKey:MPMediaItemPropertyTitle];
 }
 
--(void)setNowPlayingArtwork:(UIImage*)artworkImage{
+-(void)setNowPlayingArtwork:(UIImage*)artworkImage
+{
     //[self.nowPlayingInfo setValue:nil forKey:MPMediaItemPropertyArtwork];
 }
 
--(void)setNowPlayingDuration:(double)durationInSec{
+-(void)setNowPlayingDuration:(double)durationInSec
+{
     [self.nowPlayingInfo setValue:[NSNumber numberWithDouble:durationInSec] forKey:MPMediaItemPropertyPlaybackDuration];
 }
 
--(void)setNowPlayingPlaybackProgress:(double)playbackProgressInSec{
+-(void)setNowPlayingPlaybackProgress:(double)playbackProgressInSec
+{
     [self.nowPlayingInfo setValue:[NSNumber numberWithDouble:playbackProgressInSec] forKey:MPNowPlayingInfoPropertyPlaybackProgress];
 }
 
--(void)setNowPlayingElapsedPlaybackTime:(double)elapsedPlaybackTimeInSec{
+-(void)setNowPlayingElapsedPlaybackTime:(double)elapsedPlaybackTimeInSec
+{
     [self.nowPlayingInfo setValue:[NSNumber numberWithDouble:elapsedPlaybackTimeInSec] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
 }
 
--(void)setNowPlayingPlaybackRate:(double)playbackRate{
+-(void)setNowPlayingPlaybackRate:(double)playbackRate
+{
     [self.nowPlayingInfo setValue:[NSNumber numberWithFloat:(float)playbackRate] forKey:MPNowPlayingInfoPropertyPlaybackRate];
 }
 

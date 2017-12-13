@@ -55,6 +55,7 @@
 
 -(instancetype)init:(id<AudioPacketsDownloaderProtocol>)delegate Session:(StreamingSession* __weak)session MediaId:(NSString*)mediaId
 {
+    self = [super init];
     self.session = session;
     self.mediaId = mediaId;
     

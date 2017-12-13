@@ -14,4 +14,5 @@
 -(MPRemoteCommandHandlerStatus)onTogglePlayPauseCommand;
 -(MPRemoteCommandHandlerStatus)onNextTrackCommand;
 -(MPRemoteCommandHandlerStatus)onPrevTrackCommand;
+-(MPRemoteCommandHandlerStatus)onChangePlaybackPosition:(NSTimeInterval)position;
 @end

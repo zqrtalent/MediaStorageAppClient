@@ -13,7 +13,7 @@
 #include "../MediaStorageApp/MediaStorageWebApi/DataContracts/MLSong.h"
 #include "../MediaStorageApp/Models/AudioMetadataInfo.h"
 #include "../MediaStorageApp/Extensions/AudioMetadataInfo+DataContracts.h"
-#include "../MediaStorageApp/Extensions/NSString+MecuryString.h"
+#include "../MediaStorageApp/Extensions/NSString+MercuryString.h"
 
 @interface ModiaStorageAppModelTests : XCTestCase
 

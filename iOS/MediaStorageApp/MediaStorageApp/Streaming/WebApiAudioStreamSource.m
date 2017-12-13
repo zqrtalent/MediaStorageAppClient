@@ -36,6 +36,8 @@
 -(instancetype)init:(StreamingSession* __weak)session MediaId:(NSString*)mediaId StreamDescription:(const AudioStreamBasicDescription*)streamDesc WithSettings:(WebApiAudioStreamReaderSettings*)settings
 {
     assert(streamDesc);
+    self = [super init];
+    
     self.downloader = [[WebApiAudioPackatesDownloader alloc] init:self Session:session MediaId:mediaId];
     self.packetsReadIsInProgress = NO;
     self.lastReadOffset = 0;
@@ -46,7 +48,7 @@
     memcpy(&_streamBasicDesc, streamDesc, sizeof(AudioStreamBasicDescription));
     
     _lockDownloadSync = [[NSCondition alloc] init];
-    return [super init];;
+    return self;
 }
 
 -(UInt32)getPacketSizeInBytes
@@ -108,18 +110,25 @@
         // Wait for previous read request to complete.
         if(![self waitForPacketsReadToComplete:range])
         {
-            // Download requesting packets.
-            self.packetsReadIsInProgress = YES;
-            _rangeReadPackets = range;
-            _streamReadCallback = nil;
+            if(!self.packetsReadIsInProgress)
+            {
+                // Download requesting packets.
+                self.packetsReadIsInProgress = YES;
+                _rangeReadPackets = range;
+                _streamReadCallback = nil;
+                [self.downloader start:range.location];
+                
+                ret = StreamReadPacketStatus_DownloadScheduled;
+            }
+            else
+            {
+                ret = StreamReadPacketStatus_ReadError;
+            }
             
-            [self.downloader start:range.location];
-            
-            ret = StreamReadPacketStatus_DownloadScheduled;
-            //NSLog(@"read packets: %ld", range.location);
         }
         else
-            ret = StreamReadPacketStatus_ReadError;
+            ret = StreamReadPacketStatus_DownloadScheduled;
+        
         // Unlock section.
         [_lockDownloadSync unlock];
     }

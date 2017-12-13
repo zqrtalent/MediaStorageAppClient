@@ -8,12 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import "StreamingSession.h"
-#import "WebApiAudioStreamReaderSettings.h"
+#import "MediaStreamSource.h"
 
 @interface AudioFileSource : NSObject<MediaStreamSourceProtocol>
 
--(instancetype)init:(StreamingSession* __weak)session MediaId:(NSURL*)urlMedia FileType:(AudioFileTypeID)fileTypeId;
+-(instancetype)init:(NSURL*)urlMedia FileType:(AudioFileTypeID)fileTypeId;
 
 -(bool)getStreamDescription:(AudioStreamBasicDescription*)streamDescOut;
 

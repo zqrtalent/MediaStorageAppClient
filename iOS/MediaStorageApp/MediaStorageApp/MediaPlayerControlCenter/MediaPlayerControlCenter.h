@@ -23,17 +23,23 @@
 -(void)enablePlayCommand:(BOOL)enable;
 -(void)enableNextTrackCommand:(BOOL)enable;
 -(void)enablePrevTrackCommand:(BOOL)enable;
+-(void)enableChangePlaybackPositionCommand:(BOOL)enable;
 
 // MPNowPlayingInfo attributes.
 -(void)setNowPlayingState:(BOOL)playing;
+-(void)setNowPlayingState:(BOOL)playing WithElapsedPlaybackTimeSec:(double)elapsedTimeInSec;
 -(void)setNowPlayingArtistName:(NSString*)artistName;
 -(void)setNowPlayingAlbumName:(NSString*)albumName;
 -(void)setNowPlayingTitle:(NSString*)title;
 -(void)setNowPlayingArtwork:(UIImage*)artworkImage;
 -(void)setNowPlayingDuration:(double)durationInSec;
+
 -(void)setNowPlayingPlaybackProgress:(double)playbackProgressInSec;
+// Update song elapsed playback time (Current playing time).
 -(void)setNowPlayingElapsedPlaybackTime:(double)elapsedPlaybackTimeInSec;
+// Playback rate 1.0 default speed 2.0 twice faster time etc.
 -(void)setNowPlayingPlaybackRate:(double)playbackRate;
+
 -(void)updateNowPlayingInfo;
 
 @end

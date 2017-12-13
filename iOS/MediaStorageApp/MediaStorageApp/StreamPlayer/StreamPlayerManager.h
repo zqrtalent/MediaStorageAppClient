@@ -23,7 +23,8 @@ class MediaLibraryInfo;
 @property (nonatomic, strong) StreamPlayerPlaylist* playlist;
 @property (nonatomic, strong) Player* player;
 @property (nonatomic, readonly, getter=retrievePlayerState) AudioPlayerState playerState;
-@property (nonatomic, strong) AudioMetadataInfo* NowPlaying;
+@property (nonatomic, readonly, getter=retrieveElapsedPlaybackTimeInSec) double elapsedPlaybackTimeSec;
+@property (nonatomic, strong) AudioMetadataInfo* nowPlaying;
 
 +(instancetype)sharedInstance;
 
@@ -32,6 +33,12 @@ class MediaLibraryInfo;
 -(void)play:(int)index;
 
 -(BOOL)playPauseToggle;
+
+-(BOOL)play;
+
+-(BOOL)pause;
+
+-(BOOL)replay;
 
 -(BOOL)playNext;
 

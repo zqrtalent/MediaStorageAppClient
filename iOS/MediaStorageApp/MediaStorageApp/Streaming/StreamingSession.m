@@ -104,8 +104,12 @@
     //streamDesc.mFormatFlags = kLinearPCMFormatFlagIsFloat; // little-endian
     streamDesc.mReserved = 0;
     
-    return [[AudioFileSource alloc] init:self MediaId:[NSURL URLWithString:@"/Users/ZqrTalent/Desktop/01_blink_182_dumpweed_myzuka.me.mp3"] FileType:kAudioFileMP3Type];
-    //return [[WebApiAudioStreamSource alloc] init:self MediaId:mediaId StreamDescription:&streamDesc WithSettings:[WebApiAudioStreamReaderSettings defaultSettings]];
+//    if([mediaId compare:@"33682b34-0706-4fb5-ac59-4c72e2095145" options:NSCaseInsensitiveSearch] == NSOrderedSame){
+//        return [[AudioFileSource alloc] init: [NSURL URLWithString:@"/Users/ZqrTalent/Desktop/01_blink_182_dumpweed_myzuka.me.mp3"] FileType:kAudioFileMP3Type];
+//    }
+    
+    //return [[AudioFileSource alloc] init: [NSURL URLWithString:@"/Users/ZqrTalent/Desktop/01_blink_182_dumpweed_myzuka.me.mp3"] FileType:kAudioFileMP3Type];
+    return [[WebApiAudioStreamSource alloc] init:self MediaId:mediaId StreamDescription:&streamDesc WithSettings:[WebApiAudioStreamReaderSettings defaultSettings]];
 }
 
 @end

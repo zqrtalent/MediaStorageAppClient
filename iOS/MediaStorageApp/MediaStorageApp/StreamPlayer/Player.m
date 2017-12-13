@@ -161,12 +161,6 @@ typedef struct PlayingBufferInfoStruct{
 {
     // TODO: Validate seconds parameter.
     
-    
-    // TODO: Check seek packet position value for max or min.
-    //long packetPosNew = (seconds * 1000.0) / MP3_FRAME_DURATION_MSEC;
-    //if(packetPosNew == self.PacketPos)
-    //    return;
-    
     // Convert time sec into packet offset.
     UInt32 seekTimeMs = seconds * 1000.0f;
     long packetPosNew = [self.audioStream timeMsecOffset2PacketOffset:seekTimeMs];

@@ -7,6 +7,7 @@
 //
 
 #import "AudioFileSource.h"
+#import "../Models/AudioStreamPacketsInfo.h"
 
 @interface AudioFileSource()
 {
@@ -21,8 +22,10 @@
 
 @implementation AudioFileSource
 
--(instancetype)init:(StreamingSession* __weak)session MediaId:(NSURL*)urlMedia FileType:(AudioFileTypeID)fileTypeId
+-(instancetype)init:(NSURL*)urlMedia FileType:(AudioFileTypeID)fileTypeId
 {
+    self = [super init];
+    
     auto status = AudioFileOpenURL((__bridge CFURLRef)urlMedia, kAudioFileReadPermission, fileTypeId, &_mediaFileId);
     assert(status == noErr);
     _urlMedia = urlMedia;
@@ -33,7 +36,7 @@
     AudioStreamBasicDescription desc = {};
     [self getStreamDescription:&desc];
     
-    return [super init];
+    return self;
 }
 
 -(bool)getStreamDescription:(AudioStreamBasicDescription*)streamDescOut
@@ -53,17 +56,12 @@
 -(UInt32)getPacketSizeInBytes
 {
     assert(_mediaFileId);
-    
     if(_packetSizeInBytes == 0)
     {
-    
         UInt32 maxPacketSizeInBytes = 0;
         UInt32 size = sizeof(maxPacketSizeInBytes);
         if(AudioFileGetProperty(_mediaFileId, kAudioFilePropertyPacketSizeUpperBound, &size, &maxPacketSizeInBytes) == noErr)
-        {
             _packetSizeInBytes = maxPacketSizeInBytes;
-            return maxPacketSizeInBytes;
-        }
     }
     
     return _packetSizeInBytes;

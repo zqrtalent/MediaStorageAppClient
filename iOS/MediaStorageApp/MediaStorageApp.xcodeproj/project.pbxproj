@@ -55,6 +55,15 @@
 		BA87FBE51EE7327300F56A7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA87FBE41EE7327300F56A7A /* Assets.xcassets */; };
 		BA87FBE81EE7327300F56A7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA87FBE61EE7327300F56A7A /* LaunchScreen.storyboard */; };
 		BA87FBF31EE7327300F56A7A /* MediaStorageAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA87FBF21EE7327300F56A7A /* MediaStorageAppTests.m */; };
+		BA8B442D1FDC220F005DBCA2 /* WebApiAudioStreamSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAB20D21F88F21E00F3EF77 /* WebApiAudioStreamSource.m */; };
+		BA8B442F1FDC2216005DBCA2 /* WebApiAudioPackatesDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAB20D81F89384100F3EF77 /* WebApiAudioPackatesDownloader.m */; };
+		BA8B44301FDC221D005DBCA2 /* StreamingSessionSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF80DF31F85701C00E19958 /* StreamingSessionSettings.m */; };
+		BA8B44311FDC2222005DBCA2 /* StreamingSession.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF80DF01F856FFE00E19958 /* StreamingSession.m */; };
+		BA8B44321FDC222D005DBCA2 /* AudioMetadataInfo+DataContracts.m in Sources */ = {isa = PBXBuildFile; fileRef = BA744A551FAE583800962CA8 /* AudioMetadataInfo+DataContracts.m */; };
+		BA8B44331FDC2231005DBCA2 /* NSString+MercuryString.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAB20CF1F88E21D00F3EF77 /* NSString+MercuryString.m */; };
+		BA8B44351FDC2342005DBCA2 /* AudioFileSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8B44341FDC2342005DBCA2 /* AudioFileSourceTests.m */; };
+		BA8B44361FDC27BF005DBCA2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34D6B41F0598980041EA39 /* AudioToolbox.framework */; };
+		BA8B443A1FDC2C4F005DBCA2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34D6B61F0598A70041EA39 /* UIKit.framework */; };
 		BAA45CE41FB7A62600648F1E /* AudioFileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA45CE31FB7A62600648F1E /* AudioFileSource.m */; };
 		BAA45CE51FB7A62600648F1E /* AudioFileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA45CE31FB7A62600648F1E /* AudioFileSource.m */; };
 		BAAB20D01F88E21D00F3EF77 /* NSString+MercuryString.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAB20CF1F88E21D00F3EF77 /* NSString+MercuryString.m */; };
@@ -174,6 +183,8 @@
 		BA87FBF21EE7327300F56A7A /* MediaStorageAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaStorageAppTests.m; sourceTree = "<group>"; };
 		BA87FBF41EE7327300F56A7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA87FC071EE7384600F56A7A /* Mercury.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Mercury.xcodeproj; path = ../../Mercury/Mercury.xcodeproj; sourceTree = "<group>"; };
+		BA8B44341FDC2342005DBCA2 /* AudioFileSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFileSourceTests.m; sourceTree = "<group>"; };
+		BA8B44371FDC2BE7005DBCA2 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		BAA45CE21FB7A62600648F1E /* AudioFileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioFileSource.h; path = Streaming/AudioFileSource.h; sourceTree = "<group>"; };
 		BAA45CE31FB7A62600648F1E /* AudioFileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioFileSource.m; path = Streaming/AudioFileSource.m; sourceTree = "<group>"; };
 		BAAB20C41F88D84F00F3EF77 /* MediaStreamSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStreamSource.h; path = Streaming/MediaStreamSource.h; sourceTree = "<group>"; };
@@ -226,6 +237,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA8B443A1FDC2C4F005DBCA2 /* UIKit.framework in Frameworks */,
+				BA8B44361FDC27BF005DBCA2 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +248,7 @@
 		BA011D721EFF23EA004D7BDA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BA8B44371FDC2BE7005DBCA2 /* CoreImage.framework */,
 				BAB320641F12708C00F3C1BC /* CoreData.framework */,
 				BA34D6B81F0598AF0041EA39 /* CoreFoundation.framework */,
 				BA34D6B61F0598A70041EA39 /* UIKit.framework */,
@@ -416,6 +430,7 @@
 				BA87FBF21EE7327300F56A7A /* MediaStorageAppTests.m */,
 				BA87FBF41EE7327300F56A7A /* Info.plist */,
 				BA15B6EF1F9B78BE0038F066 /* ModiaStorageAppModelTests.m */,
+				BA8B44341FDC2342005DBCA2 /* AudioFileSourceTests.m */,
 			);
 			path = MediaStorageAppTests;
 			sourceTree = "<group>";
@@ -670,15 +685,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAF559AD1FAF3A1D0097E03A /* StreamingSession+ApiRequests.m in Sources */,
+				BA8B442D1FDC220F005DBCA2 /* WebApiAudioStreamSource.m in Sources */,
+				BA8B44301FDC221D005DBCA2 /* StreamingSessionSettings.m in Sources */,
 				BA4A20441F9D42F1009DA8BF /* AudioStreamPacketsInfo.m in Sources */,
+				BA8B44331FDC2231005DBCA2 /* NSString+MercuryString.m in Sources */,
 				BA0339F51FD402B80065B8B3 /* AudioPacketsByTimeRequest.m in Sources */,
+				BA8B44321FDC222D005DBCA2 /* AudioMetadataInfo+DataContracts.m in Sources */,
+				BA8B44351FDC2342005DBCA2 /* AudioFileSourceTests.m in Sources */,
 				BA15B6EE1F9B78590038F066 /* MLSong.cpp in Sources */,
 				BA87FBF31EE7327300F56A7A /* MediaStorageAppTests.m in Sources */,
 				BAA45CE51FB7A62600648F1E /* AudioFileSource.m in Sources */,
 				BA15B6F01F9B78BE0038F066 /* ModiaStorageAppModelTests.m in Sources */,
+				BA8B44311FDC2222005DBCA2 /* StreamingSession.m in Sources */,
 				BA15B6ED1F9B78550038F066 /* MLArtist.cpp in Sources */,
 				BA15B6EB1F9B78340038F066 /* AudioMetadataInfo.m in Sources */,
 				BA15B6EC1F9B784F0038F066 /* MLAlbum.cpp in Sources */,
+				BA8B442F1FDC2216005DBCA2 /* WebApiAudioPackatesDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

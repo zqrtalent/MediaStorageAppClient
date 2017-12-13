@@ -152,26 +152,28 @@
     
     __typeof__(self) __weak weakSelf = self;
     playStartedBlock = ^{
-        if(!resumed){ // Start play
+        if(!resumed) // Start play
+        {
             [weakSelf.mpControlCenter setActiveRemoteCommands:YES];
             weakSelf.mpControlCenter.remoteCommandsDelegate = weakSelf;
             
-            AudioMetadataInfo* playingMedia = weakSelf.playerManager.NowPlaying;
+            AudioMetadataInfo* playingMedia = weakSelf.playerManager.nowPlaying;
             
             // Initialize now playing info.
             [weakSelf.mpControlCenter setNowPlayingTitle:playingMedia.songName];
             [weakSelf.mpControlCenter setNowPlayingArtistName:playingMedia.artistName];
             [weakSelf.mpControlCenter setNowPlayingAlbumName:playingMedia.albumName];
             [weakSelf.mpControlCenter setNowPlayingDuration:(double)playingMedia.durationSec];
+            [weakSelf.mpControlCenter setNowPlayingElapsedPlaybackTime:weakSelf.playerManager.elapsedPlaybackTimeSec];
             
-            //[weakSelf.mpControlCenter setNowPlayingPlaybackProgress:(double)playingMedia.CurrentPositionInSec];
-            //[weakSelf.mpControlCenter setNowPlayingElapsedPlaybackTime:(double)playingMedia.CurrentPositionInSec];
-            
-            [weakSelf.mpControlCenter setNowPlayingState:YES];
+            [weakSelf.mpControlCenter setNowPlayingState:YES WithElapsedPlaybackTimeSec:(double)weakSelf.playerManager.elapsedPlaybackTimeSec];
             [weakSelf.mpControlCenter setActiveNowPlayingInfo:YES];
         }
         else
-            [weakSelf.mpControlCenter setNowPlayingState:YES];
+        {
+            [weakSelf.mpControlCenter setNowPlayingElapsedPlaybackTime:weakSelf.playerManager.elapsedPlaybackTimeSec];
+            [weakSelf.mpControlCenter setNowPlayingState:YES WithElapsedPlaybackTimeSec:(double)weakSelf.playerManager.elapsedPlaybackTimeSec];
+        }
     };
     
     if([NSThread isMainThread])
@@ -180,9 +182,9 @@
         dispatch_async(dispatch_get_main_queue(), playStartedBlock);
 }
 
--(void)onPlayEnded{
+-(void)onPlayEnded
+{
     void (^playEndedBlock)();
-    
     __typeof__(self) __weak weakSelf = self;
     playEndedBlock = ^{
         [weakSelf.mpControlCenter setActiveNowPlayingInfo:NO];
@@ -199,6 +201,7 @@
     void (^playPausedBlock)();
     __typeof__(self) __weak weakSelf = self;
     playPausedBlock = ^{
+        [weakSelf.mpControlCenter setNowPlayingElapsedPlaybackTime: weakSelf.playerManager.elapsedPlaybackTimeSec];
         [weakSelf.mpControlCenter setNowPlayingState:NO];
     };
     
@@ -216,7 +219,8 @@
     //    });
 }
 
--(void)onBufferingEnded{
+-(void)onBufferingEnded
+{
     //    dispatch_async(dispatch_get_main_queue(), ^(){
     //        NSLog(@"onBufferingEnded");
     //        [[NowPlayInfo sharedInstance].miniPlayerView onBufferingEnded];
@@ -227,45 +231,75 @@
 {
     self.currentPlayTimeSecFloat = (msec/1000.0);
     int currentTimeSec = (int)self.currentPlayTimeSecFloat;
-    if(currentTimeSec != self.currentPlayTimeSec){ //  Dont update time change less than second.
+    if(currentTimeSec != self.currentPlayTimeSec) //  Dont update time change less than second.
+    {
+        int currTimeSecOld = self.currentPlayTimeSec;
         self.currentPlayTimeSec = currentTimeSec;
         
         // Update now playing info.
-        if(self.mpControlCenter){
-            void (^playTimeUpdatelock)();
-            __typeof__(self) __weak weakSelf = self;
-            playTimeUpdatelock = ^{
-                //[self.mpControlCenter setNowPlayingPlaybackProgress:(double)currentTimeSec];
-                [weakSelf.mpControlCenter setNowPlayingElapsedPlaybackTime:(double)currentTimeSec];
-                [weakSelf.mpControlCenter updateNowPlayingInfo];
-            };
-            
-            if([NSThread isMainThread])
-                playTimeUpdatelock();
-            else
-                dispatch_async(dispatch_get_main_queue(), playTimeUpdatelock);
+        if(self.mpControlCenter)
+        {
+            // If seek backwards or replay was performed.
+            if(currTimeSecOld > currentTimeSec || (currentTimeSec -  currTimeSecOld) > 1)
+            {
+                void (^playTimeUpdatelock)();
+                __typeof__(self) __weak weakSelf = self;
+                playTimeUpdatelock = ^{
+                    [weakSelf.mpControlCenter setNowPlayingElapsedPlaybackTime:(double)currentTimeSec];
+                    [weakSelf.mpControlCenter updateNowPlayingInfo];
+                };
+                
+                if([NSThread isMainThread])
+                    playTimeUpdatelock();
+                else
+                    dispatch_async(dispatch_get_main_queue(), playTimeUpdatelock);
+            }
         }
     }
 }
 
 #pragma mark - RemoteCommandsProtocol methods.
--(MPRemoteCommandHandlerStatus)onPlayCommand{
-    return MPRemoteCommandHandlerStatusSuccess;
+-(MPRemoteCommandHandlerStatus)onPlayCommand
+{
+    if([self.playerManager play])
+        return MPRemoteCommandHandlerStatusSuccess;
+    return MPRemoteCommandHandlerStatusCommandFailed;
 }
 
--(MPRemoteCommandHandlerStatus)onPauseCommand{
-    return MPRemoteCommandHandlerStatusSuccess;
+-(MPRemoteCommandHandlerStatus)onPauseCommand
+{
+    if([self.playerManager pause])
+        return MPRemoteCommandHandlerStatusSuccess;
+    return MPRemoteCommandHandlerStatusCommandFailed;
 }
 
--(MPRemoteCommandHandlerStatus)onTogglePlayPauseCommand{
-    return MPRemoteCommandHandlerStatusSuccess;
+-(MPRemoteCommandHandlerStatus)onTogglePlayPauseCommand
+{
+    if([self.playerManager playPauseToggle])
+        return MPRemoteCommandHandlerStatusSuccess;
+    return MPRemoteCommandHandlerStatusCommandFailed;
 }
 
--(MPRemoteCommandHandlerStatus)onNextTrackCommand{
-    return MPRemoteCommandHandlerStatusSuccess;
+-(MPRemoteCommandHandlerStatus)onNextTrackCommand
+{
+    if([self.playerManager playNext])
+        return MPRemoteCommandHandlerStatusSuccess;
+    return MPRemoteCommandHandlerStatusCommandFailed;
 }
 
--(MPRemoteCommandHandlerStatus)onPrevTrackCommand{
+-(MPRemoteCommandHandlerStatus)onPrevTrackCommand
+{
+    if([self.playerManager playPrev])
+        return MPRemoteCommandHandlerStatusSuccess;
+    return MPRemoteCommandHandlerStatusCommandFailed;
+}
+
+-(MPRemoteCommandHandlerStatus)onChangePlaybackPosition:(NSTimeInterval)position
+{
+    if(position < 0.0 || position > (float)self.playerManager.nowPlaying.durationSec)
+        return MPRemoteCommandHandlerStatusCommandFailed;
+    
+    [self.playerManager.player seekAtTime:(float)position];
     return MPRemoteCommandHandlerStatusSuccess;
 }
 
