@@ -118,6 +118,7 @@
                 _streamReadCallback = nil;
                 [self.downloader start:range.location];
                 
+                // What happens if download failed? Should we wait for it forever???
                 ret = StreamReadPacketStatus_DownloadScheduled;
             }
             else

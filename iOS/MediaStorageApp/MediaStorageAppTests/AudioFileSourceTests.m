@@ -25,19 +25,19 @@
 //    [super tearDown];
 //}
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-    
-    AudioFileSource* audioFile = [[AudioFileSource alloc] init:
-                                  [NSURL URLWithString:@"/Users/ZqrTalent/Desktop/01_blink_182_dumpweed_myzuka.me.mp3"]
-                                                      FileType:kAudioFileMP3Type];
-    
-    long offset = [audioFile getByteByPacket:1];
-    XCTAssert(offset > 0);
-    XCTAssert([audioFile getPacketSizeInBytes] > 0);
-    XCTAssert([audioFile getNumberOfPackets] > 0);
-}
+//- (void)testExample {
+//    // This is an example of a functional test case.
+//    // Use XCTAssert and related functions to verify your tests produce the correct results.
+//    
+//    AudioFileSource* audioFile = [[AudioFileSource alloc] init:
+//                                  [NSURL URLWithString:@"/Users/ZqrTalent/Desktop/01_blink_182_dumpweed_myzuka.me.mp3"]
+//                                                      FileType:kAudioFileMP3Type];
+//    
+//    long offset = [audioFile getByteByPacket:1];
+//    XCTAssert(offset > 0);
+//    XCTAssert([audioFile getPacketSizeInBytes] > 0);
+//    XCTAssert([audioFile getNumberOfPackets] > 0);
+//}
 
 //- (void)testPerformanceExample {
 //    // This is an example of a performance test case.

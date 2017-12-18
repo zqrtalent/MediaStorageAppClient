@@ -84,7 +84,7 @@ typedef struct PlayingBufferInfoStruct{
     [_engine connect:_playerNode to:[_engine mainMixerNode] format: audioFormat];
     
     // Set player volume.
-    //[_playerNode setVolume:0.2];
+    [_playerNode setVolume:0.0];
     return self;
 }
 
@@ -190,10 +190,9 @@ typedef struct PlayingBufferInfoStruct{
             self.PlayingTimeMsec = seekTimeMs;
             self.SeekPacketPos = packetPosNew;
             self.Seeking = YES;
-            
-            //[self.delegate onPlayTimeUpdate: (int)([self getCurrentTimeInMSecByPos:packetPosNew])];
-            [self.delegate onPlayTimeUpdate: seekTimeMs];
         }
+        
+        [self.delegate onPlayTimeUpdate: seekTimeMs];
     }
 }
 
@@ -252,6 +251,12 @@ typedef struct PlayingBufferInfoStruct{
 {
     // Set player volume.
     [_playerNode setVolume:volume];
+}
+
+-(float)getVolume
+{
+    // Get player node volume.
+    return _playerNode.volume;
 }
 
 -(NSString*)getMediaId

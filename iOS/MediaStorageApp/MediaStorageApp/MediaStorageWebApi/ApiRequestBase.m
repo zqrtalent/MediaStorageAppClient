@@ -92,9 +92,14 @@
         }
         else
         {
+//            mem.SetCurrentOffset(0);
+//            pObject->Deserialize(&mem);
             //[self responseArrivedCallback: nullptr WithData:data WithErrorString:@"Data deserialization error!"];
             if(_callback)
                 (_callback)(nullptr, data, @"Data deserialization error!");
+            
+            // Destroy object.
+            delete pObject;
         }
     }
     else
@@ -188,12 +193,15 @@
         {
             self.receivedDataSizeUsed += size;
             if(self.receivedDataSizeUsed > self.receivedData.length)
+            {
                 [self.receivedData increaseLengthBy: (self.receivedDataSizeUsed - self.receivedData.length)];
-            [self.receivedData replaceBytesInRange:NSMakeRange((self.receivedDataSizeUsed - size), size) withBytes:data.bytes];
+            }
+            
+            [self.receivedData replaceBytesInRange:NSMakeRange((self.receivedDataSizeUsed - size), size) withBytes:pData];
         }
         
         // More data?
-        if(self.receivedData.length < expectedContentLength)
+        if(self.receivedDataSizeUsed < expectedContentLength)
             return; // Wait for more data.
         
         [self dataReceiveCompleted:self.receivedData ContentType:mimeType];

@@ -17,7 +17,7 @@
                         <viewControllerLayoutGuide type="bottom" id="U2c-jF-prR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="X9R-kP-STv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aSt-1H-KfF">
@@ -25,7 +25,7 @@
                                     <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                                 </accessibility>
                             </imageView>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37Q-Lc-EcQ">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37Q-Lc-EcQ">
                                 <connections>
                                     <action selector="onPlaybackTrackbarTouchDown:" destination="Y31-fy-51R" eventType="touchDown" id="bhj-xR-zJO"/>
                                     <action selector="onPlaybackTrackbarTouchUpInside:" destination="Y31-fy-51R" eventType="touchUpInside" id="0cr-2M-5wk"/>
@@ -33,7 +33,7 @@
                                     <action selector="onPlaybackTrackbarValueChanged:" destination="Y31-fy-51R" eventType="valueChanged" id="OLK-tV-xWV"/>
                                 </connections>
                             </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5u-K2-xD5">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5u-K2-xD5">
                                 <connections>
                                     <action selector="onVolumeChanged:" destination="Y31-fy-51R" eventType="valueChanged" id="OLa-NE-E5D"/>
                                 </connections>

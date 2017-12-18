@@ -52,6 +52,9 @@
         {
             [weakSelf.delegate streamingSession:weakSelf Authenticated:YES];
         }
+        
+        // Destroy object.
+        delete pSessInfo;
         [req cancelTasksAndInvalidate];
         req = nil;
     }];
@@ -68,6 +71,9 @@
         {
             [weakSelf.delegate streamingSession:weakSelf AllMediaLibraryMetadata:pInfo];
         }
+        
+        // Destroy object.
+        delete pInfo;
         [req cancelTasksAndInvalidate];
         req = nil;
     }];

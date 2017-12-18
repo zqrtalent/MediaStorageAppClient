@@ -11,6 +11,9 @@
 MediaLibraryInfo::MediaLibraryInfo()
 {
     _artists.CreateVariableIndex(_T("Id"), Compare_String);
+    _currentArtist = nullptr;
+    _currentAlbum = nullptr;
+    _currentPlaylist = nullptr;
 }
 
 BEGIN_DECLARE_VAR(MediaLibraryInfo, Serializable)

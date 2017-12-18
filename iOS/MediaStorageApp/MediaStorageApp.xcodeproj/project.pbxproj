@@ -84,6 +84,9 @@
 		BAF559AD1FAF3A1D0097E03A /* StreamingSession+ApiRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF559AB1FAF3A1D0097E03A /* StreamingSession+ApiRequests.m */; };
 		BAF80DF11F856FFE00E19958 /* StreamingSession.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF80DF01F856FFE00E19958 /* StreamingSession.m */; };
 		BAF80DF41F85701C00E19958 /* StreamingSessionSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF80DF31F85701C00E19958 /* StreamingSessionSettings.m */; };
+		BAFC042A1FE403FA002C5A84 /* WebApiRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFC04291FE403FA002C5A84 /* WebApiRequestTests.m */; };
+		BAFC042D1FE414FE002C5A84 /* WebApiAudioPacketsDownloaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFC042C1FE414FE002C5A84 /* WebApiAudioPacketsDownloaderTests.m */; };
+		BAFC042E1FE4171C002C5A84 /* WebApiAudioStreamReaderSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAB20D51F88F2B800F3EF77 /* WebApiAudioStreamReaderSettings.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -215,6 +218,8 @@
 		BAF80DF01F856FFE00E19958 /* StreamingSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamingSession.m; path = Streaming/StreamingSession.m; sourceTree = "<group>"; };
 		BAF80DF21F85701C00E19958 /* StreamingSessionSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamingSessionSettings.h; path = Streaming/StreamingSessionSettings.h; sourceTree = "<group>"; };
 		BAF80DF31F85701C00E19958 /* StreamingSessionSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamingSessionSettings.m; path = Streaming/StreamingSessionSettings.m; sourceTree = "<group>"; };
+		BAFC04291FE403FA002C5A84 /* WebApiRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebApiRequestTests.m; sourceTree = "<group>"; };
+		BAFC042C1FE414FE002C5A84 /* WebApiAudioPacketsDownloaderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebApiAudioPacketsDownloaderTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -427,6 +432,8 @@
 		BA87FBF11EE7327300F56A7A /* MediaStorageAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				BAFC042B1FE41392002C5A84 /* Streaming */,
+				BAFC04271FE403A2002C5A84 /* ApiRequest */,
 				BA87FBF21EE7327300F56A7A /* MediaStorageAppTests.m */,
 				BA87FBF41EE7327300F56A7A /* Info.plist */,
 				BA15B6EF1F9B78BE0038F066 /* ModiaStorageAppModelTests.m */,
@@ -502,6 +509,22 @@
 				BA70A6AB1F8A37560080D3EE /* AudioPacketsDownloaderProtocol.h */,
 				BAA45CE21FB7A62600648F1E /* AudioFileSource.h */,
 				BAA45CE31FB7A62600648F1E /* AudioFileSource.m */,
+			);
+			name = Streaming;
+			sourceTree = "<group>";
+		};
+		BAFC04271FE403A2002C5A84 /* ApiRequest */ = {
+			isa = PBXGroup;
+			children = (
+				BAFC04291FE403FA002C5A84 /* WebApiRequestTests.m */,
+			);
+			name = ApiRequest;
+			sourceTree = "<group>";
+		};
+		BAFC042B1FE41392002C5A84 /* Streaming */ = {
+			isa = PBXGroup;
+			children = (
+				BAFC042C1FE414FE002C5A84 /* WebApiAudioPacketsDownloaderTests.m */,
 			);
 			name = Streaming;
 			sourceTree = "<group>";
@@ -694,8 +717,11 @@
 				BA8B44351FDC2342005DBCA2 /* AudioFileSourceTests.m in Sources */,
 				BA15B6EE1F9B78590038F066 /* MLSong.cpp in Sources */,
 				BA87FBF31EE7327300F56A7A /* MediaStorageAppTests.m in Sources */,
+				BAFC042E1FE4171C002C5A84 /* WebApiAudioStreamReaderSettings.m in Sources */,
 				BAA45CE51FB7A62600648F1E /* AudioFileSource.m in Sources */,
+				BAFC042A1FE403FA002C5A84 /* WebApiRequestTests.m in Sources */,
 				BA15B6F01F9B78BE0038F066 /* ModiaStorageAppModelTests.m in Sources */,
+				BAFC042D1FE414FE002C5A84 /* WebApiAudioPacketsDownloaderTests.m in Sources */,
 				BA8B44311FDC2222005DBCA2 /* StreamingSession.m in Sources */,
 				BA15B6ED1F9B78550038F066 /* MLArtist.cpp in Sources */,
 				BA15B6EB1F9B78340038F066 /* AudioMetadataInfo.m in Sources */,

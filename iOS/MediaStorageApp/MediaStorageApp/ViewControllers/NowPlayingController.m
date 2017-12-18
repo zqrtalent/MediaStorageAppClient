@@ -156,6 +156,9 @@
     // Disable play/pause button when buffering is in action.
     [self.playPauseButton setEnabled:!(playerState == AudioPlayer_Buffering)];
     
+    // Update volume bar.
+    self.volumeBar.value = [playerMan.player getVolume];
+    
     // Play/Pause button.
     [self.playPauseButton setTitle: playerState == AudioPlayer_Playing ? @"Pause" : @"Play" forState:UIControlStateNormal];
     
@@ -271,24 +274,32 @@
 
 -(void)onPlayTimeUpdate:(unsigned int)msec
 {
+    int currentTimeSec = (int)(msec/1000.0);
+    _currentPlayTimeSecFloat = (msec/1000.0);
+    if(currentTimeSec == _currentPlayTimeSec && _trackbarIsCaptured)
+        return;
+    
     __typeof__(self) __weak weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        _currentPlayTimeSecFloat = (msec/1000.0);
-        int currentTimeSec = (int)_currentPlayTimeSecFloat;
-        if(currentTimeSec != _currentPlayTimeSec){
+        //_currentPlayTimeSecFloat = (msec/1000.0);
+        //int currentTimeSec = (int)_currentPlayTimeSecFloat;
+        if(currentTimeSec != _currentPlayTimeSec)
+        {
             _currentPlayTimeSec = currentTimeSec;
             if(!_trackbarIsCaptured)
                 [weakSelf.playbackTrackbar setValue:_currentPlayTimeSecFloat];
             
             // Update track bar and playback time labels.
             float timeLeftSec = [AppDelegate sharedInstance].playerManager.nowPlaying.durationSec - _currentPlayTimeSecFloat;
+            
             // Update playback times.
             self.currTimeSecLabel.text = [NSString stringWithFormat:@"%d:%02d", currentTimeSec/60, currentTimeSec%60];
             self.currTimeSecLeftLabel.text = [NSString stringWithFormat:@"-%d:%02d", (int)(timeLeftSec/60), (int)(timeLeftSec)%60];
             
             [self.addinDelegate onPlayTimeUpdate:msec];
         }
-        else{
+        else
+        {
             if(!_trackbarIsCaptured)
                 [weakSelf.playbackTrackbar setValue:_currentPlayTimeSecFloat];
         }

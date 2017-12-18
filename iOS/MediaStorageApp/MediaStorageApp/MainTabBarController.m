@@ -110,8 +110,12 @@
 
 -(void)streamingSession:(StreamingSession*)sess AllMediaLibraryMetadata:(MediaLibraryInfo*)pInfo
 {
+    assert(pInfo);
+    MediaLibraryInfo* pMlInfo = new MediaLibraryInfo();
+    pInfo->Copy(pMlInfo);
+    
     // Keep media library info metadata object.
-    [((AppDelegate*)[UIApplication sharedApplication].delegate) setMediaLibraryInfo:pInfo];
+    [((AppDelegate*)[UIApplication sharedApplication].delegate) setMediaLibraryInfo:pMlInfo];
     
     dispatch_async(dispatch_get_main_queue(), ^()
     {

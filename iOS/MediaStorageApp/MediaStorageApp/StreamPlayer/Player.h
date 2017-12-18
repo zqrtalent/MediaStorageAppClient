@@ -39,6 +39,7 @@ typedef void (^PlayerEventCompletionHandler)();
 
 -(void)play:(id<MediaStreamSourceProtocol> __nonnull)audioStream AudioMetadata:(AudioMetadataInfo* __nullable)metadata At:(int)msecStartAt;
 -(void)setVolume:(float)volume;
+-(float)getVolume;
 -(void)stop:(PlayerEventCompletionHandler __nullable)completionHandler;
 -(void)pause:(PlayerEventCompletionHandler __nullable)completionHandler;
 -(void)resume;

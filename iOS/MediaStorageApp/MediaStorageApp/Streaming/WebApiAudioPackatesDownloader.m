@@ -192,11 +192,18 @@
         
         // Interrupt download wait.
         dispatch_semaphore_signal(self.download_sync);
-        
-        [self.objects_lock lock]; // lock
-        [self freeUpMemoryBuffer];
-        [self.objects_lock unlock]; // unlock
     }
+    
+    [self.objects_lock lock]; // lock
+    [self freeUpMemoryBuffer];
+    
+    // Release audio packets request object.
+    if(_audioPacketsReq)
+    {
+        [_audioPacketsReq cancelTasksAndInvalidate];
+        _audioPacketsReq = nil;
+    }
+    [self.objects_lock unlock]; // unlock
     
     return YES;
 }
@@ -238,16 +245,20 @@
     
     auto request = [self.session audioPacketsByTime:_mediaId Offset:positionMsec NumPackets:1];
     
-    MediaPackets* __block packets = nullptr;
+    long __block offset = 0;
     dispatch_semaphore_t __block waitSemaphore = dispatch_semaphore_create(0);
     
     [request makeRequest:^(MediaPackets* respPackets){
-        packets = respPackets;
+        offset = respPackets != nullptr ? respPackets->_offset : -1;
         dispatch_semaphore_signal(waitSemaphore);
     }];
     
     dispatch_semaphore_wait(waitSemaphore, DISPATCH_TIME_FOREVER);
-    return packets == nullptr ? -1 : packets->_offset;
+    
+    waitSemaphore = nil; // Destroy block instances.
+    [request cancelTasksAndInvalidate];
+    
+    return offset;
 }
 
 -(bool)copyAudioPacketsData:(NSRange)range PacketsInfo:(AudioStreamPacketsInfo*)packets OutSize:(UInt32*)outDataSize
@@ -344,6 +355,7 @@
         // Download packets data.
         if( ![self download:NSMakeRange(self.packetOffsetCurrent, self.downloadPacketsAtTheTime) IsEof:&isEof])
         {
+            NSLog(@"Can't download packets!");
             break; // Can't download packets.
         }
         
@@ -397,6 +409,9 @@
         return nullptr;
     
     // Download audio packets.
+//    if(_audioPacketsReq)
+//       [_audioPacketsReq cancelTasksAndInvalidate];
+    
     if(!_audioPacketsReq)
         _audioPacketsReq = [self.session audioPacketsByOffset:_mediaId Range:range];
     else
@@ -434,7 +449,7 @@
 {
     //NSLog(@"start download: %ld - %ld", range.location, range.length);
     // Download audio packets.
-    MediaPackets* packets = [self downloadPackets:range andWait:0.0];
+    MediaPackets* packets = [self downloadPackets:range andWait:2.0];
     
     if(packets)
     {

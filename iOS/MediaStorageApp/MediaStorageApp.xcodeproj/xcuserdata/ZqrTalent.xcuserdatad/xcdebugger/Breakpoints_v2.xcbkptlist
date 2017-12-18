@@ -9,29 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MediaStorageAppTests/AudioFileSourceTests.m"
-            timestampString = "534521916.929967"
+            filePath = "MediaStorageApp/ViewControllers/NowPlayingController.m"
+            timestampString = "535125499.912422"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "-testExample"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MediaStorageAppTests/AudioFileSourceTests.m"
-            timestampString = "534533147.208366"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "-testExample"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "-onPlayTimeUpdate:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,14 +25,46 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MediaStorageApp/Streaming/StreamingSession.m"
-            timestampString = "534606292.902659"
+            filePath = "MediaStorageApp/ViewControllers/NowPlayingController.m"
+            timestampString = "535125499.912422"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "-getMediaStream:"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
+            landmarkName = "-onPlayTimeUpdate:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[NowPlayingController onPlayTimeUpdate:]"
+                  moduleName = "MediaStorageApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ZqrTalent/Desktop/Dev/MediaStorageAppClient/iOS/MediaStorageApp/MediaStorageApp/ViewControllers/NowPlayingController.m"
+                  timestampString = "535122266.321199"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "275"
+                  endingLineNumber = "275"
+                  offsetFromSymbolStart = "49">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__41-[NowPlayingController onPlayTimeUpdate:]_block_invoke"
+                  moduleName = "MediaStorageApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ZqrTalent/Desktop/Dev/MediaStorageAppClient/iOS/MediaStorageApp/MediaStorageApp/ViewControllers/NowPlayingController.m"
+                  timestampString = "535122266.324255"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "275"
+                  endingLineNumber = "275"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -57,61 +73,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MediaStorageApp/AppDelegate.m"
-            timestampString = "534892775.561966"
+            filePath = "MediaStorageApp/Streaming/WebApiAudioStreamSource.m"
+            timestampString = "535125541.383197"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "302"
-            endingLineNumber = "302"
-            landmarkName = "-onChangePlaybackPosition:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MediaStorageApp/StreamPlayer/Player.m"
-            timestampString = "534892821.417789"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "381"
-            endingLineNumber = "381"
-            landmarkName = "-decodeAndPlayLoop"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MediaStorageApp/StreamPlayer/Decoder/AudioStreamDecoder.m"
-            timestampString = "534892891.134819"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
-            landmarkName = "-decode:AndWriteResultInto:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MediaStorageApp/StreamPlayer/Decoder/AudioStreamDecoder.m"
-            timestampString = "534893004.128965"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "-decode:AndWriteResultInto:"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "-readPackets:InPacketsInfoObject:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
