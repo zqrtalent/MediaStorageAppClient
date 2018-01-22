@@ -12,8 +12,8 @@
 
 -(instancetype)init
 {
-    //self.webApiHost = @"http://45.35.50.10:81";
-    self.webApiHost = @"https://localhost:5001";
+    self.webApiHost = @"http://45.35.50.10:5001";
+    //self.webApiHost = @"https://localhost:5001";
     self.webApiKey = @"nokey";
     self.webApiVer = @"1.0";
     return self;

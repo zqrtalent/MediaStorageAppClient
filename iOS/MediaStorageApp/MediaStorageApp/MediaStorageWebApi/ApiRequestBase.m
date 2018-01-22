@@ -36,6 +36,7 @@
     if(self.session)
     {
         [self.session invalidateAndCancel];
+        self.receivedData = nil;
         self.session = nil;
     }
 }
@@ -45,6 +46,7 @@
     if(self.session)
     {
         [self.session finishTasksAndInvalidate];
+        self.receivedData = nil;
         self.session = nil;
     }
 }

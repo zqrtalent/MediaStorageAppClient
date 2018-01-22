@@ -12,10 +12,12 @@
 @interface AudioStreamDecoder()
 {
 @private
-    id<MediaStreamSourceProtocol>     _media;
-    AudioConverterRef                _converter;
-    AudioStreamBasicDescription       _inFormat;
-    AudioStreamBasicDescription       _outFormat;
+    id<MediaStreamSourceProtocol>   _media;
+    AudioConverterRef               _converter;
+    AudioStreamBasicDescription     _inFormat;
+    AudioStreamBasicDescription     _outFormat;
+    
+    AudioStreamPacketsInfo*         _packetsInfo;
     
     std::unique_ptr<Byte>           _buffer;
     UInt32                          _bufferSize;
@@ -57,6 +59,8 @@ typedef struct
     _bufferSize = (_outFormat.mBytesPerFrame*_outFormat.mSampleRate) * (float)(outputBufferMsec / 1000.0); // Time sec buffer.
     _bufferTimeMSec = outputBufferMsec;
     _buffer = std::unique_ptr<Byte>(new Byte[_bufferSize]);
+    
+    _packetsInfo = nil;
     return self;
 }
 
@@ -74,6 +78,8 @@ typedef struct
     _bufferSize = outputBufferSize;
     _bufferTimeMSec = 0;
     _buffer = std::unique_ptr<Byte>(new Byte[_bufferSize]);
+    
+    _packetsInfo = nil;
     return self;
 }
 
@@ -87,17 +93,21 @@ typedef struct
 -(void)closeAndInvalidate
 {
     // Dispose audio converter.
-    if(_converter != nil){
+    if(_converter != nil)
+    {
         AudioConverterDispose(_converter);
         _converter = nil;
     }
     
-    if(_buffer != nil){
+    if(_buffer != nil)
+    {
         _buffer.reset();
         _bufferSize = 0;
     }
     
     _media = nil;
+    [_packetsInfo clearPacketsData:YES];
+    _packetsInfo = nil;
 }
 
 OSStatus
@@ -170,14 +180,18 @@ AudioConverterComplexInputDataProcMy(AudioConverterRef  inAudioConverter,
         }
     }
     
-    AudioStreamPacketsInfo* packetsInfo = [[AudioStreamPacketsInfo alloc] init:32768];
+    // Prepare packets info container.
+    if(_packetsInfo == nil)
+        _packetsInfo = [[AudioStreamPacketsInfo alloc] init:0];
+    else
+        [_packetsInfo clearPacketsData:NO];
     
     // Setup source buffers and data proc info struct.
     AudioFileIO afio = {};
     afio.srcFilePos = audioPacketOffset;
     afio.srcSizePerPacket = [_media getPacketSizeInBytes];
     afio.mediaStream = (__bridge void*)_media;
-    afio.audioStreamPacketsInfo = (__bridge void*)packetsInfo;
+    afio.audioStreamPacketsInfo = (__bridge void*)_packetsInfo;
     memcpy(&afio.srcFormat, &(_inFormat), sizeof(AudioStreamBasicDescription));
     
     // Set up output buffer list.

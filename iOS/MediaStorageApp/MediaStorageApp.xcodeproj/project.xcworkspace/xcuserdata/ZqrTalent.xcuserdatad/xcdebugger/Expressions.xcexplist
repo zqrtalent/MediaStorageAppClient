@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "::-[AudioStreamPacketsInfo addAudioPacket:PacketDataSize:StreamPacketDesc:](const void *, UInt32, AudioStreamPacketDescription &amp;):AudioStreamPacketsInfo.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.packetsData.length">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

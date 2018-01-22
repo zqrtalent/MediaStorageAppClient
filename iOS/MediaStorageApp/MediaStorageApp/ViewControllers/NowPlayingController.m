@@ -50,7 +50,8 @@
     if([appDel conformsToProtocol:@protocol(PlayerDelegate)])
         self.addinDelegate = appDel;
     
-    //[self initiateUIForPlay];
+    // Update UI.
+    [self updateNowPlayingUI:YES WithTimingInfo:YES];
     
     // Play song.
     //    if(info.NowPlaying == nil || [info.NowPlaying.mediaId compare:self.media.mediaId options:NSCaseInsensitiveSearch] != NSOrderedSame ){
@@ -185,17 +186,15 @@
     }
 }
 
--(void)initiateUIForPlay
+-(void)initiateUI
 {
-    NSString* sessionId =  [AppDelegate sharedInstance].streamingSession.sessionId;
-    AudioMetadataInfo* nowPlaying = [AppDelegate sharedInstance].playerManager.nowPlaying;
-    
-    // Do any additional setup after loading the view.
     [self updateNowPlayingUI:YES WithTimingInfo:YES];
     
+    AudioMetadataInfo* nowPlaying = [AppDelegate sharedInstance].playerManager.nowPlaying;
     // Request for image resource.
     if(nowPlaying.artworkId != nil && [nowPlaying.artworkId length] > 0 )
     {
+        NSString* sessionId =  [AppDelegate sharedInstance].streamingSession.sessionId;
         __typeof__(self) __weak weakSelf = self;
         ImageResourceRequest* __block req = [[ImageResourceRequest alloc] init:sessionId ImageId:nowPlaying.artworkId SizeType:@"medium"];
         [req makeRequest:^(NSData* imageData)
@@ -228,7 +227,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         //[self.playPauseButton setTitle:@"Pause" forState:UIControlStateNormal];
         if(!resumed){
-            [self initiateUIForPlay];
+            [self initiateUI];
         }
         else{
             [self updateNowPlayingUI:NO WithTimingInfo:NO];

@@ -23,7 +23,7 @@
 
 -(instancetype)init:(UInt32)bufferCapacityInBytes
 {
-    self.packetsData = [NSMutableData dataWithLength:bufferCapacityInBytes];
+    self.packetsData = bufferCapacityInBytes > 0 ? [NSMutableData dataWithLength:bufferCapacityInBytes] : nil;
     self.packetsDataSizeUsed = 0;
     self.packetsDescData = nil;
     self.packetsDescDataSizeUsed = 0;

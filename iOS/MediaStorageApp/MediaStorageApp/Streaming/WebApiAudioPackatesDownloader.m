@@ -376,6 +376,7 @@
             self.pauseRequested = NO;
             [self.operations_lock unlock];
             
+            NSLog(@"Download paused!");
             [self.delegate audioPacketsDownloadPaused]; // Paused event.
             
             dispatch_semaphore_wait(self.download_pause, DISPATCH_TIME_FOREVER);
@@ -449,7 +450,7 @@
 {
     //NSLog(@"start download: %ld - %ld", range.location, range.length);
     // Download audio packets.
-    MediaPackets* packets = [self downloadPackets:range andWait:2.0];
+    MediaPackets* packets = [self downloadPackets:range andWait:10.0];
     
     if(packets)
     {
@@ -503,7 +504,8 @@
         [self.delegate audioPacketsDownloadProgress:self.packetOffsetCurrent PacketsCt:packets->_numPackets IsEof:*pIsEof];
     }
     
-    delete packets;
+    if(packets != nullptr)
+        delete packets;
     return packets != nullptr;
 }
 
