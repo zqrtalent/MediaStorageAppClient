@@ -13,9 +13,10 @@
 
 /* Playing buffer info structure. */
 typedef struct PlayingBufferInfoStruct{
-    bool isPlaying;
-    long packetPos;
-    UInt32 packetsSize;
+    bool    isPlaying;      // Playing status
+    long    packetPos;      // Packet position.
+    UInt32  numPackets;     // Number of packets.
+    UInt32  durationMsec;   // Duration in milliseconds.
 } PlayingBufferInfo, * PPlayingBufferInfoStruct;
 
 @interface Player()
@@ -24,6 +25,7 @@ typedef struct PlayingBufferInfoStruct{
     AVAudioEngine*          _engine;
     AVAudioPlayerNode*      _playerNode;
     NSError*                _error;
+    int                     _buffersCt;
     AVAudioPCMBuffer*       _buffers[2];
     AVAudioPCMBuffer*       _bufferNoSound;     // Used empty sound PCM buffer to interrupt all the scheduling PCM buffers.
     PlayingBufferInfo       _buffersPlaying[2];
@@ -34,6 +36,8 @@ typedef struct PlayingBufferInfoStruct{
 
 @property (nonatomic, strong) dispatch_queue_t decode_play_queue;
 @property (nonatomic, strong) dispatch_semaphore_t playSyncSemaphore;
+
+@property (atomic, assign) int BufferIndex;                // Current buffer index.
 
 @property (atomic, assign) bool Seeking;                    // Indicates seek operation.
 @property (atomic, assign) long SeekPacketPos;              // Seek packet position.
@@ -85,6 +89,8 @@ typedef struct PlayingBufferInfoStruct{
     
     // Set player volume.
     [_playerNode setVolume:0.0];
+    
+    _buffersCt = 2;
     return self;
 }
 
@@ -270,9 +276,7 @@ typedef struct PlayingBufferInfoStruct{
     [_playerNode stop];
     [_engine stop];
     
-    _buffersPlaying[0].isPlaying = _buffersPlaying[1].isPlaying = NO;
-    _buffersPlaying[0].packetPos = _buffersPlaying[1].packetPos = 0;
-    _buffersPlaying[0].packetsSize = _buffersPlaying[1].packetsSize = 0;
+    memset(_buffersPlaying, 0, sizeof(_buffersPlaying));
     
     // Reset decoder.
     [_decoder reset];
@@ -348,9 +352,195 @@ typedef struct PlayingBufferInfoStruct{
 
 -(void)resetPlayBufferInfo
 {
-    _buffersPlaying[0].isPlaying = _buffersPlaying[1].isPlaying = NO;
-    _buffersPlaying[0].packetPos = _buffersPlaying[1].packetPos = 0;
-    _buffersPlaying[0].packetsSize = _buffersPlaying[1].packetsSize = 0;
+    memset(_buffersPlaying, 0, sizeof(_buffersPlaying));
+}
+
++(BOOL)checkForSeekEvent:(Player* __weak)player
+{
+    // Check for seek operation.
+    if(player.Seeking)
+    {
+        player.BufferIndex = 0;
+        player.Seeking = NO;
+        
+        // Reset play buffer infos.
+        [player resetPlayBufferInfo];
+        
+        // Wait while sync is in progress.
+        dispatch_semaphore_wait(player.playSyncSemaphore, DISPATCH_TIME_FOREVER);
+        
+        // Update decode packet position.
+        player.PacketPos = player.SeekPacketPos;
+        player.SeekPacketPos = 0;
+        
+        // Reset decoder.
+        [player.decoder reset];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
++(BOOL)checkForPauseEvent:(Player* __weak)player
+{
+    // Pause signaled.
+    if(!dispatch_semaphore_wait(player.player_pause_semaphore, DISPATCH_TIME_NOW))
+    {
+        // Set paused state.
+        [player updateState:AudioPlayer_Paused];
+        
+        // Wait until pause semaphore is signaled.
+        dispatch_semaphore_wait(player.player_pause_semaphore, DISPATCH_TIME_FOREVER);
+        
+        // If there was seek operation while pause.
+        if(player.Seeking)
+        {
+            //// Update decode packet position.
+            ////weakSelf.PacketPos = weakSelf.SeekPacketPos;
+            ////weakSelf.SeekPacketPos = 0;
+            //continue;
+            return YES;
+        }
+        
+        // Reset decoder.
+        [player.decoder reset];
+        
+        // Update decode packet position to last playing packet position.
+        player.PacketPos = player.PacketPosPlaying;
+        
+        // Set playing state.
+        [player updateState:AudioPlayer_Playing];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
++(BOOL)checkForStopEvent:(Player* __weak)player
+{
+    // Stop signaled.
+    if(!dispatch_semaphore_wait(player.player_stop_semaphore, DISPATCH_TIME_NOW))
+    {
+        player.state = AudioPlayer_Stopped;
+        [player.delegate onPlayEnded];
+        return YES;
+    }
+
+    return NO;
+}
+
++(BOOL)decodeAudioPackets:(Player* __weak)player FillBuffer:(AVAudioPCMBuffer* __weak)buffer AndCopyInfo:(DecodedAudioInfo*)audioInfo
+{
+    //DecodedAudioInfo info = {0};
+    BOOL checkEvents = NO;
+    
+    while(YES)
+    {
+        if(checkEvents)
+        {
+            // Wait while paused.
+            [Player checkForPauseEvent:player];
+            
+            // Stop if stop is event is signaled.
+            if([Player checkForStopEvent:player])
+                return NO; // Stop decode and play.
+        }
+        
+        // Decode audio packets.
+        if([player.decoder decode:player.PacketPos AndWriteResultInto:*audioInfo])
+        {
+            // Fill play buffer with decoded audio data.
+            [player.decoder fillAudioPCMBuffer:buffer];
+        }
+        else
+        {
+            // Need more data.
+            if(audioInfo->status == Decoder_ErrorNeedMoreData)
+            {
+                NSLog(@"Decoder: need more data");
+                
+                // Set buffering state.
+                [player updateState:AudioPlayer_Buffering];
+                //isBuffering = YES;
+                
+                // Wait 500 msec before retry.
+                [NSThread sleepForTimeInterval:0.5];
+                
+                // Try again but check events first.
+                checkEvents = YES;
+                continue;
+            }
+        }
+        
+        break;
+    }
+    
+    return YES;
+}
+
+-(void)audioBufferPlayFinishedOrInterrupted:(UInt32)bufferIndex
+{
+    //NSLog(@"%ld", packetPosPlaying);
+    _buffersPlaying[bufferIndex].isPlaying = NO;
+    
+    if(!self.Seeking && self.state != AudioPlayer_Stopped)
+    {
+        // Seed playing packet position.
+        int nextBufferIndex = (bufferIndex + 1) % _buffersCt;
+        if(_buffersPlaying[nextBufferIndex].isPlaying)
+            self.PacketPosPlaying = _buffersPlaying[nextBufferIndex].packetPos;
+        
+        self.PlayingTimeMsec += _buffersPlaying[bufferIndex].durationMsec;
+        [self.delegate onPlayTimeUpdate: self.PlayingTimeMsec];
+        //buffersInfo[bufferIndex].isPlaying = NO;
+        
+        dispatch_semaphore_signal(self.playSyncSemaphore);
+    }
+}
+
+-(void)scheduleBufferToPlay:(UInt32)bufferIndex
+{
+    //long packetPosPlaying = self.PacketPos;
+    //PlayingBufferInfo* buffersPlaying = &player->_buffersPlaying[0];
+    // TODO: the logic below is not 100% correct, I encountered problem while seeking!
+    assert(_buffersPlaying[0].isPlaying == NO || _buffersPlaying[1].isPlaying == NO);
+    
+    if(self.Seeking)
+    {
+        dispatch_semaphore_signal(self.playSyncSemaphore);
+        return;
+    }
+    
+    // Schedule buffer for playing.
+    __typeof__(self) __weak weakSelf = self;
+    [_playerNode scheduleBuffer:_buffers[bufferIndex] completionHandler:^(){
+        [weakSelf audioBufferPlayFinishedOrInterrupted:bufferIndex];
+    }];
+    
+    _buffersPlaying[bufferIndex].isPlaying = YES;
+    
+    if(!self.Seeking)
+    {
+        // Set playing packet position.
+        int prevBufferIndex = self.BufferIndex - 1;
+        if(prevBufferIndex == -1)
+            prevBufferIndex = _buffersCt - 1;
+        
+        if(!_buffersPlaying[prevBufferIndex].isPlaying)
+        {
+            self.PacketPosPlaying = self.PacketPos;
+            // Update play time.
+            [self.delegate onPlayTimeUpdate: (int)(self.getCurrentTimeInMSec)];
+        }
+        
+        // Reset play sync event if signaled.
+        if(_buffersPlaying[0].isPlaying == YES && _buffersPlaying[1].isPlaying == YES)
+        {
+            dispatch_semaphore_wait(self.playSyncSemaphore, DISPATCH_TIME_NOW);
+        }
+    }
 }
 
 -(void)decodeAndPlayLoop
@@ -371,184 +561,74 @@ typedef struct PlayingBufferInfoStruct{
     
     self.decodeAndPlayBlock =
     dispatch_block_create(DISPATCH_BLOCK_ASSIGN_CURRENT, ^{
-        int bufferIndex = 0, buffersCt = 2;
+        int /*bufferIndex = 0,*/ buffersCt = 2;
         DecodedAudioInfo info = {0};
         //memset(&info, sizeof(info), 0);
         
-        bool isBuffering = true;
+        //bool isBuffering = true;
         weakSelf.state = AudioPlayer_Buffering;
         
         while(YES)
         {
-            // Check for seek operation.
-            if(weakSelf.Seeking)
+            if(![Player checkForSeekEvent: weakSelf])
             {
-                bufferIndex = 0;
-                weakSelf.Seeking = NO;
-                
-                // Reset play buffer infos.
-                [weakSelf resetPlayBufferInfo];
-                
-                dispatch_semaphore_wait(weakSelf.playSyncSemaphore, DISPATCH_TIME_FOREVER);
-                
-                // Update decode packet position.
-                weakSelf.PacketPos = weakSelf.SeekPacketPos;
-                weakSelf.SeekPacketPos = 0;
-                
-                // Reset decoder.
-                [weakSelf.decoder reset];
-            }
-            else
-            {
-                if(_buffersPlaying[bufferIndex].isPlaying)
+                if(_buffersPlaying[weakSelf.BufferIndex].isPlaying)
                 {
                     dispatch_semaphore_wait(weakSelf.playSyncSemaphore, DISPATCH_TIME_FOREVER);
                 }
-            }
-            
-        retry:
-            // Pause signaled.
-            if(!dispatch_semaphore_wait(weakSelf.player_pause_semaphore, DISPATCH_TIME_NOW))
-            {
-                // Set paused state.
-                [weakSelf updateState:AudioPlayer_Paused];
                 
-                // Wait until pause semaphore is signaled.
-                dispatch_semaphore_wait(weakSelf.player_pause_semaphore, DISPATCH_TIME_FOREVER);
-                
-                // If there was seek operation while pause.
-                if(weakSelf.Seeking)
+                //Pause signaled.
+                if([Player checkForPauseEvent:weakSelf])
                 {
-                    // Update decode packet position.
-                    //weakSelf.PacketPos = weakSelf.SeekPacketPos;
-                    //weakSelf.SeekPacketPos = 0;
-                    continue;
+                }
+    
+                // Stop signaled.
+                if([Player checkForStopEvent:weakSelf])
+                {
+                    break; // Stop decode and play.
                 }
                 
-                // Reset decoder.
-                [weakSelf.decoder reset];
-                
-                // Update decode packet position to last playing packet position.
-                weakSelf.PacketPos = self.PacketPosPlaying;
-                
-                // Set playing state.
-                [weakSelf updateState:AudioPlayer_Playing];
-            }
-            
-            // Stop signaled.
-            if(!dispatch_semaphore_wait(weakSelf.player_stop_semaphore, DISPATCH_TIME_NOW))
-            {
-                weakSelf.state = AudioPlayer_Stopped;
-                [weakSelf.delegate onPlayEnded];
-                break;
-            }
-            
-            // Decode audio packets.
-            if([weakSelf.decoder decode:weakSelf.PacketPos AndWriteResultInto:info])
-            {
-                // Fill play buffer with decoded audio data.
-                [weakSelf.decoder fillAudioPCMBuffer:_buffers[bufferIndex]];
-            }
-            else
-            {
-                // Need more data.
-                if(info.status == Decoder_ErrorNeedMoreData)
+                if([Player decodeAudioPackets:weakSelf FillBuffer:_buffers[weakSelf.BufferIndex] AndCopyInfo:&info])
                 {
-                    NSLog(@"Decoder: need more data");
+                    if(info.isEof == YES ||
+                       info.status == Decoder_ErrorUnavailableData ||
+                       info.status == Decoder_UnknownError )
+                    {
+                        // Set ended state.
+                        [weakSelf updateState:AudioPlayer_Stopped];
+                        // Reset player.
+                        // Note: there's might be some audio playing in the same time of reseting play!!!
+                        [weakSelf resetPlay];
+                        break; // EOF or error
+                    }
                     
-                    // Set buffering state.
-                    [weakSelf updateState:AudioPlayer_Buffering];
-                    isBuffering = YES;
+                    //_buffersPlaying[weakSelf.BufferIndex].packetPos = NO;
+                    _buffersPlaying[weakSelf.BufferIndex].packetPos = weakSelf.PacketPos;
+                    _buffersPlaying[weakSelf.BufferIndex].numPackets = info.numPackets;
+                    _buffersPlaying[weakSelf.BufferIndex].durationMsec = info.durationMsec;
                     
-                    // Wait 500 msec before retry.
-                    [NSThread sleepForTimeInterval:0.5];
+                    // Set playing state.
+                    if(weakSelf.state == AudioPlayer_Buffering)
+                    {
+                        // Set playing state.
+                        [weakSelf updateState:AudioPlayer_Playing];
+                    }
                     
-                    goto retry;
+                    // Advance decode packet position.
+                    weakSelf.PacketPos += info.numPackets;
                 }
-            }
-            
-            if(info.isEof == YES ||
-               info.status == Decoder_ErrorUnavailableData ||
-               info.status == Decoder_UnknownError )
-            {
-                // Set ended state.
-                [weakSelf updateState:AudioPlayer_Stopped];
-                // Reset player.
-                // Note: there's might be some audio playing in the same time of reseting play!!!
-                [weakSelf resetPlay];
-                break; // EOF or error
-            }
-            
-            long packetPosPlaying = weakSelf.PacketPos;
-            PlayingBufferInfo* buffersPlaying = &_buffersPlaying[0];
-            
-            // TODO: the logic below is not 100% correct, I encountered problem when I was playing with seeking operation!
-            assert(buffersPlaying[0].isPlaying == NO || buffersPlaying[1].isPlaying == NO);
-            
-            [_playerNode scheduleBuffer:_buffers[bufferIndex] completionHandler:^()
-            {
-                NSLog(@"%ld", packetPosPlaying);
-                buffersPlaying[bufferIndex].isPlaying = NO;
-                
-                if(!weakSelf.Seeking && weakSelf.state != AudioPlayer_Stopped)
+                else
                 {
-                    // Seed playing packet position.
-                    int nextBufferIndex = (bufferIndex + 1) % buffersCt;
-                    if(buffersPlaying[nextBufferIndex].isPlaying)
-                        weakSelf.PacketPosPlaying = buffersPlaying[nextBufferIndex].packetPos;
-                    
-                    weakSelf.PlayingTimeMsec += info.durationMsec;
-                    [weakSelf.delegate onPlayTimeUpdate: weakSelf.PlayingTimeMsec];
-                    //buffersPlaying[bufferIndex].isPlaying = NO;
-                    
-                    dispatch_semaphore_signal(weakSelf.playSyncSemaphore);
-                }
-            }];
-            
-            if(isBuffering)
-            {
-                isBuffering = NO;
-                
-                // Set playing state.
-                [weakSelf updateState:AudioPlayer_Playing];
-            }
-            
-            if(!weakSelf.Seeking)
-            {
-                _buffersPlaying[bufferIndex].isPlaying = YES;
-                _buffersPlaying[bufferIndex].packetPos = weakSelf.PacketPos;
-                _buffersPlaying[bufferIndex].packetsSize = info.numPackets;
-                
-                // Set playing packet position.
-                int prevBufferIndex = bufferIndex - 1;
-                if(prevBufferIndex == -1)
-                    prevBufferIndex = buffersCt - 1;
-                
-                if(!_buffersPlaying[prevBufferIndex].isPlaying)
-                {
-                    weakSelf.PacketPosPlaying = weakSelf.PacketPos;
-                    // Update play time.
-                    [weakSelf.delegate onPlayTimeUpdate: (int)(weakSelf.getCurrentTimeInMSec)];
+                    // Stop is signaled, EOF is reached orerror while decoding audio.
+                    // For more check status. [weakSelf getState];
+                    break;
                 }
                 
-                // Reset play sync event if signaled.
-                if(_buffersPlaying[0].isPlaying == YES && _buffersPlaying[1].isPlaying == YES)
-                {
-                    dispatch_semaphore_wait(weakSelf.playSyncSemaphore, DISPATCH_TIME_NOW);
-                }
-                
-                // Advance decode packet position.
-                weakSelf.PacketPos += info.numPackets;
-            }
-            else
-            {
-                // Update decode packet position.
-                //weakSelf.PacketPos = weakSelf.SeekPacketPos;
-                //weakSelf.SeekPacketPos = 0;
-                continue;
+                // Schedule buffer to play.
+                [weakSelf scheduleBufferToPlay: weakSelf.BufferIndex];
             }
             
-            bufferIndex = (bufferIndex + 1) % buffersCt;
+            weakSelf.BufferIndex = (weakSelf.BufferIndex + 1) % buffersCt;
         }
     });
     

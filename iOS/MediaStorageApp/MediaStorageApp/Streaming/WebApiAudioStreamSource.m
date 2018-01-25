@@ -104,6 +104,8 @@
     }
     else
     {
+        NSLog(@"read packets %ld - %ld", range.location, range.length);
+        
         // Lock section.
         [_lockDownloadSync lock];
         
